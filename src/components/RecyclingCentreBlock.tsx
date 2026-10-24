@@ -5,6 +5,11 @@ import type { AreaSlug } from "@/lib/areas";
  * and optional recycling-centre mappings in site config.
  * TODO(Sam): Wire verified council recycling references per area when confirmed.
  */
-export function RecyclingCentreBlock(_: { areaSlug: AreaSlug }) {
+export function RecyclingCentreBlock({
+  areaSlug: _areaSlug,
+}: {
+  areaSlug: AreaSlug;
+}) {
+  void _areaSlug;
   return null;
 }

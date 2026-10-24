@@ -16,7 +16,12 @@ export interface NeighbourhoodDefinition {
  */
 export const neighbourhoods: NeighbourhoodDefinition[] = [];
 
-export function getNeighbourhood(): NeighbourhoodDefinition | undefined {
+export function getNeighbourhood(
+  areaSlug: string,
+  neighbourhoodSlug: string,
+): NeighbourhoodDefinition | undefined {
+  void areaSlug;
+  void neighbourhoodSlug;
   return undefined;
 }
 
