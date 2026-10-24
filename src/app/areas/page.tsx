@@ -28,7 +28,7 @@ export default function AreasHubPage() {
       </h1>
       <p className="mt-4 max-w-2xl text-zinc-600">
         Borough pages for {formatServiceAreasCommaList()}. Postcode districts and
-        neighbourhood links are added when service areas are confirmed.
+        neighbourhood links are shown on each area page.
       </p>
       <PageImage image={areaPageImage()} className="mt-8 max-w-3xl" />
       <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

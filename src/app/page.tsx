@@ -17,7 +17,9 @@ import {
   company,
   complianceCopy,
   formatServiceAreasCommaList,
+  getServiceAreaEntry,
   region,
+  serviceAreaHubSlugs,
 } from "@/config/site";
 
 export const metadata = buildMetadata({
@@ -52,6 +54,10 @@ const trustDetails = [
 
 export default function HomePage() {
   const areaList = formatServiceAreasCommaList();
+  const hubNames = serviceAreaHubSlugs
+    .map((slug) => getServiceAreaEntry(slug)?.name)
+    .filter(Boolean)
+    .join(" and ");
 
   const faq = [
     {
@@ -180,7 +186,7 @@ export default function HomePage() {
             Areas we cover
           </h2>
           <p className="mt-2 max-w-2xl text-sm text-zinc-600 sm:text-base">
-            Coverage across {region}: {areaList}.
+            Routed from {hubNames} with coverage across {region}: {areaList}.
           </p>
           <ul className="mt-8 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {areas.map((a) => (

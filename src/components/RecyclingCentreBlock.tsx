@@ -1,15 +1,30 @@
 import type { AreaSlug } from "@/lib/areas";
+import { getRecyclingCentreForArea } from "@/lib/areas";
 
-/**
- * Public recycling centre references are hidden until Sam confirms service areas
- * and optional recycling-centre mappings in site config.
- * TODO(Sam): Wire verified council recycling references per area when confirmed.
- */
-export function RecyclingCentreBlock({
-  areaSlug: _areaSlug,
-}: {
-  areaSlug: AreaSlug;
-}) {
-  void _areaSlug;
-  return null;
+export function RecyclingCentreBlock({ areaSlug }: { areaSlug: AreaSlug }) {
+  const centre = getRecyclingCentreForArea(areaSlug);
+  if (!centre) return null;
+
+  return (
+    <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 text-sm text-zinc-400">
+      <h3 className="font-semibold text-white">Public recycling centre (reference)</h3>
+      <p className="mt-2">
+        <strong className="text-zinc-200">{centre.name}</strong>
+        <br />
+        {centre.address}
+      </p>
+      <p className="mt-2 text-xs text-zinc-500">{centre.servesNotes}</p>
+      <p className="mt-2 text-xs">
+        Source:{" "}
+        <a
+          href={centre.source.url}
+          className="text-geek-lime underline"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          {centre.source.label}
+        </a>
+      </p>
+    </div>
+  );
 }

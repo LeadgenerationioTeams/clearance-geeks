@@ -1,6 +1,6 @@
-# The Clearance Geeks - Waste Removals
+# Clearance Geeks - Waste Removals
 
-> Waste removal and house clearance — service areas and region configured in src/config/site.ts.
+> Waste removal and house clearance across Greater Manchester.
 
 ## Services
 - House clearance
@@ -11,7 +11,7 @@
 - Single item collections
 
 ## Areas
-See PLACEHOLDER_SERVICE_AREAS in src/config/site.ts.
+Stockport, Manchester, Salford, Trafford, Tameside, Oldham, Bolton, Bury, Rochdale, Wigan, Cheadle, Didsbury.
 
 ## Contact
 Use the quote form on the homepage or call the number shown on the site once published.

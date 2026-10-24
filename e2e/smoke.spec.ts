@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { PLACEHOLDER_SERVICE_AREAS } from "../src/config/site";
+import { serviceAreaHubSlugs, getServiceAreaEntry } from "../src/config/site";
 
 async function acceptCookies(page: import("@playwright/test").Page) {
   const accept = page.getByRole("button", { name: /^accept$/i });
@@ -8,7 +8,8 @@ async function acceptCookies(page: import("@playwright/test").Page) {
   }
 }
 
-const sampleArea = PLACEHOLDER_SERVICE_AREAS[0];
+const hubSlug = serviceAreaHubSlugs[0];
+const hubArea = getServiceAreaEntry(hubSlug)!;
 
 test("homepage loads and quote form visible", async ({ page }) => {
   await page.goto("/");
@@ -26,11 +27,11 @@ test("services hub links to a service page", async ({ page }) => {
 });
 
 test("areas and legal pages respond", async ({ page }) => {
-  await page.goto(`/areas/${sampleArea.slug}`);
+  await page.goto(`/areas/${hubSlug}`);
   await acceptCookies(page);
   await expect(
     page.getByRole("heading", {
-      name: new RegExp(`clearance in ${sampleArea.name}`, "i"),
+      name: new RegExp(`clearance in ${hubArea.name}`, "i"),
     }),
   ).toBeVisible();
   await page.goto("/privacy");
