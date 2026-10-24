@@ -203,7 +203,7 @@ export default function HomePage() {
           <p className="mt-6 text-sm text-zinc-600">
             <Link
               href="/areas"
-              className="font-semibold text-geek-charcoal underline decoration-geek-lime decoration-2 underline-offset-4"
+              className="inline-flex min-h-11 items-center py-1 font-semibold text-geek-charcoal underline decoration-geek-lime decoration-2 underline-offset-4"
             >
               Browse all area pages
             </Link>

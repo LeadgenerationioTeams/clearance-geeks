@@ -70,14 +70,14 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
                 marketing tags load only if you accept. See{" "}
                 <Link
                   href="/cookies"
-                  className="font-medium text-geek-charcoal underline decoration-geek-lime decoration-2 underline-offset-4"
+                  className="inline-flex min-h-11 items-center py-1 font-medium text-geek-charcoal underline decoration-geek-lime decoration-2 underline-offset-4"
                 >
                   cookies
                 </Link>{" "}
                 and{" "}
                 <Link
                   href="/privacy"
-                  className="font-medium text-geek-charcoal underline decoration-geek-lime decoration-2 underline-offset-4"
+                  className="inline-flex min-h-11 items-center py-1 font-medium text-geek-charcoal underline decoration-geek-lime decoration-2 underline-offset-4"
                 >
                   privacy
                 </Link>
