@@ -38,6 +38,7 @@ export const siteConfig = {
     email: "PLACEHOLDER_EMAIL",
   },
 
+  // TO CONFIRM WITH SAM: starting set
   serviceAreas: {
     region: "Greater Manchester",
     summary:
