@@ -1,5 +1,6 @@
 import { serviceSlugs } from "./services";
 import { areaSlugs, serviceByTownSlugs } from "./areas";
+import { neighbourhoods } from "./neighbourhoods";
 
 export interface RouteEntry {
   path: string;
@@ -25,6 +26,13 @@ export function getAllStaticRoutes(): RouteEntry[] {
 
   for (const slug of areaSlugs) {
     routes.push({ path: `/areas/${slug}`, label: `Area: ${slug}` });
+  }
+
+  for (const n of neighbourhoods) {
+    routes.push({
+      path: `/areas/${n.areaSlug}/${n.slug}`,
+      label: `${n.areaSlug} ${n.name}`,
+    });
   }
 
   for (const areaSlug of serviceByTownSlugs) {

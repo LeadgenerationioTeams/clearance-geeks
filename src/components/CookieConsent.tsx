@@ -5,7 +5,7 @@ import { useCallback, useSyncExternalStore } from "react";
 
 const STORAGE_KEY = "tcg_cookie_consent_v1";
 
-type Consent = "unknown" | "granted" | "denied";
+export type Consent = "unknown" | "granted" | "denied";
 
 function readConsent(): Consent {
   if (typeof window === "undefined") return "unknown";
@@ -22,16 +22,19 @@ const listeners = new Set<() => void>();
 
 function subscribe(onChange: () => void) {
   listeners.add(onChange);
-  return () => {
-    listeners.delete(onChange);
-  };
+  return () => listeners.delete(onChange);
 }
 
 function notifyConsentChange() {
   listeners.forEach((l) => l());
 }
 
-export function CookieConsentGate({ children }: { children: React.ReactNode }) {
+/** Optional analytics — only mount after explicit Accept. None configured yet. */
+function OptionalAnalytics() {
+  return null;
+}
+
+export function CookieConsentProvider({ children }: { children: React.ReactNode }) {
   const consent = useSyncExternalStore(
     subscribe,
     readConsent,
@@ -47,49 +50,56 @@ export function CookieConsentGate({ children }: { children: React.ReactNode }) {
     notifyConsentChange();
   }, []);
 
-  if (consent === "unknown") {
-    return (
-      <div className="fixed inset-0 z-[100] flex items-end justify-center bg-black p-4 sm:items-center">
+  return (
+    <>
+      {children}
+      {consent === "granted" ? <OptionalAnalytics /> : null}
+      {consent === "unknown" ? (
         <div
-          className="max-w-lg rounded-2xl border-2 border-geek-lime bg-zinc-950 p-6 text-white shadow-2xl"
+          className="fixed bottom-0 left-0 right-0 z-[100] border-t border-geek-lime/30 bg-zinc-950/95 p-4 shadow-2xl backdrop-blur sm:p-5"
           role="dialog"
           aria-labelledby="cookie-title"
         >
-          <h2 id="cookie-title" className="font-display text-2xl text-geek-lime">
-            Cookies & site use
-          </h2>
-          <p className="mt-3 text-sm leading-relaxed text-zinc-300">
-            We use essential cookies to remember your choice. No analytics or
-            marketing tags load until you accept. Read our{" "}
-            <Link href="/cookies" className="text-geek-lime underline">
-              cookie policy
-            </Link>{" "}
-            and{" "}
-            <Link href="/privacy" className="text-geek-lime underline">
-              privacy notice
-            </Link>
-            .
-          </p>
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <button
-              type="button"
-              onClick={() => save("granted")}
-              className="min-h-12 flex-1 rounded-xl bg-geek-lime font-bold text-black"
-            >
-              Accept & continue
-            </button>
-            <button
-              type="button"
-              onClick={() => save("denied")}
-              className="min-h-12 flex-1 rounded-xl border border-zinc-600 font-semibold text-zinc-200"
-            >
-              Essential only
-            </button>
+          <div className="mx-auto flex max-w-6xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="text-sm text-zinc-300">
+              <p id="cookie-title" className="font-semibold text-white">
+                Cookies on this site
+              </p>
+              <p className="mt-1">
+                We use essential cookies to remember your choice. Analytics and
+                marketing tags load only if you accept. See{" "}
+                <Link href="/cookies" className="text-geek-lime underline">
+                  cookies
+                </Link>{" "}
+                and{" "}
+                <Link href="/privacy" className="text-geek-lime underline">
+                  privacy
+                </Link>
+                .
+              </p>
+            </div>
+            <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+              <button
+                type="button"
+                onClick={() => save("granted")}
+                className="min-h-11 rounded-xl bg-geek-lime px-5 font-bold text-black"
+              >
+                Accept
+              </button>
+              <button
+                type="button"
+                onClick={() => save("denied")}
+                className="min-h-11 rounded-xl border border-zinc-600 px-5 font-semibold text-zinc-200"
+              >
+                Reject
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    );
-  }
-
-  return <>{children}</>;
+      ) : null}
+    </>
+  );
 }
+
+/** @deprecated use CookieConsentProvider */
+export const CookieConsentGate = CookieConsentProvider;

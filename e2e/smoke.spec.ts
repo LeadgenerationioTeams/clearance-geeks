@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 async function acceptCookies(page: import("@playwright/test").Page) {
-  const accept = page.getByRole("button", { name: /accept & continue/i });
+  const accept = page.getByRole("button", { name: /^accept$/i });
   if (await accept.isVisible()) {
     await accept.click();
   }
@@ -25,7 +25,9 @@ test("services hub links to a service page", async ({ page }) => {
 test("areas and legal pages respond", async ({ page }) => {
   await page.goto("/areas/stockport");
   await acceptCookies(page);
-  await expect(page.getByText(/Waste removal in Stockport/i)).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /clearance in Stockport/i }),
+  ).toBeVisible();
   await page.goto("/privacy");
   await expect(page.getByRole("heading", { name: /privacy/i })).toBeVisible();
 });

@@ -3,7 +3,7 @@ import { Bangers, Inter } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-import { CookieConsentGate } from "@/components/CookieConsent";
+import { CookieConsentProvider } from "@/components/CookieConsent";
 import { company } from "@/lib/company";
 import { JsonLd, localBusinessJsonLd } from "@/lib/schema";
 
@@ -34,12 +34,12 @@ export default function RootLayout({
   return (
     <html lang="en-GB" className={`${display.variable} ${body.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-black text-white antialiased">
-        <CookieConsentGate>
+        <CookieConsentProvider>
           <JsonLd data={localBusinessJsonLd()} />
           <SiteHeader />
           <main className="flex-1">{children}</main>
           <SiteFooter />
-        </CookieConsentGate>
+        </CookieConsentProvider>
       </body>
     </html>
   );

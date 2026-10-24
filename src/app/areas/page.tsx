@@ -3,6 +3,8 @@ import { areas } from "@/lib/areas";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd, breadcrumbJsonLd } from "@/lib/schema";
+import { PageImage } from "@/components/PageImage";
+import { images } from "@/lib/media";
 
 export const metadata = buildMetadata({
   title: "Areas we cover",
@@ -28,6 +30,7 @@ export default function AreasHubPage() {
         Hyper-local clearance pages with neighbourhood notes, sample postcodes
         and typical jobs — no copy-paste town blurbs.
       </p>
+      <PageImage image={images.manchesterSkyline} className="mt-8 max-w-3xl" />
       <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {areas.map((a) => (
           <li key={a.slug}>

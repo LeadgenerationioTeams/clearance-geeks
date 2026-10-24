@@ -11,6 +11,9 @@ import {
   faqPageJsonLd,
   serviceJsonLd,
 } from "@/lib/schema";
+import { PageImage } from "@/components/PageImage";
+import { imageForService } from "@/lib/service-images";
+import type { ServiceSlug } from "@/lib/services";
 
 export function generateStaticParams() {
   return serviceSlugs.map((slug) => ({ slug }));
@@ -71,6 +74,10 @@ export default async function ServicePage({
       <div className="mt-6">
         <CallButton />
       </div>
+      <PageImage
+        image={imageForService(slug as ServiceSlug)}
+        className="mt-8 max-w-3xl"
+      />
       <div className="mt-10 grid gap-10 lg:grid-cols-2">
         <div>
           <h2 className="font-display text-2xl text-white">What we take</h2>

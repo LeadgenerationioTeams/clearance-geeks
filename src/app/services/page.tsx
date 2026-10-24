@@ -3,6 +3,8 @@ import { services } from "@/lib/services";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd, breadcrumbJsonLd } from "@/lib/schema";
+import { PageImage } from "@/components/PageImage";
+import { images } from "@/lib/media";
 
 export const metadata = buildMetadata({
   title: "Waste removal services",
@@ -31,6 +33,7 @@ export default function ServicesHubPage() {
         across Greater Manchester with local routing from Stockport and
         Manchester hubs.
       </p>
+      <PageImage image={images.recycling} className="mt-8 max-w-3xl" />
       <ul className="mt-10 grid gap-5 sm:grid-cols-2">
         {services.map((s) => (
           <li key={s.slug}>

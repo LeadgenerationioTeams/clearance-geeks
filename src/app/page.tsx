@@ -5,6 +5,8 @@ import { CallButton } from "@/components/CallButton";
 import { TodoStats } from "@/components/TodoStats";
 import { services } from "@/lib/services";
 import { buildMetadata } from "@/lib/seo";
+import { PageImage } from "@/components/PageImage";
+import { images } from "@/lib/media";
 
 export const metadata = buildMetadata({
   title: "Waste removal & house clearance Greater Manchester",
@@ -70,7 +72,10 @@ export default function HomePage() {
               ))}
             </ul>
           </div>
-          <QuoteForm />
+          <div className="space-y-6">
+            <PageImage image={images.vanStreet} priority />
+            <QuoteForm />
+          </div>
         </div>
       </section>
 
