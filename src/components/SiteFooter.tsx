@@ -22,7 +22,10 @@ export function SiteFooter() {
           <p className="mt-3 leading-relaxed">{company.address}</p>
           <p className="mt-2">
             {phoneHref ? (
-              <a href={phoneHref} className="hover:text-geek-lime">
+              <a
+                href={phoneHref}
+                className="inline-flex min-h-11 items-center py-1 hover:text-geek-lime"
+              >
                 {company.phone}
               </a>
             ) : (
@@ -31,7 +34,10 @@ export function SiteFooter() {
           </p>
           <p>
             {emailHref ? (
-              <a href={emailHref} className="hover:text-geek-lime">
+              <a
+                href={emailHref}
+                className="inline-flex min-h-11 items-center py-1 hover:text-geek-lime"
+              >
                 {company.email}
               </a>
             ) : (
@@ -53,12 +59,18 @@ export function SiteFooter() {
           <p className="font-semibold text-white">Explore</p>
           <ul className="mt-3 space-y-2">
             <li>
-              <Link href="/services" className="inline-flex min-h-11 items-center hover:text-geek-lime">
+              <Link
+                href="/services"
+                className="inline-flex min-h-11 items-center py-1 hover:text-geek-lime"
+              >
                 Services
               </Link>
             </li>
             <li>
-              <Link href="/areas" className="inline-flex min-h-11 items-center hover:text-geek-lime">
+              <Link
+                href="/areas"
+                className="inline-flex min-h-11 items-center py-1 hover:text-geek-lime"
+              >
                 Areas we cover
               </Link>
             </li>
@@ -68,17 +80,26 @@ export function SiteFooter() {
           <p className="font-semibold text-white">Legal</p>
           <ul className="mt-3 space-y-2">
             <li>
-              <Link href="/privacy" className="inline-flex min-h-11 items-center hover:text-geek-lime">
+              <Link
+                href="/privacy"
+                className="inline-flex min-h-11 items-center py-1 hover:text-geek-lime"
+              >
                 Privacy
               </Link>
             </li>
             <li>
-              <Link href="/cookies" className="inline-flex min-h-11 items-center hover:text-geek-lime">
+              <Link
+                href="/cookies"
+                className="inline-flex min-h-11 items-center py-1 hover:text-geek-lime"
+              >
                 Cookies
               </Link>
             </li>
             <li>
-              <Link href="/terms" className="inline-flex min-h-11 items-center hover:text-geek-lime">
+              <Link
+                href="/terms"
+                className="inline-flex min-h-11 items-center py-1 hover:text-geek-lime"
+              >
                 Terms
               </Link>
             </li>

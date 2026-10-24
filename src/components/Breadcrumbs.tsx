@@ -12,7 +12,10 @@ export function Breadcrumbs({
           <li key={item.label} className="flex items-center gap-1">
             {i > 0 ? <span className="text-zinc-600">/</span> : null}
             {item.href ? (
-              <Link href={item.href} className="hover:text-geek-lime">
+              <Link
+                href={item.href}
+                className="inline-flex min-h-11 items-center py-1 hover:text-geek-lime"
+              >
                 {item.label}
               </Link>
             ) : (
