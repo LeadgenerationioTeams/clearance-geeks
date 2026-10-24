@@ -21,11 +21,11 @@ export function HomeHero() {
         className="object-cover object-[72%_42%] sm:object-[68%_40%] lg:object-[58%_38%]"
       />
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-zinc-950/90 via-zinc-950/80 to-zinc-950/92 lg:bg-gradient-to-r lg:from-zinc-950/95 lg:via-zinc-950/82 lg:to-zinc-950/50"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-zinc-950/80 via-zinc-950/75 to-zinc-950/78 lg:bg-gradient-to-r lg:from-zinc-950/92 lg:via-zinc-950/78 lg:to-zinc-950/45"
         aria-hidden
       />
-      <div className="site-container relative z-10 w-full pb-10 pt-8 md:pb-12 md:pt-10 lg:py-8">
-        <div className="grid gap-6 lg:grid-cols-2 lg:items-start lg:gap-10">
+      <div className="site-container relative z-10 w-full pb-10 pt-8 md:pb-12 md:pt-10 lg:pb-6 lg:pt-5">
+        <div className="grid gap-6 lg:grid-cols-2 lg:items-start lg:gap-5">
           <div className="max-w-xl text-white">
             <h1 className="font-display text-[2.25rem] leading-[1.08] tracking-tight md:text-5xl lg:max-w-[22ch] lg:text-[3.5rem]">
               Waste removal &amp; house clearance across{" "}
@@ -49,6 +49,7 @@ export function HomeHero() {
           <div className="lg:sticky lg:top-24">
             <QuoteForm
               id="quote"
+              compactDesktop
               className="shadow-2xl ring-1 ring-white/10"
               title="Get a free quote"
             />

@@ -10,10 +10,13 @@ export function QuoteForm({
   id = "quote",
   className = "",
   title = "Get a quote",
+  compactDesktop = false,
 }: {
   id?: string;
   className?: string;
   title?: string;
+  /** Tighter layout on lg+ (home hero above-the-fold). */
+  compactDesktop?: boolean;
 }) {
   const [state, action, pending] = useActionState(submitQuote, initial);
 
@@ -21,15 +24,19 @@ export function QuoteForm({
     <form
       id={id}
       action={action}
-      className={`space-y-4 rounded-2xl border border-zinc-200/80 bg-white p-5 sm:p-6 ${className}`}
+      className={`space-y-4 rounded-2xl border border-zinc-200/80 bg-white p-5 sm:p-6 ${compactDesktop ? "lg:space-y-2 lg:p-4" : ""} ${className}`}
     >
-      <h2 className="font-display text-2xl text-zinc-900 sm:text-[1.75rem]">
+      <h2
+        className={`font-display text-2xl text-zinc-900 sm:text-[1.75rem] ${compactDesktop ? "lg:text-xl" : ""}`}
+      >
         {title}
       </h2>
       <p className="text-sm text-zinc-600">
         Tell us what needs clearing. Optional photo helps us size the van.
       </p>
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div
+        className={`grid gap-4 sm:grid-cols-2 ${compactDesktop ? "lg:gap-2" : ""}`}
+      >
         <label className="block text-sm">
           <span className="text-zinc-700">Name</span>
           <input
@@ -81,9 +88,9 @@ export function QuoteForm({
         <span className="text-zinc-700">What needs clearing?</span>
         <textarea
           name="details"
-          rows={4}
+          rows={compactDesktop ? 2 : 4}
           required
-          className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
+          className={`mt-1 w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900 ${compactDesktop ? "lg:min-h-0 lg:py-2" : ""}`}
         />
       </label>
       <button
