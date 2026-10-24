@@ -14,7 +14,7 @@ export function CallButton({
   return (
     <a
       href={href}
-      className={`inline-flex min-h-12 items-center justify-center rounded-xl bg-geek-lime px-6 py-3 text-center text-lg font-extrabold uppercase tracking-wide text-black shadow-[0_0_24px_rgba(139,230,0,0.45)] transition hover:scale-[1.02] hover:bg-geek-lime-bright active:scale-[0.98] ${className}`}
+      className={`inline-flex min-h-11 items-center justify-center rounded-lg bg-geek-lime px-5 py-2.5 text-center text-sm font-semibold text-geek-charcoal transition hover:bg-geek-lime-bright active:scale-[0.99] ${className}`}
     >
       {label}
       {company.phone.startsWith("[") ? "" : ` ${company.phone}`}

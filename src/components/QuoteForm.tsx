@@ -27,7 +27,7 @@ export function QuoteForm({ id = "quote" }: { id?: string }) {
           <input
             name="name"
             required
-            className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
+            className="mt-1 w-full min-h-11 rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
           />
         </label>
         <label className="block text-sm">
@@ -36,7 +36,7 @@ export function QuoteForm({ id = "quote" }: { id?: string }) {
             name="phone"
             type="tel"
             required
-            className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
+            className="mt-1 w-full min-h-11 rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
           />
         </label>
       </div>
@@ -45,7 +45,7 @@ export function QuoteForm({ id = "quote" }: { id?: string }) {
         <input
           name="email"
           type="email"
-          className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
+          className="mt-1 w-full min-h-11 rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
         />
       </label>
       <label className="block text-sm">
@@ -53,14 +53,14 @@ export function QuoteForm({ id = "quote" }: { id?: string }) {
         <input
           name="postcode"
           required
-          className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
+          className="mt-1 w-full min-h-11 rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
         />
       </label>
       <label className="block text-sm">
         <span className="text-zinc-700">Service</span>
         <select
           name="service"
-          className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
+          className="mt-1 w-full min-h-11 rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
         >
           {services.map((s) => (
             <option key={s.slug} value={s.slug}>
@@ -75,13 +75,13 @@ export function QuoteForm({ id = "quote" }: { id?: string }) {
           name="details"
           rows={4}
           required
-          className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
+          className="mt-1 w-full min-h-11 rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
         />
       </label>
       <button
         type="submit"
         disabled={pending}
-        className="w-full rounded-xl bg-geek-lime px-6 py-3 text-lg font-extrabold uppercase tracking-wide text-black transition hover:bg-geek-lime-bright disabled:opacity-60"
+        className="w-full min-h-11 rounded-lg bg-geek-lime px-6 py-3 text-sm font-semibold text-geek-charcoal transition hover:bg-geek-lime-bright disabled:opacity-60"
       >
         {pending ? "Sending…" : "Request quote"}
       </button>

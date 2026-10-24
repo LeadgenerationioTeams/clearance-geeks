@@ -1,6 +1,6 @@
 # The Clearance Geeks - Waste Removals
 
-> Licensed waste removal and house clearance across Greater Manchester.
+> Waste removal and house clearance across Greater Manchester.
 
 ## Services
 - House clearance

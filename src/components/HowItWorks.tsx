@@ -24,18 +24,34 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section className="border-t border-zinc-200 bg-white py-14">
+    <section className="border-t border-zinc-200 bg-white py-14 sm:py-16">
       <div className="mx-auto max-w-6xl px-4">
-        <h2 className="font-display text-3xl text-zinc-900 sm:text-4xl">How it works</h2>
-        <ol className="mt-10 grid gap-8 lg:grid-cols-3">
+        <h2 className="font-display text-2xl text-geek-charcoal sm:text-3xl">
+          How it works
+        </h2>
+        <ol className="mt-10 grid gap-10 lg:grid-cols-3">
           {steps.map((step, index) => {
-            const photo = photosForTag(step.photoTag, 3)[index] ?? photosForTag("general", 1)[0];
+            const photo =
+              photosForTag(step.photoTag, 3)[index] ??
+              photosForTag("general", 1)[0];
             return (
               <li key={step.step} className="flex flex-col">
-                <JobPhoto photo={photo} sizes="(max-width: 1024px) 100vw, 30vw" />
-                <span className="mt-4 font-display text-4xl text-geek-lime">{step.step}</span>
-                <h3 className="mt-1 font-display text-xl text-zinc-900">{step.title}</h3>
-                <p className="mt-2 text-sm text-zinc-600">{step.body}</p>
+                <JobPhoto
+                  photo={photo}
+                  sizes="(max-width: 1024px) 100vw, 30vw"
+                />
+                <span
+                  className="mt-5 text-sm font-semibold uppercase tracking-wide text-geek-lime"
+                  aria-hidden
+                >
+                  Step {step.step}
+                </span>
+                <h3 className="mt-1 font-display text-lg text-geek-charcoal">
+                  {step.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+                  {step.body}
+                </p>
               </li>
             );
           })}

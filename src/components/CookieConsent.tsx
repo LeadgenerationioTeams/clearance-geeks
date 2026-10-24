@@ -56,23 +56,29 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
       {consent === "granted" ? <OptionalAnalytics /> : null}
       {consent === "unknown" ? (
         <div
-          className="fixed bottom-0 left-0 right-0 z-[100] border-t border-geek-lime/30 bg-zinc-950/95 p-4 shadow-2xl backdrop-blur sm:p-5"
+          className="fixed bottom-0 left-0 right-0 z-[100] border-t border-zinc-200 bg-white/95 p-4 shadow-2xl backdrop-blur sm:p-5"
           role="dialog"
           aria-labelledby="cookie-title"
         >
           <div className="mx-auto flex max-w-6xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="text-sm text-zinc-300">
-              <p id="cookie-title" className="font-semibold text-white">
+            <div className="text-sm text-zinc-600">
+              <p id="cookie-title" className="font-semibold text-geek-charcoal">
                 Cookies on this site
               </p>
               <p className="mt-1">
                 We use essential cookies to remember your choice. Analytics and
                 marketing tags load only if you accept. See{" "}
-                <Link href="/cookies" className="text-geek-lime underline">
+                <Link
+                  href="/cookies"
+                  className="font-medium text-geek-charcoal underline decoration-geek-lime decoration-2 underline-offset-4"
+                >
                   cookies
                 </Link>{" "}
                 and{" "}
-                <Link href="/privacy" className="text-geek-lime underline">
+                <Link
+                  href="/privacy"
+                  className="font-medium text-geek-charcoal underline decoration-geek-lime decoration-2 underline-offset-4"
+                >
                   privacy
                 </Link>
                 .
@@ -82,14 +88,14 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
               <button
                 type="button"
                 onClick={() => save("granted")}
-                className="min-h-11 rounded-xl bg-geek-lime px-5 font-bold text-black"
+                className="min-h-11 rounded-lg bg-geek-lime px-5 font-semibold text-geek-charcoal"
               >
                 Accept
               </button>
               <button
                 type="button"
                 onClick={() => save("denied")}
-                className="min-h-11 rounded-xl border border-zinc-600 px-5 font-semibold text-zinc-200"
+                className="min-h-11 rounded-lg border border-zinc-300 px-5 font-semibold text-geek-charcoal"
               >
                 Reject
               </button>

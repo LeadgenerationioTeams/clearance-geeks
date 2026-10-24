@@ -20,13 +20,13 @@ export default function AreasHubPage() {
   ];
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10">
+    <div className="mx-auto max-w-6xl px-4 py-10 sm:py-12">
       <JsonLd data={breadcrumbJsonLd(crumbs)} />
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Areas" }]} />
-      <h1 className="mt-4 font-display text-4xl text-geek-lime sm:text-5xl">
+      <h1 className="mt-4 font-display text-3xl text-geek-charcoal sm:text-4xl">
         Greater Manchester areas
       </h1>
-      <p className="mt-4 max-w-2xl text-zinc-300">
+      <p className="mt-4 max-w-2xl text-zinc-600">
         Borough pages with verified recycling-centre references, postcode
         districts and neighbourhood links.
       </p>
@@ -36,13 +36,13 @@ export default function AreasHubPage() {
           <li key={a.slug}>
             <Link
               href={`/areas/${a.slug}`}
-              className="block h-full rounded-2xl border border-zinc-800 bg-zinc-950 p-5 hover:border-geek-lime/50"
+              className="block h-full rounded-xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:border-zinc-300 hover:shadow-md"
             >
-              <h2 className="font-display text-2xl text-white">{a.name}</h2>
-              <p className="mt-1 text-xs uppercase text-zinc-500">
+              <h2 className="font-display text-xl text-geek-charcoal">{a.name}</h2>
+              <p className="mt-1 text-xs font-medium uppercase tracking-wide text-zinc-500">
                 {a.boroughLabel}
               </p>
-              <p className="mt-2 text-sm text-zinc-400 line-clamp-4">
+              <p className="mt-2 text-sm leading-relaxed text-zinc-600 line-clamp-4">
                 {a.summary}
               </p>
             </Link>

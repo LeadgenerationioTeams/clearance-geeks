@@ -14,7 +14,7 @@ export function StickyMobileCta() {
 
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 z-40 border-t border-geek-lime/40 bg-black/95 p-3 backdrop-blur md:hidden"
+      className="fixed bottom-0 left-0 right-0 z-40 border-t border-zinc-200 bg-white/95 p-3 backdrop-blur md:hidden"
       style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
     >
       <div className={`grid gap-2 ${wa ? "grid-cols-2" : "grid-cols-1"}`}>
@@ -22,7 +22,7 @@ export function StickyMobileCta() {
         {wa ? (
           <a
             href={wa}
-            className="inline-flex min-h-12 items-center justify-center rounded-xl border-2 border-geek-lime bg-transparent px-3 text-center text-sm font-extrabold uppercase tracking-wide text-geek-lime"
+            className="inline-flex min-h-11 items-center justify-center rounded-lg border-2 border-geek-charcoal bg-transparent px-3 text-center text-sm font-semibold text-geek-charcoal"
             rel="noopener noreferrer"
             target="_blank"
           >

@@ -14,9 +14,11 @@ export default function TermsPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Terms" }]} />
-      <h1 className="mt-4 font-display text-4xl text-geek-lime">Terms</h1>
+      <h1 className="mt-4 font-display text-3xl text-geek-charcoal sm:text-4xl">
+        Terms
+      </h1>
       <PageImage image={images.brandedSplash} className="mt-6 max-w-md" />
-      <p className="mt-6 text-zinc-400">
+      <p className="mt-6 text-zinc-600">
         Placeholder terms for using the {company.legalName} website. Service
         terms for waste collection will be provided separately at booking.
       </p>

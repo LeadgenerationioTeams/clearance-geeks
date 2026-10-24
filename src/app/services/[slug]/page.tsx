@@ -109,14 +109,14 @@ export default async function ServicePage({
             Local pages:{" "}
             <Link
               href={`/areas/stockport/${slug}`}
-              className="text-geek-lime underline"
+              className="font-medium text-geek-charcoal underline decoration-geek-lime decoration-2 underline-offset-4"
             >
               Stockport
             </Link>
             {" · "}
             <Link
               href={`/areas/manchester/${slug}`}
-              className="text-geek-lime underline"
+              className="font-medium text-geek-charcoal underline decoration-geek-lime decoration-2 underline-offset-4"
             >
               Manchester
             </Link>

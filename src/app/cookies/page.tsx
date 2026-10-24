@@ -13,9 +13,11 @@ export default function CookiesPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Cookies" }]} />
-      <h1 className="mt-4 font-display text-4xl text-geek-lime">Cookies</h1>
+      <h1 className="mt-4 font-display text-3xl text-geek-charcoal sm:text-4xl">
+        Cookies
+      </h1>
       <PageImage image={images.brandedSplash} className="mt-6 max-w-md" />
-      <p className="mt-6 text-zinc-400">
+      <p className="mt-6 text-zinc-600">
         We store a single local preference when you accept or decline optional
         cookies. No analytics scripts are installed in this build. Update this
         page when tags are added.

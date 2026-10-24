@@ -6,10 +6,12 @@ export function RecyclingCentreBlock({ areaSlug }: { areaSlug: AreaSlug }) {
   if (!centre) return null;
 
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 text-sm text-zinc-400">
-      <h3 className="font-semibold text-white">Public recycling centre (reference)</h3>
+    <div className="rounded-xl border border-zinc-200 bg-zinc-50 p-4 text-sm text-zinc-600">
+      <h3 className="font-semibold text-geek-charcoal">
+        Public recycling centre (reference)
+      </h3>
       <p className="mt-2">
-        <strong className="text-zinc-200">{centre.name}</strong>
+        <strong className="text-geek-charcoal">{centre.name}</strong>
         <br />
         {centre.address}
       </p>
@@ -18,7 +20,7 @@ export function RecyclingCentreBlock({ areaSlug }: { areaSlug: AreaSlug }) {
         Source:{" "}
         <a
           href={centre.source.url}
-          className="text-geek-lime underline"
+          className="font-medium text-geek-charcoal underline decoration-geek-lime decoration-2 underline-offset-4"
           rel="noopener noreferrer"
           target="_blank"
         >

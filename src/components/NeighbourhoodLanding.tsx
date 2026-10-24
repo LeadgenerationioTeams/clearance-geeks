@@ -39,16 +39,16 @@ export function NeighbourhoodLanding({
 
       <section className="mx-auto grid max-w-6xl gap-8 px-4 py-8 lg:grid-cols-2 lg:items-center">
         <div>
-          <h1 className="font-display text-4xl text-geek-lime sm:text-5xl">
+          <h1 className="font-display text-3xl text-geek-charcoal sm:text-4xl">
             Waste removal — {hood.name}, {area.name}
           </h1>
-          <p className="mt-4 text-lg text-zinc-300">{hood.about}</p>
-          <p className="mt-3 text-zinc-400">{hood.accessNote}</p>
+          <p className="mt-4 text-lg text-zinc-600">{hood.about}</p>
+          <p className="mt-3 text-zinc-500">{hood.accessNote}</p>
           <div className="mt-6 flex flex-wrap gap-3">
             <CallButton />
             <Link
               href={`/areas/${area.slug}`}
-              className="text-sm font-semibold text-zinc-400 underline"
+              className="inline-flex min-h-11 items-center text-sm font-semibold text-zinc-600 underline decoration-geek-lime decoration-2 underline-offset-4"
             >
               All of {area.name}
             </Link>
@@ -58,12 +58,12 @@ export function NeighbourhoodLanding({
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-10">
-        <h2 className="font-display text-2xl text-white">Why choose us</h2>
+        <h2 className="font-display text-2xl text-geek-charcoal">Why choose us</h2>
         <ul className="mt-4 grid gap-3 sm:grid-cols-2">
           {whyChooseUsForArea(area.name).map((item) => (
             <li
               key={item}
-              className="rounded-lg border border-zinc-800 p-3 text-sm text-zinc-400"
+              className="rounded-lg border border-zinc-200 bg-white p-3 text-sm text-zinc-600"
             >
               {item}
             </li>
@@ -71,17 +71,20 @@ export function NeighbourhoodLanding({
         </ul>
       </section>
 
-      <section className="border-y border-zinc-800 bg-zinc-950/40 py-10">
+      <section className="border-y border-zinc-200 bg-zinc-50 py-10">
         <div className="mx-auto max-w-6xl px-4">
-          <h2 className="font-display text-2xl text-white">How it works</h2>
+          <h2 className="font-display text-2xl text-geek-charcoal">How it works</h2>
           <ol className="mt-6 grid gap-4 md:grid-cols-3">
             {clearanceProcess.map((s) => (
-              <li key={s.step} className="rounded-xl border border-zinc-800 p-4">
-                <span className="text-geek-lime font-display text-2xl">
-                  {s.step}
+              <li
+                key={s.step}
+                className="rounded-xl border border-zinc-200 bg-white p-4"
+              >
+                <span className="text-sm font-semibold uppercase tracking-wide text-geek-lime">
+                  Step {s.step}
                 </span>
-                <p className="mt-2 font-semibold text-white">{s.title}</p>
-                <p className="mt-1 text-sm text-zinc-500">{s.body}</p>
+                <p className="mt-2 font-semibold text-geek-charcoal">{s.title}</p>
+                <p className="mt-1 text-sm text-zinc-600">{s.body}</p>
               </li>
             ))}
           </ol>
@@ -89,15 +92,15 @@ export function NeighbourhoodLanding({
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-10">
-        <h2 className="font-display text-2xl text-geek-lime">Local reference</h2>
+        <h2 className="font-display text-2xl text-geek-charcoal">Local reference</h2>
         {hood.landmarks.length ? (
-          <ul className="mt-4 space-y-2 text-sm text-zinc-400">
+          <ul className="mt-4 space-y-2 text-sm text-zinc-600">
             {hood.landmarks.map((l) => (
               <li key={l.name}>
                 {l.name} —{" "}
                 <a
                   href={l.source.url}
-                  className="text-geek-lime underline"
+                  className="font-medium text-geek-charcoal underline decoration-geek-lime decoration-2 underline-offset-4"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
@@ -119,7 +122,7 @@ export function NeighbourhoodLanding({
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-10">
-        <h2 className="font-display text-2xl text-white">Services</h2>
+        <h2 className="font-display text-2xl text-geek-charcoal">Services</h2>
         <ul className="mt-4 grid gap-2 sm:grid-cols-2">
           {services.map((s) => (
             <li key={s.slug}>
@@ -129,7 +132,7 @@ export function NeighbourhoodLanding({
                     ? `/areas/${area.slug}/${s.slug}`
                     : `/services/${s.slug}`
                 }
-                className="text-geek-lime underline"
+                className="inline-flex min-h-11 items-center font-medium text-geek-charcoal underline decoration-geek-lime decoration-2 underline-offset-4"
               >
                 {s.title}
               </Link>
@@ -142,12 +145,12 @@ export function NeighbourhoodLanding({
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-10">
-        <h2 className="font-display text-2xl text-geek-lime">FAQs</h2>
+        <h2 className="font-display text-2xl text-geek-charcoal">FAQs</h2>
         <dl className="mt-4 space-y-4">
           {hood.faqs.map((f) => (
             <div key={f.question}>
-              <dt className="font-semibold text-white">{f.question}</dt>
-              <dd className="mt-1 text-zinc-400">{f.answer}</dd>
+              <dt className="font-semibold text-geek-charcoal">{f.question}</dt>
+              <dd className="mt-1 text-zinc-600">{f.answer}</dd>
             </div>
           ))}
         </dl>

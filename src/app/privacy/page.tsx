@@ -12,11 +12,13 @@ export const metadata = buildMetadata({
 
 export default function PrivacyPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 prose prose-invert">
+    <div className="mx-auto max-w-3xl px-4 py-10">
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Privacy" }]} />
-      <h1 className="mt-4 font-display text-4xl text-geek-lime">Privacy</h1>
+      <h1 className="mt-4 font-display text-3xl text-geek-charcoal sm:text-4xl">
+        Privacy
+      </h1>
       <PageImage image={images.brandedSplash} className="mt-6 max-w-md" />
-      <p className="mt-6 text-zinc-400">
+      <p className="mt-6 text-zinc-600">
         Placeholder privacy notice for {company.legalName}. Replace with counsel-approved
         text before launch. Contact: {company.email}.
       </p>

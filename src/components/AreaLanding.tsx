@@ -25,7 +25,7 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
       <section className="relative overflow-hidden border-b border-zinc-200 bg-white">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 lg:grid-cols-2 lg:items-start">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-widest text-geek-lime">
+            <p className="text-sm font-medium uppercase tracking-wide text-zinc-500">
               {area.boroughLabel}
             </p>
             <h1 className="mt-2 font-display text-4xl leading-tight text-zinc-900 sm:text-5xl lg:text-6xl">

@@ -1,17 +1,11 @@
 import type { Metadata } from "next";
-import { Bangers, Inter } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CookieConsentProvider } from "@/components/CookieConsent";
 import { company } from "@/lib/company";
 import { JsonLd, localBusinessJsonLd } from "@/lib/schema";
-
-const display = Bangers({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-display",
-});
 
 const body = Inter({
   subsets: ["latin"],
@@ -32,8 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-GB" className={`${display.variable} ${body.variable} h-full`}>
-      <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-900 antialiased">
+    <html lang="en-GB" className={`${body.variable} h-full`}>
+      <body className="min-h-full flex flex-col bg-zinc-100 text-geek-charcoal antialiased">
         <CookieConsentProvider>
           <JsonLd data={localBusinessJsonLd()} />
           <SiteHeader />
