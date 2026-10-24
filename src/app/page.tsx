@@ -19,6 +19,7 @@ export const metadata = buildMetadata({
 });
 
 const checklist = [
+  "Single items",
   "Full house clearances",
   "Garden clearance",
   "Office & commercial",
