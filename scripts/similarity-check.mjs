@@ -103,13 +103,7 @@ function extractServices() {
 }
 
 function extractAreas() {
-  const sitePath = join(ROOT, "src/config/site.ts");
-  const siteText = readFileSync(sitePath, "utf8");
-  if (siteText.includes("PLACEHOLDER_SERVICE_REGION")) {
-    console.log("Areas: skipped (service areas awaiting Sam confirmation)");
-    return [];
-  }
-  return extractVisibleFromDataFile(sitePath, "area");
+  return extractVisibleFromDataFile(join(ROOT, "src/lib/areas.ts"), "area");
 }
 
 function compareGroup(label, pages) {

@@ -180,9 +180,10 @@ export function PrivacyPolicyContent() {
 
       <h2 className="font-display text-geek-lime">11. Service area</h2>
       <p>
-        We primarily operate in {siteConfig.serviceAreas.region}. Confirmed town
-        and borough lists will be published once coverage is finalised. Your
-        postcode helps us confirm coverage before booking.
+        We primarily operate in {siteConfig.serviceAreas.region} (
+        {siteConfig.serviceAreas.locations.slice(0, 4).join(", ")} and
+        surrounding areas). Your postcode helps us confirm coverage before
+        booking.
       </p>
     </article>
   );

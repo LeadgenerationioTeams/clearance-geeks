@@ -20,8 +20,8 @@ const body = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: company.legalName,
-    template: `%s | ${company.legalName}`,
+    default: company.name,
+    template: `%s | ${company.name}`,
   },
   description: company.defaultDescription,
 };

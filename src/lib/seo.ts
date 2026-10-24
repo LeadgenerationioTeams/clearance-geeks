@@ -12,7 +12,7 @@ export function buildMetadata({
   description: string;
   path: string;
 }): Metadata {
-  const fullTitle = `${title} | ${company.legalName}`;
+  const fullTitle = `${title} | ${company.name}`;
   const url = `${resolveSiteUrl()}${path}`;
 
   return {
@@ -23,7 +23,7 @@ export function buildMetadata({
       title: fullTitle,
       description,
       url,
-      siteName: company.legalName,
+      siteName: company.name,
       locale: "en_GB",
       type: "website",
     },
