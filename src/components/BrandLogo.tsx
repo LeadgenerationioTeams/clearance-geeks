@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 
-type Variant = "header" | "hero";
+/** Photographic extract from brand/van-sam.png (cargo panel wordmark). */
+const LOCKUP_WIDTH = 1044;
+const LOCKUP_HEIGHT = 1524;
 
-const src = "/brand/logo-lockup.svg";
+type Variant = "header" | "hero";
 
 export function BrandLogo({
   variant = "header",
@@ -14,18 +16,23 @@ export function BrandLogo({
   linked?: boolean;
   className?: string;
 }) {
-  const sizes =
+  const src =
     variant === "hero"
-      ? "min-h-[120px] w-full max-w-xl sm:min-h-[160px] sm:max-w-2xl"
-      : "h-11 w-[min(100%,220px)] sm:h-11 sm:w-[240px]";
+      ? "/brand/logo-hero-lockup.webp"
+      : "/brand/logo-lockup.webp";
+
+  const sizeClass =
+    variant === "hero"
+      ? "h-[min(280px,42vw)] w-auto max-w-full sm:h-[280px]"
+      : "h-12 w-auto max-w-[min(100%,280px)]";
 
   const img = (
     <Image
       src={src}
       alt="The Clearance Geeks — Waste Removals"
-      width={420}
-      height={96}
-      className={`object-contain object-left ${sizes} ${className}`}
+      width={LOCKUP_WIDTH}
+      height={LOCKUP_HEIGHT}
+      className={`object-contain object-left ${sizeClass} ${className}`}
       priority={variant === "hero"}
       unoptimized
     />
