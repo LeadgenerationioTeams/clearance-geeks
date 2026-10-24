@@ -3,6 +3,7 @@ import {
   company,
   formatRegisteredAddress,
   isPlaceholder,
+  serviceAreaNames,
   siteConfig,
 } from "@/config/site";
 
@@ -16,7 +17,7 @@ export function PrivacyPolicyContent() {
     : `${email}${isPlaceholder(phone) ? "" : ` or ${phone}`}`;
 
   return (
-    <article className="prose prose-invert prose-zinc mt-8 max-w-none text-zinc-300">
+    <article className="prose prose-invert prose-zinc mt-8 max-w-none break-words text-zinc-300">
       <p className="lead text-zinc-400">
         Last updated: 24 October 2026. This privacy notice explains how{" "}
         {controller} (&quot;we&quot;, &quot;us&quot;) collects and uses personal
@@ -181,7 +182,7 @@ export function PrivacyPolicyContent() {
       <h2 className="font-display text-geek-lime">11. Service area</h2>
       <p>
         We primarily operate in {siteConfig.serviceAreas.region} (
-        {siteConfig.serviceAreas.locations.slice(0, 4).join(", ")} and
+        {serviceAreaNames().slice(0, 4).join(", ")} and
         surrounding areas). Your postcode helps us confirm coverage before
         booking.
       </p>

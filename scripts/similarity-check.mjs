@@ -103,7 +103,7 @@ function extractServices() {
 }
 
 function extractAreas() {
-  return extractVisibleFromDataFile(join(ROOT, "src/lib/areas.ts"), "area");
+  return extractVisibleFromDataFile(join(ROOT, "src/config/site.ts"), "area");
 }
 
 function compareGroup(label, pages) {

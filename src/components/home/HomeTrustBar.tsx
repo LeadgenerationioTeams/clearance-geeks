@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { siteConfig } from "@/config/site";
+import { hubAreaName, siteConfig } from "@/config/site";
 
 function Icon({ children }: { children: ReactNode }) {
   return (
@@ -58,7 +58,7 @@ const trustItems = (
 ];
 
 export function HomeTrustBar() {
-  const regionSub = `${siteConfig.serviceAreas.locations[0]}, ${siteConfig.serviceAreas.locations[1]} & beyond`;
+  const regionSub = `${hubAreaName(0)}, ${hubAreaName(1)} & beyond`;
   const items = trustItems(siteConfig.serviceAreas.region, regionSub);
   return (
     <section className="border-y border-white/10 bg-zinc-950">

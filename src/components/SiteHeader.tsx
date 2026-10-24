@@ -27,12 +27,7 @@ export function SiteHeader() {
         <div className="flex items-center justify-end gap-3 sm:gap-4">
           <PhoneLink className="hidden text-sm md:inline" />
           <CallButton
-            className="hidden min-h-11 px-4 py-2 text-sm sm:inline-flex"
-            label="Call"
-            showPhone={false}
-          />
-          <CallButton
-            className="sm:hidden min-h-10 px-3 text-xs"
+            className="min-h-11 px-4 py-2 text-sm"
             label="Call"
             showPhone={false}
           />

@@ -1,5 +1,8 @@
 import Link from "next/link";
-import { company } from "@/config/site";
+import { company, siteConfig } from "@/config/site";
+
+const footerLinkClass =
+  "inline-flex min-h-11 items-center hover:text-geek-lime";
 
 export function SiteFooter() {
   return (
@@ -7,9 +10,9 @@ export function SiteFooter() {
       <div className="site-container section-pad grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <p className="font-display text-xl text-geek-lime">{company.legalName}</p>
-          <p className="mt-3 text-zinc-400">{company.address}</p>
+          <p className="mt-3 break-words text-zinc-400">{company.address}</p>
           <p className="mt-2">{company.phone}</p>
-          <p>{company.email}</p>
+          <p className="break-all">{company.email}</p>
         </div>
         <div>
           <p className="font-semibold text-white">Company</p>
@@ -20,14 +23,14 @@ export function SiteFooter() {
         </div>
         <div>
           <p className="font-semibold text-white">Explore</p>
-          <ul className="mt-3 space-y-2">
+          <ul className="mt-1 space-y-0">
             <li>
-              <Link href="/services" className="hover:text-geek-lime">
+              <Link href="/services" className={footerLinkClass}>
                 Services
               </Link>
             </li>
             <li>
-              <Link href="/areas" className="hover:text-geek-lime">
+              <Link href="/areas" className={footerLinkClass}>
                 Areas we cover
               </Link>
             </li>
@@ -35,28 +38,31 @@ export function SiteFooter() {
         </div>
         <div>
           <p className="font-semibold text-white">Legal</p>
-          <ul className="mt-3 space-y-2">
+          <ul className="mt-1 space-y-0">
             <li>
-              <Link href="/privacy" className="hover:text-geek-lime">
+              <Link href="/privacy" className={footerLinkClass}>
                 Privacy
               </Link>
             </li>
             <li>
-              <Link href="/cookies" className="hover:text-geek-lime">
+              <Link href="/cookies" className={footerLinkClass}>
                 Cookies
               </Link>
             </li>
             <li>
-              <Link href="/terms" className="hover:text-geek-lime">
+              <Link href="/terms" className={footerLinkClass}>
                 Terms
               </Link>
             </li>
           </ul>
         </div>
       </div>
-      <p className="site-container border-t border-zinc-800 py-6 text-xs text-zinc-600">
-        © 2026 {company.name}. Carrier registration details above when confirmed.
-      </p>
+      <div className="site-container border-t border-zinc-800 py-6 text-xs text-zinc-600">
+        <p>© 2026 {company.name}.</p>
+        <p className="mt-2 max-w-3xl text-zinc-500">
+          {siteConfig.compliance.wasteCarrierNote}
+        </p>
+      </div>
     </footer>
   );
 }

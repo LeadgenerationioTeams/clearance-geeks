@@ -7,7 +7,7 @@ import { HomeHowItWorks } from "@/components/home/HomeHowItWorks";
 import { HomeAreas } from "@/components/home/HomeAreas";
 import { HomeCtaBand } from "@/components/home/HomeCtaBand";
 import { buildMetadata } from "@/lib/seo";
-import { company, siteConfig } from "@/config/site";
+import { company, serviceAreaNames, siteConfig } from "@/config/site";
 
 export const metadata = buildMetadata({
   title: `Waste removal & house clearance ${siteConfig.serviceAreas.region}`,
@@ -18,7 +18,7 @@ export const metadata = buildMetadata({
 const faq = [
   {
     q: "What areas do you cover?",
-    a: `${siteConfig.serviceAreas.region} including ${siteConfig.serviceAreas.locations.slice(0, 2).join(", ")} and surrounding boroughs. See our areas page for towns and neighbourhoods.`,
+    a: `${siteConfig.serviceAreas.region} including ${serviceAreaNames().slice(0, 2).join(", ")} and surrounding boroughs. See our areas page for towns and neighbourhoods.`,
   },
   {
     q: "How do I get a price?",

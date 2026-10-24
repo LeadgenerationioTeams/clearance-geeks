@@ -35,7 +35,7 @@ export function QuoteForm({
           <input
             name="name"
             required
-            className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
+            className="mt-1 min-h-11 w-full rounded-lg border border-zinc-300 bg-white px-3 py-3 text-zinc-900"
           />
         </label>
         <label className="block text-sm">
@@ -44,7 +44,7 @@ export function QuoteForm({
             name="phone"
             type="tel"
             required
-            className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
+            className="mt-1 min-h-11 w-full rounded-lg border border-zinc-300 bg-white px-3 py-3 text-zinc-900"
           />
         </label>
       </div>
@@ -53,7 +53,7 @@ export function QuoteForm({
         <input
           name="email"
           type="email"
-          className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
+          className="mt-1 min-h-11 w-full rounded-lg border border-zinc-300 bg-white px-3 py-3 text-zinc-900"
         />
       </label>
       <label className="block text-sm">
@@ -61,14 +61,14 @@ export function QuoteForm({
         <input
           name="postcode"
           required
-          className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
+          className="mt-1 min-h-11 w-full rounded-lg border border-zinc-300 bg-white px-3 py-3 text-zinc-900"
         />
       </label>
       <label className="block text-sm">
         <span className="text-zinc-700">Service</span>
         <select
           name="jobType"
-          className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
+          className="mt-1 min-h-11 w-full rounded-lg border border-zinc-300 bg-white px-3 py-3 text-zinc-900"
         >
           {services.map((s) => (
             <option key={s.slug} value={s.slug}>

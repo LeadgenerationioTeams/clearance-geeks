@@ -7,7 +7,7 @@ export function CookiePolicyContent() {
     : company.email;
 
   return (
-    <article className="prose prose-invert prose-zinc mt-8 max-w-none text-zinc-300">
+    <article className="prose prose-invert prose-zinc mt-8 max-w-none break-words text-zinc-300">
       <p className="lead text-zinc-400">
         Last updated: 24 October 2026. This policy explains how {company.legalName}{" "}
         uses cookies and similar technologies on this website.
