@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-/** Photographic extract from brand/van-sam.png (cargo panel wordmark). */
-const LOCKUP_WIDTH = 1044;
-const LOCKUP_HEIGHT = 1524;
+/** Sam's cargo-panel crop — public/brand/logo-master.png (from brand/logo-crop.png). */
+export const LOGO_WIDTH = 1024;
+export const LOGO_HEIGHT = 732;
 
 type Variant = "header" | "hero";
 
@@ -16,24 +16,40 @@ export function BrandLogo({
   linked?: boolean;
   className?: string;
 }) {
-  const src =
-    variant === "hero"
-      ? "/brand/logo-hero-lockup.webp"
-      : "/brand/logo-lockup.webp";
-
-  const sizeClass =
-    variant === "hero"
-      ? "h-[min(280px,42vw)] w-auto max-w-full sm:h-[280px]"
-      : "h-12 w-auto max-w-[min(100%,280px)]";
+  if (variant === "hero") {
+    const hero = (
+      <div
+        className={`inline-block max-w-full rounded-2xl bg-black p-4 shadow-md ${className}`}
+      >
+        <Image
+          src="/brand/logo-hero-lockup-1x.webp"
+          alt="The Clearance Geeks — Waste Removals"
+          width={360}
+          height={Math.round(360 * (LOGO_HEIGHT / LOGO_WIDTH))}
+          className="h-auto w-[360px] max-w-full object-contain"
+          priority
+          unoptimized
+        />
+      </div>
+    );
+    return linked ? (
+      <Link href="/" className="inline-block">
+        {hero}
+        <span className="sr-only">The Clearance Geeks — Waste Removals</span>
+      </Link>
+    ) : (
+      hero
+    );
+  }
 
   const img = (
     <Image
-      src={src}
+      src="/brand/logo-lockup.webp"
       alt="The Clearance Geeks — Waste Removals"
-      width={LOCKUP_WIDTH}
-      height={LOCKUP_HEIGHT}
-      className={`object-contain object-left ${sizeClass} ${className}`}
-      priority={variant === "hero"}
+      width={LOGO_WIDTH}
+      height={LOGO_HEIGHT}
+      className={`h-12 w-auto max-w-[min(100%,320px)] object-contain object-left ${className}`}
+      priority
       unoptimized
     />
   );
@@ -41,7 +57,7 @@ export function BrandLogo({
   if (!linked) return img;
 
   return (
-    <Link href="/" className={`inline-block ${variant === "hero" ? "mb-2" : ""}`}>
+    <Link href="/" className="inline-block">
       {img}
       <span className="sr-only">The Clearance Geeks — Waste Removals</span>
     </Link>

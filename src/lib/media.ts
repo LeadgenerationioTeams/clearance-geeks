@@ -50,7 +50,7 @@ export const images = {
     creditUrl: "https://unsplash.com/photos/white-and-brown-cardboard-box-1581578731548",
   },
   brandedSplash: {
-    src: "/brand/logo-lockup.webp",
+    src: "/brand/logo-master.png",
     alt: "The Clearance Geeks logo with geek mascot and wordmark from our van livery",
     credit: "Extracted from fleet van photography",
     creditUrl: "/brand/van-hero.webp",
