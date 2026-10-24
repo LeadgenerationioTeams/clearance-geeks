@@ -8,8 +8,9 @@ import {
   heroBenefitHeadline,
   whyChooseUsForArea,
 } from "@/lib/area-sales";
-import { areaPageImage, images } from "@/lib/media";
+import { images } from "@/lib/media";
 import { PageImage } from "./PageImage";
+import { VanBrandImage } from "./VanBrandImage";
 import { CallButton } from "./CallButton";
 import { QuoteForm } from "./QuoteForm";
 import { StickyMobileCta } from "./StickyMobileCta";
@@ -41,7 +42,7 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
               </Link>
             </div>
           </div>
-          <PageImage image={areaPageImage()} priority />
+          <VanBrandImage priority sizes="(max-width: 1024px) 100vw, 50vw" />
         </div>
       </section>
 
@@ -196,7 +197,7 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
               Postcode, photos and access notes are enough for a written quote
               before collection.
             </p>
-            <PageImage image={images.vanStreet} className="mt-6" />
+            <VanBrandImage className="mt-6" sizes="(max-width: 1024px) 100vw, 40vw" />
           </div>
           <QuoteForm />
         </div>

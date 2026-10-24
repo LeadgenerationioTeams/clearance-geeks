@@ -13,84 +13,81 @@ export function QuoteForm({ id = "quote" }: { id?: string }) {
     <form
       id={id}
       action={action}
-      className="space-y-4 rounded-2xl border border-geek-lime/40 bg-zinc-950/80 p-5 backdrop-blur sm:p-6"
+      className="space-y-4 rounded-2xl border border-zinc-200 bg-white p-5 shadow-md sm:p-6"
     >
-      <h2 className="font-display text-2xl text-white sm:text-3xl">
+      <h2 className="font-display text-2xl text-zinc-900 sm:text-3xl">
         Get a quote
       </h2>
-      <p className="text-sm text-zinc-400">
+      <p className="text-sm text-zinc-600">
         Tell us what needs clearing. Optional photo helps us size the van.
       </p>
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block text-sm">
-          <span className="text-zinc-300">Name</span>
+          <span className="text-zinc-700">Name</span>
           <input
             name="name"
             required
-            className="mt-1 w-full rounded-lg border border-zinc-700 bg-black px-3 py-2 text-white"
+            className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
           />
         </label>
         <label className="block text-sm">
-          <span className="text-zinc-300">Phone</span>
+          <span className="text-zinc-700">Phone</span>
           <input
             name="phone"
             type="tel"
             required
-            className="mt-1 w-full rounded-lg border border-zinc-700 bg-black px-3 py-2 text-white"
+            className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
           />
-        </label>
-        <label className="block text-sm">
-          <span className="text-zinc-300">Postcode</span>
-          <input
-            name="postcode"
-            required
-            className="mt-1 w-full rounded-lg border border-zinc-700 bg-black px-3 py-2 text-white uppercase"
-          />
-        </label>
-        <label className="block text-sm">
-          <span className="text-zinc-300">Job type</span>
-          <select
-            name="jobType"
-            required
-            className="mt-1 w-full rounded-lg border border-zinc-700 bg-black px-3 py-2 text-white"
-          >
-            <option value="">Select…</option>
-            {services.map((s) => (
-              <option key={s.slug} value={s.slug}>
-                {s.title}
-              </option>
-            ))}
-            <option value="other">Other / mixed</option>
-          </select>
         </label>
       </div>
       <label className="block text-sm">
-        <span className="text-zinc-300">Details (access, parking, items)</span>
-        <textarea
-          name="details"
-          rows={3}
-          className="mt-1 w-full rounded-lg border border-zinc-700 bg-black px-3 py-2 text-white"
+        <span className="text-zinc-700">Email</span>
+        <input
+          name="email"
+          type="email"
+          className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
         />
       </label>
       <label className="block text-sm">
-        <span className="text-zinc-300">Photo (optional)</span>
+        <span className="text-zinc-700">Postcode</span>
         <input
-          name="photo"
-          type="file"
-          accept="image/*"
-          className="mt-1 w-full text-sm text-zinc-400 file:mr-3 file:rounded-lg file:border-0 file:bg-geek-lime file:px-3 file:py-2 file:font-semibold file:text-black"
+          name="postcode"
+          required
+          className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
+        />
+      </label>
+      <label className="block text-sm">
+        <span className="text-zinc-700">Service</span>
+        <select
+          name="service"
+          className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
+        >
+          {services.map((s) => (
+            <option key={s.slug} value={s.slug}>
+              {s.title}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label className="block text-sm">
+        <span className="text-zinc-700">What needs clearing?</span>
+        <textarea
+          name="details"
+          rows={4}
+          required
+          className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
         />
       </label>
       <button
         type="submit"
         disabled={pending}
-        className="w-full min-h-12 rounded-xl bg-geek-lime font-bold text-black disabled:opacity-60"
+        className="w-full rounded-xl bg-geek-lime px-6 py-3 text-lg font-extrabold uppercase tracking-wide text-black transition hover:bg-geek-lime-bright disabled:opacity-60"
       >
         {pending ? "Sending…" : "Request quote"}
       </button>
       {state.message ? (
         <p
-          className={`text-sm ${state.ok ? "text-geek-lime" : "text-red-400"}`}
+          className={`text-sm ${state.ok ? "text-green-800" : "text-red-700"}`}
           role="status"
         >
           {state.message}

@@ -8,7 +8,7 @@ export interface SiteImage {
 
 /**
  * Stock photos: alt text describes the photo only (not a specific town).
- * Brand SVG is illustrative artwork — not a photograph of a job site.
+ * Van and logo assets are derived from brand/van-sam.png (Clearance Geeks fleet).
  */
 export const images = {
   heroClearance: {
@@ -35,11 +35,13 @@ export const images = {
     credit: "Unsplash — Ricardo Gomez Angel",
     creditUrl: "https://unsplash.com/photos/yellow-crane-under-blue-sky-1504307651254",
   },
-  vanStreet: {
-    src: "https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=1600&q=80",
-    alt: "White van on a city street (stock photo)",
-    credit: "Unsplash — CHUTTERSNAP",
-    creditUrl: "https://unsplash.com/photos/white-van-on-road-1519003722824",
+  clearanceGeeksVan: {
+    src: "/brand/van-1024.webp",
+    alt:
+      "The Clearance Geeks branded white van with black and neon green waste removals livery",
+    credit: "The Clearance Geeks",
+    creditUrl: "/brand/van-hero.webp",
+    illustrative: false,
   },
   recycling: {
     src: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1600&q=80",
@@ -48,15 +50,15 @@ export const images = {
     creditUrl: "https://unsplash.com/photos/white-and-brown-cardboard-box-1581578731548",
   },
   brandedSplash: {
-    src: "/logo-clearance-geeks.svg",
-    alt: "Illustrative The Clearance Geeks logo on black",
-    credit: "Illustrative brand artwork (see brand reference)",
-    creditUrl: "/brand-van-reference.png",
+    src: "/brand/logo-header.png",
+    alt: "The Clearance Geeks logo with geek mascot and wordmark from our van livery",
+    credit: "Brand artwork from fleet van",
+    creditUrl: "/brand/van-hero.webp",
     illustrative: true,
   },
 } satisfies Record<string, SiteImage>;
 
-/** Same neutral stock photo for all area pages — not location-specific. */
+/** Branded van photo for area and service trust sections. */
 export function areaPageImage(): SiteImage {
-  return images.vanStreet;
+  return images.clearanceGeeksVan;
 }

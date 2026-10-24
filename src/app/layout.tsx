@@ -33,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-GB" className={`${display.variable} ${body.variable} h-full`}>
-      <body className="min-h-full flex flex-col bg-black text-white antialiased">
+      <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-900 antialiased">
         <CookieConsentProvider>
           <JsonLd data={localBusinessJsonLd()} />
           <SiteHeader />

@@ -8,7 +8,7 @@ export function imageForService(slug: ServiceSlug): SiteImage {
     "office-commercial-clearance": images.officeClearance,
     "general-junk-rubbish-removal": images.recycling,
     "builders-waste": images.buildersRubble,
-    "single-items": images.vanStreet,
+    "single-items": images.clearanceGeeksVan,
   };
   return map[slug];
 }
