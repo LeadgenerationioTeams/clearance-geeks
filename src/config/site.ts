@@ -38,7 +38,7 @@ export const siteConfig = {
     email: "PLACEHOLDER_EMAIL",
   },
 
-  // TO CONFIRM WITH SAM: starting set
+  // Confirmed by Sam 24 Oct 2026
   serviceAreas: {
     region: "Greater Manchester",
     summary:
