@@ -5,11 +5,12 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd, breadcrumbJsonLd } from "@/lib/schema";
 import { gallerySlice } from "@/lib/gallery";
 import { JobPhoto } from "@/components/JobPhoto";
+import { siteConfig } from "@/config/site";
 
 export const metadata = buildMetadata({
   title: "Waste removal services",
   description:
-    "House clearance, garden waste, office clearances, junk removal, builders waste and single-item collections across Greater Manchester.",
+    `House clearance, garden waste, office clearances, junk removal, builders waste and single-item collections across ${siteConfig.serviceAreas.region}.`,
   path: "/services",
 });
 
@@ -30,8 +31,9 @@ export default function ServicesHubPage() {
       </h1>
       <p className="mt-4 max-w-2xl text-zinc-700">
         Pick the clearance type that matches your job. Every service is available
-        across Greater Manchester with local routing from Stockport and
-        Manchester hubs.
+        across {siteConfig.serviceAreas.region} with local routing from{" "}
+        {siteConfig.serviceAreas.locations[0]} and{" "}
+        {siteConfig.serviceAreas.locations[1]} hubs.
       </p>
       <ul className="relative z-10 mt-10 grid gap-5 sm:grid-cols-2">
         {services.map((s) => (

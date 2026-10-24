@@ -1,6 +1,10 @@
-import { company, siteUrl } from "./company";
+import { company, siteConfig } from "@/config/site";
+import { resolveSiteUrl } from "@/lib/env.server";
 
 export function localBusinessJsonLd() {
+  const siteUrl = resolveSiteUrl();
+  const addr = siteConfig.company.registeredAddress;
+
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -11,13 +15,14 @@ export function localBusinessJsonLd() {
     email: company.email,
     address: {
       "@type": "PostalAddress",
-      streetAddress: company.address,
-      addressLocality: "Greater Manchester",
+      streetAddress: [addr.line1, addr.line2].filter(Boolean).join(", "),
+      addressLocality: addr.city,
+      postalCode: addr.postcode,
       addressCountry: "GB",
     },
     areaServed: {
       "@type": "AdministrativeArea",
-      name: "Greater Manchester",
+      name: siteConfig.serviceAreas.region,
     },
   };
 }
@@ -61,6 +66,7 @@ export function faqPageJsonLd(faqs: { question: string; answer: string }[]) {
 export function breadcrumbJsonLd(
   items: { name: string; path: string }[],
 ) {
+  const siteUrl = resolveSiteUrl();
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",

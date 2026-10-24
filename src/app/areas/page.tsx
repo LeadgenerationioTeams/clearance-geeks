@@ -5,11 +5,12 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd, breadcrumbJsonLd } from "@/lib/schema";
 import { PageImage } from "@/components/PageImage";
 import { areaPageImage } from "@/lib/media";
+import { serviceAreasListText, siteConfig } from "@/config/site";
 
 export const metadata = buildMetadata({
   title: "Areas we cover",
   description:
-    "Waste removal and house clearance in Stockport, Manchester, Salford, Trafford, Tameside, Oldham, Bolton, Bury, Rochdale, Wigan, Cheadle and Didsbury.",
+    `Waste removal and house clearance in ${serviceAreasListText()}.`,
   path: "/areas",
 });
 
@@ -24,7 +25,7 @@ export default function AreasHubPage() {
       <JsonLd data={breadcrumbJsonLd(crumbs)} />
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Areas" }]} />
       <h1 className="mt-4 font-display text-4xl text-geek-lime sm:text-5xl">
-        Greater Manchester areas
+        {siteConfig.serviceAreas.region} areas
       </h1>
       <p className="mt-4 max-w-2xl text-zinc-300">
         Borough pages with verified recycling-centre references, postcode

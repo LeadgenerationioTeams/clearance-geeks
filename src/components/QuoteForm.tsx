@@ -67,7 +67,7 @@ export function QuoteForm({
       <label className="block text-sm">
         <span className="text-zinc-700">Service</span>
         <select
-          name="service"
+          name="jobType"
           className="mt-1 w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900"
         >
           {services.map((s) => (

@@ -1,4 +1,4 @@
-import { siteUrl as defaultSiteUrl } from "./company";
+import { siteUrl as defaultSiteUrl } from "@/config/site";
 
 export const isProduction = process.env.VERCEL_ENV === "production";
 

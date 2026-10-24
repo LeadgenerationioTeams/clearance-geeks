@@ -16,6 +16,7 @@ import { JobPhoto } from "@/components/JobPhoto";
 import { imageForService } from "@/lib/service-images";
 import { photosForTag, photosForServiceSlug } from "@/lib/gallery";
 import type { ServiceSlug } from "@/lib/services";
+import { siteConfig } from "@/config/site";
 
 export function generateStaticParams() {
   return serviceSlugs.map((slug) => ({ slug }));
@@ -58,7 +59,7 @@ export default async function ServicePage({
         data={serviceJsonLd({
           name: service.title,
           description: service.intro,
-          areaName: "Greater Manchester",
+          areaName: siteConfig.serviceAreas.region,
         })}
       />
       <JsonLd data={faqPageJsonLd(service.faqs)} />

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { company, siteUrl } from "./company";
+import { company } from "@/config/site";
+import { resolveSiteUrl } from "@/lib/env.server";
 
 /** Crawl/index rules live in `app/robots.ts` (VERCEL_ENV-aware). */
 export function buildMetadata({
@@ -12,7 +13,7 @@ export function buildMetadata({
   path: string;
 }): Metadata {
   const fullTitle = `${title} | ${company.legalName}`;
-  const url = `${siteUrl}${path}`;
+  const url = `${resolveSiteUrl()}${path}`;
 
   return {
     title: fullTitle,

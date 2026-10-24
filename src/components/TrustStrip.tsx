@@ -1,8 +1,10 @@
+import { siteConfig } from "@/config/site";
+
 const items = [
   "Written quotes before we load",
   "Tidy, respectful crews",
   "Recycling where facilities allow",
-  "Greater Manchester coverage",
+  `${siteConfig.serviceAreas.region} coverage`,
 ];
 
 export function TrustStrip() {

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { siteConfig } from "@/config/site";
 import { homeGalleryPhotos } from "@/lib/gallery";
 
 export function HomeJobGallery() {
@@ -12,7 +13,8 @@ export function HomeJobGallery() {
             Recent jobs
           </h2>
           <p className="mt-3 text-zinc-600">
-            Real clearance work across Greater Manchester — not stock photography.
+            Real clearance work across {siteConfig.serviceAreas.region} — not stock
+            photography.
           </p>
         </div>
         <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

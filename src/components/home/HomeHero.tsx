@@ -2,6 +2,7 @@ import Link from "next/link";
 import { QuoteForm } from "@/components/QuoteForm";
 import { CallButton } from "@/components/CallButton";
 import { VanBrandImage } from "@/components/VanBrandImage";
+import { siteConfig } from "@/config/site";
 
 export function HomeHero() {
   return (
@@ -10,7 +11,8 @@ export function HomeHero() {
         <div className="grid gap-8 lg:grid-cols-2 lg:items-start lg:gap-12">
           <div className="max-w-xl text-white">
             <h1 className="font-display text-[2.25rem] leading-[1.08] tracking-tight md:text-5xl lg:max-w-[22ch] lg:text-[3.5rem]">
-              Waste removal &amp; house clearance across Greater Manchester
+              Waste removal &amp; house clearance across{" "}
+              {siteConfig.serviceAreas.region}
             </h1>
             <p className="mt-4 text-base text-zinc-300 md:text-lg">
               Fast quotes, tidy crews and responsible disposal for homes and

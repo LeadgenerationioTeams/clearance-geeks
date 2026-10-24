@@ -1,4 +1,4 @@
-import { company } from "@/lib/company";
+import { company, isPlaceholder, telHref } from "@/config/site";
 
 export function CallButton({
   className = "",
@@ -11,9 +11,7 @@ export function CallButton({
   variant?: "primary" | "outline" | "outline-dark";
   showPhone?: boolean;
 }) {
-  const href = company.phone.startsWith("[")
-    ? "#quote"
-    : `tel:${company.phone.replace(/\s/g, "")}`;
+  const href = telHref(company.phone);
 
   const base =
     "inline-flex min-h-12 items-center justify-center rounded-xl px-6 py-3 text-center text-base font-bold transition md:text-lg";
@@ -26,7 +24,7 @@ export function CallButton({
         : `${base} bg-geek-lime font-extrabold uppercase tracking-wide text-black shadow-[0_0_24px_rgba(139,230,0,0.35)] hover:bg-geek-lime-bright`;
 
   const phoneSuffix =
-    showPhone && !company.phone.startsWith("[") ? ` ${company.phone}` : "";
+    showPhone && !isPlaceholder(company.phone) ? ` ${company.phone}` : "";
 
   return (
     <a href={href} className={`${styles} ${className}`}>
@@ -37,16 +35,14 @@ export function CallButton({
 }
 
 export function PhoneLink({ className = "" }: { className?: string }) {
-  const href = company.phone.startsWith("[")
-    ? "#quote"
-    : `tel:${company.phone.replace(/\s/g, "")}`;
+  const href = telHref(company.phone);
 
   return (
     <a
       href={href}
       className={`font-semibold text-white hover:text-geek-lime ${className}`}
     >
-      {company.phone.startsWith("[") ? "Call for a quote" : company.phone}
+      {isPlaceholder(company.phone) ? "Call for a quote" : company.phone}
     </a>
   );
 }

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { siteConfig } from "@/config/site";
 
 function Icon({ children }: { children: ReactNode }) {
   return (
@@ -11,7 +12,10 @@ function Icon({ children }: { children: ReactNode }) {
   );
 }
 
-const items = [
+const trustItems = (
+  region: string,
+  regionSub: string,
+) => [
   {
     title: "Written quotes",
     body: "Price agreed before we load",
@@ -42,8 +46,8 @@ const items = [
     ),
   },
   {
-    title: "Greater Manchester",
-    body: "Stockport, Manchester & beyond",
+    title: region,
+    body: regionSub,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M12 21s7-4.5 7-11a7 7 0 10-14 0c0 6.5 7 11 7 11z" />
@@ -54,6 +58,8 @@ const items = [
 ];
 
 export function HomeTrustBar() {
+  const regionSub = `${siteConfig.serviceAreas.locations[0]}, ${siteConfig.serviceAreas.locations[1]} & beyond`;
+  const items = trustItems(siteConfig.serviceAreas.region, regionSub);
   return (
     <section className="border-y border-white/10 bg-zinc-950">
       <ul className="site-container grid gap-6 py-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8 lg:py-10">

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { company } from "@/lib/company";
+import { company } from "@/config/site";
 
 export function SiteFooter() {
   return (
