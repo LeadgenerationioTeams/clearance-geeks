@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { areas } from "@/lib/areas";
-import { formatServiceAreasCommaList } from "@/config/site";
+import { formatServiceAreasCommaList, region } from "@/config/site";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd, breadcrumbJsonLd } from "@/lib/schema";
@@ -9,7 +9,7 @@ import { areaPageImage } from "@/lib/media";
 
 export const metadata = buildMetadata({
   title: "Areas we cover",
-  description: `Waste removal and house clearance in ${formatServiceAreasCommaList()}.`,
+  description: `Waste removal and house clearance in ${region}: ${formatServiceAreasCommaList()}.`,
   path: "/areas",
 });
 
@@ -24,11 +24,11 @@ export default function AreasHubPage() {
       <JsonLd data={breadcrumbJsonLd(crumbs)} />
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Areas" }]} />
       <h1 className="mt-4 font-display text-3xl text-geek-charcoal sm:text-4xl">
-        Greater Manchester areas
+        {region} — areas we cover
       </h1>
       <p className="mt-4 max-w-2xl text-zinc-600">
-        Borough pages with verified recycling-centre references, postcode
-        districts and neighbourhood links.
+        Borough pages for {formatServiceAreasCommaList()}. Postcode districts and
+        neighbourhood links are added when service areas are confirmed.
       </p>
       <PageImage image={areaPageImage()} className="mt-8 max-w-3xl" />
       <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

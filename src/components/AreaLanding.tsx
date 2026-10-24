@@ -144,28 +144,32 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
           <RecyclingCentreBlock areaSlug={area.slug} />
         </div>
 
-        <h3 className="mt-10 font-display text-2xl text-zinc-900">
-          Neighbourhood pages in {area.name}
-        </h3>
-        <p className="mt-2 text-sm text-zinc-500">
-          Each link opens a focused page with access notes and cited landmarks
-          where available.
-        </p>
-        <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {hoods.map((h) => (
-            <li key={h.slug}>
-              <Link
-                href={`/areas/${area.slug}/${h.slug}`}
-                className="block rounded-xl border border-zinc-200 bg-white px-4 py-3 hover:border-geek-lime/40"
-              >
-                <span className="font-semibold text-zinc-900">{h.name}</span>
-                <p className="mt-1 text-xs text-zinc-500 line-clamp-3">
-                  {h.about}
-                </p>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        {hoods.length > 0 ? (
+          <>
+            <h3 className="mt-10 font-display text-2xl text-zinc-900">
+              Neighbourhood pages in {area.name}
+            </h3>
+            <p className="mt-2 text-sm text-zinc-500">
+              Each link opens a focused page with access notes and cited landmarks
+              where available.
+            </p>
+            <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {hoods.map((h) => (
+                <li key={h.slug}>
+                  <Link
+                    href={`/areas/${area.slug}/${h.slug}`}
+                    className="block rounded-xl border border-zinc-200 bg-white px-4 py-3 hover:border-geek-lime/40"
+                  >
+                    <span className="font-semibold text-zinc-900">{h.name}</span>
+                    <p className="mt-1 text-xs text-zinc-500 line-clamp-3">
+                      {h.about}
+                    </p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : null}
 
         <div className="mt-8 flex flex-wrap gap-2">
           {area.nearbyTowns.map((t) => (

@@ -11,12 +11,18 @@ import { services } from "@/lib/services";
 import { areas } from "@/lib/areas";
 import { photosForServiceSlug } from "@/lib/gallery";
 import { buildMetadata } from "@/lib/seo";
-import { company, complianceCopy } from "@/config/site";
+import {
+  brandName,
+  buildDefaultDescription,
+  company,
+  complianceCopy,
+  formatServiceAreasCommaList,
+  region,
+} from "@/config/site";
 
 export const metadata = buildMetadata({
-  title: "Waste removal & house clearance Greater Manchester",
-  description:
-    "The Clearance Geeks collect rubbish, house clearances, garden waste and trade waste across Stockport, Manchester and Greater Manchester.",
+  title: `Waste removal & house clearance — ${region}`,
+  description: buildDefaultDescription(),
   path: "/",
 });
 
@@ -24,21 +30,6 @@ const heroTrust = [
   "Written quotes before we load",
   "Single items through to full house clearances",
   "Responsible disposal — recycling where facilities allow",
-];
-
-const faq = [
-  {
-    q: "What areas do you cover?",
-    a: "Greater Manchester including Stockport, Manchester and surrounding boroughs. See our areas page for towns and neighbourhoods.",
-  },
-  {
-    q: "How do I get a price?",
-    a: "Call us or send the quote form with your postcode and a short description. Photos help us size the job.",
-  },
-  {
-    q: "Do you take single items?",
-    a: "Yes — sofas, fridges, mattresses and small loads are all fine when access and parking allow.",
-  },
 ];
 
 const trustDetails = [
@@ -60,6 +51,23 @@ const trustDetails = [
 ];
 
 export default function HomePage() {
+  const areaList = formatServiceAreasCommaList();
+
+  const faq = [
+    {
+      q: "What areas do you cover?",
+      a: `We work across ${region}, including ${areaList}. See our areas page for borough pages.`,
+    },
+    {
+      q: "How do I get a price?",
+      a: "Call us or send the quote form with your postcode and a short description. Photos help us size the job.",
+    },
+    {
+      q: "Do you take single items?",
+      a: "Yes — sofas, fridges, mattresses and small loads are all fine when access and parking allow.",
+    },
+  ];
+
   return (
     <div className="pb-24 md:pb-12">
       <TrustStrip />
@@ -70,14 +78,14 @@ export default function HomePage() {
             <div className="space-y-8">
               <div>
                 <p className="text-sm font-medium uppercase tracking-wide text-zinc-500">
-                  Greater Manchester waste removals
+                  {brandName} — {region}
                 </p>
                 <h1 className="mt-3 font-display text-3xl leading-tight text-geek-charcoal sm:text-4xl lg:text-5xl">
-                  Waste removal &amp; house clearance across Greater Manchester
+                  Waste removal &amp; house clearance across {region}
                 </h1>
                 <p className="mt-4 max-w-xl text-lg leading-relaxed text-zinc-600">
                   Fast quotes, tidy crews and responsible disposal for homes and
-                  businesses — from Stockport terraces to Manchester city flats.
+                  businesses across our service areas.
                 </p>
               </div>
 
@@ -172,8 +180,7 @@ export default function HomePage() {
             Areas we cover
           </h2>
           <p className="mt-2 max-w-2xl text-sm text-zinc-600 sm:text-base">
-            Routed from Stockport and Manchester with coverage across Greater
-            Manchester boroughs.
+            Coverage across {region}: {areaList}.
           </p>
           <ul className="mt-8 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {areas.map((a) => (

@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { getArea, serviceByTownSlugs } from "@/lib/areas";
+import { region } from "@/config/site";
 import { getService, serviceSlugs } from "@/lib/services";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -58,7 +60,7 @@ export default async function ServicePage({
         data={serviceJsonLd({
           name: service.title,
           description: service.intro,
-          areaName: "Greater Manchester",
+          areaName: region,
         })}
       />
       <JsonLd data={faqPageJsonLd(service.faqs)} />
@@ -105,22 +107,26 @@ export default async function ServicePage({
               </div>
             ))}
           </dl>
-          <p className="mt-8 text-sm text-zinc-500">
-            Local pages:{" "}
-            <Link
-              href={`/areas/stockport/${slug}`}
-              className="font-medium text-geek-charcoal underline decoration-geek-lime decoration-2 underline-offset-4"
-            >
-              Stockport
-            </Link>
-            {" · "}
-            <Link
-              href={`/areas/manchester/${slug}`}
-              className="font-medium text-geek-charcoal underline decoration-geek-lime decoration-2 underline-offset-4"
-            >
-              Manchester
-            </Link>
-          </p>
+          {serviceByTownSlugs.length > 0 ? (
+            <p className="mt-8 text-sm text-zinc-500">
+              Local pages:{" "}
+              {serviceByTownSlugs.map((areaSlug, index) => {
+                const area = getArea(areaSlug);
+                if (!area) return null;
+                return (
+                  <span key={areaSlug}>
+                    {index > 0 ? " · " : null}
+                    <Link
+                      href={`/areas/${areaSlug}/${slug}`}
+                      className="font-medium text-geek-charcoal underline decoration-geek-lime decoration-2 underline-offset-4"
+                    >
+                      {area.name}
+                    </Link>
+                  </span>
+                );
+              })}
+            </p>
+          ) : null}
         </div>
         <QuoteForm />
       </div>

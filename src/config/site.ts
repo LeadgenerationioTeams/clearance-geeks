@@ -7,28 +7,42 @@
 export type ServiceArea = {
   slug: string;
   name: string;
+  boroughLabel: string;
 };
 
-const serviceAreasList: ServiceArea[] = [
-  { slug: "stockport", name: "Stockport" },
-  { slug: "manchester", name: "Manchester" },
-  { slug: "salford", name: "Salford" },
-  { slug: "trafford", name: "Trafford" },
-  { slug: "tameside", name: "Tameside" },
-  { slug: "oldham", name: "Oldham" },
-  { slug: "bolton", name: "Bolton" },
-  { slug: "bury", name: "Bury" },
-  { slug: "rochdale", name: "Rochdale" },
-  { slug: "wigan", name: "Wigan" },
-  { slug: "cheadle", name: "Cheadle" },
-  { slug: "didsbury", name: "Didsbury" },
+/**
+ * TODO(Sam): Replace with confirmed service areas (unique slug + display name + borough label per row).
+ * Add or remove entries as needed — area pages and hub lists are generated from this array only.
+ */
+export const PLACEHOLDER_SERVICE_AREAS: readonly ServiceArea[] = [
+  {
+    slug: "placeholder-service-area-1",
+    name: "PLACEHOLDER_SERVICE_AREA_1",
+    boroughLabel: "PLACEHOLDER_BOROUGH_LABEL_1",
+  },
+  {
+    slug: "placeholder-service-area-2",
+    name: "PLACEHOLDER_SERVICE_AREA_2",
+    boroughLabel: "PLACEHOLDER_BOROUGH_LABEL_2",
+  },
+  {
+    slug: "placeholder-service-area-3",
+    name: "PLACEHOLDER_SERVICE_AREA_3",
+    boroughLabel: "PLACEHOLDER_BOROUGH_LABEL_3",
+  },
 ];
 
-/** TODO(Sam): Public site domain (hostname only, no https://). */
-export const siteDomain = "PLACEHOLDER_DOMAIN";
+/** Active service areas — swap `PLACEHOLDER_SERVICE_AREAS` for confirmed data in one place. */
+export const serviceAreas: readonly ServiceArea[] = PLACEHOLDER_SERVICE_AREAS;
+
+/** TODO(Sam): Primary operating region label (e.g. county or combined authority name). */
+export const region = "PLACEHOLDER_REGION";
 
 /** TODO(Sam): Trading / customer-facing brand name. */
 export const brandName = "The Clearance Geeks";
+
+/** TODO(Sam): Public site domain (hostname only, no https://). */
+export const siteDomain = "PLACEHOLDER_DOMAIN";
 
 /** TODO(Sam): Full legal entity name (Companies House). */
 export const legalName = "PLACEHOLDER_LEGAL_NAME";
@@ -47,16 +61,6 @@ export const phone = "PLACEHOLDER_PHONE";
 
 /** TODO(Sam): Primary email for enquiries and data protection contact. */
 export const email = "PLACEHOLDER_EMAIL";
-
-/** Primary operating region label (used in copy and schema). */
-export const region = "Greater Manchester";
-
-/** Default SEO / schema description when pages do not override. */
-export const defaultDescription =
-  "Waste removal and house clearance across Greater Manchester — Stockport, Manchester and surrounding boroughs. Fast quotes, tidy crews, responsible disposal.";
-
-/** Boroughs and towns covered — keep in sync with area pages under `/areas`. */
-export const serviceAreas: readonly ServiceArea[] = serviceAreasList;
 
 /** Service lines for llms.txt and similar summaries (includes single items). */
 export const servicesListed: readonly string[] = [
@@ -99,8 +103,12 @@ export const company = {
   email,
   wasteCarrierLicence,
   region,
-  defaultDescription,
+  defaultDescription: buildDefaultDescription(),
 };
+
+export function buildDefaultDescription(): string {
+  return `Waste removal and house clearance in ${region}. Service areas include ${formatServiceAreasCommaList()}. Fast quotes, tidy crews, responsible disposal.`;
+}
 
 export function isPlaceholderValue(value: string): boolean {
   return value.includes("PLACEHOLDER");

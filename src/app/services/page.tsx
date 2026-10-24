@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { services } from "@/lib/services";
-import { servicesListed } from "@/config/site";
+import { region, servicesListed } from "@/config/site";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd, breadcrumbJsonLd } from "@/lib/schema";
@@ -9,7 +9,7 @@ import { JobPhoto } from "@/components/JobPhoto";
 
 export const metadata = buildMetadata({
   title: "Waste removal services",
-  description: `${servicesListed.join(", ")} across Greater Manchester.`,
+  description: `${servicesListed.join(", ")} across ${region}.`,
   path: "/services",
 });
 
@@ -30,8 +30,7 @@ export default function ServicesHubPage() {
       </h1>
       <p className="mt-4 max-w-2xl text-zinc-700">
         Pick the clearance type that matches your job. Every service is available
-        across Greater Manchester with local routing from Stockport and
-        Manchester hubs.
+        across {region} from the service areas listed on our areas page.
       </p>
       <ul className="relative z-10 mt-10 grid gap-5 sm:grid-cols-2">
         {services.map((s) => (

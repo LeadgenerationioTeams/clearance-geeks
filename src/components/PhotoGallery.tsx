@@ -1,3 +1,4 @@
+import { region } from "@/config/site";
 import { gallerySlice } from "@/lib/gallery";
 import { JobPhoto } from "./JobPhoto";
 
@@ -16,7 +17,7 @@ export function PhotoGallery({
         <h2 className="font-display text-3xl text-zinc-900 sm:text-4xl">{title}</h2>
         <p className="mt-2 max-w-2xl text-sm text-zinc-600">
           Real jobs from our crews — house clearances, garden waste and bulky
-          collections across Greater Manchester.
+          collections across {region}.
         </p>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {photos.map((photo, i) => (
