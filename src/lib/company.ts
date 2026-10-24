@@ -13,7 +13,7 @@ export const company = {
   wasteCarrierLicence: "[WASTE CARRIER NO]",
   region: "Greater Manchester",
   defaultDescription:
-    "Licensed waste removal and house clearance across Greater Manchester — Stockport, Manchester and surrounding boroughs. Fast quotes, tidy crews, responsible disposal.",
+    "Waste removal and house clearance across Greater Manchester — Stockport, Manchester and surrounding boroughs. Fast quotes, tidy crews, responsible disposal.",
 } as const;
 
 /** Optional marketing data — leave null/empty; UI renders nothing when unset. */

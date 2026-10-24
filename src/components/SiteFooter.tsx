@@ -57,8 +57,8 @@ export function SiteFooter() {
         </div>
       </div>
       <p className="mx-auto mt-8 max-w-6xl px-4 text-xs text-zinc-600">
-        © 2026 {company.name}. Licensed waste carrier
-        details above.
+        © 2026 {company.name}. Carrier registration details above when
+        confirmed.
       </p>
     </footer>
   );

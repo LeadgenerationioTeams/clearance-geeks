@@ -4,6 +4,10 @@ import { CallButton } from "@/components/CallButton";
 import { TodoStats } from "@/components/TodoStats";
 import { VanBrandImage } from "@/components/VanBrandImage";
 import { StickyMobileCta } from "@/components/StickyMobileCta";
+import { BrandLogo } from "@/components/BrandLogo";
+import { TrustStrip } from "@/components/TrustStrip";
+import { HowItWorks } from "@/components/HowItWorks";
+import { PhotoGallery } from "@/components/PhotoGallery";
 import { services } from "@/lib/services";
 import { buildMetadata } from "@/lib/seo";
 
@@ -20,13 +24,6 @@ const checklist = [
   "Garden clearance",
   "Office & commercial",
   "All types of waste",
-];
-
-const trustPoints = [
-  "Licensed waste carrier — details in the footer",
-  "Written quotes before we load",
-  "Responsible disposal and recycling where possible",
-  "Same branded van and uniformed crew",
 ];
 
 const faq = [
@@ -47,26 +44,21 @@ const faq = [
 export default function HomePage() {
   return (
     <div className="pb-24 md:pb-10">
+      <TrustStrip />
+
       <section className="border-b border-zinc-200 bg-white">
-        <div className="mx-auto max-w-6xl px-4 pb-12 pt-8 sm:pt-12">
-          <div className="flex flex-col gap-10 lg:grid lg:grid-cols-2 lg:items-start">
-            <div className="order-2 lg:order-1">
-              <p className="font-display text-xl text-geek-lime sm:text-2xl">THE</p>
-              <h1 className="font-display text-5xl leading-none text-zinc-900 sm:text-6xl lg:text-7xl">
-                CLEARANCE
-                <span className="block text-geek-lime drop-shadow-[2px_2px_0_#000]">
-                  GEEKS
-                </span>
+        <div className="mx-auto max-w-6xl px-4 pb-10 pt-8 sm:pt-10">
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
+            <div>
+              <BrandLogo variant="hero" linked={false} />
+              <h1 className="mt-4 font-display text-4xl leading-tight text-zinc-900 sm:text-5xl lg:text-6xl">
+                Waste removal &amp; house clearance across Greater Manchester
               </h1>
-              <p className="mt-3 inline-block rounded-md bg-geek-lime px-3 py-1 text-sm font-bold uppercase tracking-widest text-black">
-                Waste removals
+              <p className="mt-4 max-w-xl text-lg text-zinc-700">
+                Fast quotes, tidy crews and responsible disposal for homes and
+                businesses — from Stockport terraces to Manchester city flats.
               </p>
-              <p className="mt-5 max-w-xl text-lg text-zinc-700">
-                Licensed waste collection and clearance for homes and businesses
-                across Greater Manchester — from Stockport terraces to Manchester
-                city flats. You will see our green-and-black van on the drive.
-              </p>
-              <div className="mt-6 hidden flex-col gap-3 sm:flex sm:flex-row sm:items-center lg:flex">
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <CallButton />
                 <Link
                   href="#quote"
@@ -76,7 +68,7 @@ export default function HomePage() {
                 </Link>
               </div>
               <TodoStats />
-              <ul className="mt-8 space-y-2">
+              <ul className="mt-8 grid gap-2 sm:grid-cols-2">
                 {checklist.map((item) => (
                   <li
                     key={item}
@@ -93,44 +85,22 @@ export default function HomePage() {
                 ))}
               </ul>
             </div>
-            <div className="order-1 space-y-6 lg:order-2">
+            <div className="lg:sticky lg:top-24">
               <QuoteForm />
-              <VanBrandImage priority sizes="(max-width: 1024px) 100vw, 50vw" />
             </div>
           </div>
-          <div className="mt-6 flex flex-col gap-3 sm:hidden">
-            <CallButton className="w-full" />
-          </div>
+
+          <VanBrandImage
+            priority
+            className="mt-10 border-zinc-200"
+            sizes="(max-width: 1024px) 100vw, 1152px"
+            caption="Our Clearance Geeks fleet van — same mascot and colours as the logo above."
+          />
         </div>
       </section>
 
-      <section className="border-b border-zinc-200 bg-zinc-100 py-10">
-        <div className="mx-auto grid max-w-6xl gap-8 px-4 lg:grid-cols-2 lg:items-center">
-          <VanBrandImage
-            caption={null}
-            sizes="(max-width: 1024px) 100vw, 40vw"
-            className="border-zinc-300"
-          />
-          <div>
-            <h2 className="font-display text-3xl text-zinc-900 sm:text-4xl">
-              Trust the van you book
-            </h2>
-            <p className="mt-3 text-zinc-700">
-              Our livery matches the logo on this site — mascot, neon green and
-              black. No mystery white vans: what you see online is what pulls up
-              outside.
-            </p>
-            <ul className="mt-6 space-y-3">
-              {trustPoints.map((item) => (
-                <li key={item} className="flex gap-2 text-sm text-zinc-800">
-                  <span className="text-geek-lime" aria-hidden>●</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
+      <HowItWorks />
+      <PhotoGallery />
 
       <section className="py-14">
         <div className="mx-auto max-w-6xl px-4">

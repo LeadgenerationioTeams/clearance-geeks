@@ -91,7 +91,7 @@ export const services: ServiceDefinition[] = [
       {
         question: "Do you provide waste transfer notes?",
         answer:
-          "Licensed carriers can provide transfer documentation for commercial loads. Confirm your requirements at booking.",
+          "Transfer documentation can be provided for commercial loads when required. Confirm your requirements at booking.",
       },
     ],
   },

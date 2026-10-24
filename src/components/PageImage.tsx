@@ -25,18 +25,21 @@ export function PageImage({
           unoptimized={isLocal}
         />
       </div>
-      <figcaption className="px-3 py-2 text-xs text-zinc-500">
-        {image.illustrative ? "Illustrative — " : null}
-        {image.illustrative ? null : "Photo: "}
-        <a
-          href={image.creditUrl}
-          className="text-geek-lime underline"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          {image.credit}
-        </a>
-      </figcaption>
+      {image.credit && image.creditUrl !== "/" ? (
+        <figcaption className="px-3 py-2 text-xs text-zinc-500">
+          {image.illustrative ? "Illustrative — " : "Photo: "}
+          <a
+            href={image.creditUrl}
+            className="text-geek-lime underline"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            {image.credit}
+          </a>
+        </figcaption>
+      ) : image.credit ? (
+        <figcaption className="px-3 py-2 text-xs text-zinc-500">{image.credit}</figcaption>
+      ) : null}
     </figure>
   );
 }

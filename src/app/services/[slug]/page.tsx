@@ -12,7 +12,9 @@ import {
   serviceJsonLd,
 } from "@/lib/schema";
 import { PageImage } from "@/components/PageImage";
+import { JobPhoto } from "@/components/JobPhoto";
 import { imageForService } from "@/lib/service-images";
+import { photosForTag, photosForServiceSlug } from "@/lib/gallery";
 import type { ServiceSlug } from "@/lib/services";
 
 export function generateStaticParams() {
@@ -67,10 +69,10 @@ export default async function ServicePage({
           { label: service.title },
         ]}
       />
-      <h1 className="mt-4 font-display text-4xl text-geek-lime sm:text-5xl">
+      <h1 className="mt-4 font-display text-4xl text-zinc-900 sm:text-5xl">
         {service.headline}
       </h1>
-      <p className="mt-4 max-w-3xl text-lg text-zinc-300">{service.intro}</p>
+      <p className="mt-4 max-w-3xl text-lg text-zinc-700">{service.intro}</p>
       <div className="mt-6">
         <CallButton />
       </div>
@@ -78,20 +80,28 @@ export default async function ServicePage({
         image={imageForService(slug as ServiceSlug)}
         className="mt-8 max-w-3xl"
       />
+      <div className="mt-6 grid max-w-4xl gap-4 sm:grid-cols-3">
+        {[photosForServiceSlug(slug), ...photosForTag(
+          photosForServiceSlug(slug).tags[0],
+          3,
+        ).slice(1, 3)].map((photo) => (
+          <JobPhoto key={photo.id} photo={photo} sizes="(max-width: 640px) 100vw, 30vw" />
+        ))}
+      </div>
       <div className="mt-10 grid gap-10 lg:grid-cols-2">
         <div>
-          <h2 className="font-display text-2xl text-white">What we take</h2>
-          <ul className="mt-4 list-disc space-y-2 pl-5 text-zinc-300">
+          <h2 className="font-display text-2xl text-zinc-900">What we take</h2>
+          <ul className="mt-4 list-disc space-y-2 pl-5 text-zinc-700">
             {service.bullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
           </ul>
-          <h2 className="mt-8 font-display text-2xl text-white">FAQs</h2>
+          <h2 className="mt-8 font-display text-2xl text-zinc-900">FAQs</h2>
           <dl className="mt-4 space-y-4">
             {service.faqs.map((f) => (
               <div key={f.question}>
-                <dt className="font-semibold text-geek-lime">{f.question}</dt>
-                <dd className="mt-1 text-zinc-400">{f.answer}</dd>
+                <dt className="font-semibold text-zinc-900">{f.question}</dt>
+                <dd className="mt-1 text-zinc-600">{f.answer}</dd>
               </div>
             ))}
           </dl>
