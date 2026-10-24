@@ -26,7 +26,8 @@ export function PageImage({
         />
       </div>
       <figcaption className="px-3 py-2 text-xs text-zinc-500">
-        Photo:{" "}
+        {image.illustrative ? "Illustrative — " : null}
+        {image.illustrative ? null : "Photo: "}
         <a
           href={image.creditUrl}
           className="text-geek-lime underline"

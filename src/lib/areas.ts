@@ -1,3 +1,6 @@
+import type { RecyclingCentreKey } from "@/data/local-sources";
+import { recyclingCentres } from "@/data/local-sources";
+
 export type AreaSlug =
   | "stockport"
   | "manchester"
@@ -17,15 +20,13 @@ export interface AreaDefinition {
   name: string;
   boroughLabel: string;
   summary: string;
-  housingNotes: string;
+  accessNotes: string;
   neighbourhoods: string[];
-  samplePostcodes: string[];
-  typicalJobs: string[];
-  hwrcName?: string;
-  hwrcNote?: string;
+  /** Outward postcode districts commonly associated with the borough — confirm full postcode at booking. */
+  postcodeDistricts: string[];
+  recyclingCentreKey?: RecyclingCentreKey;
   nearbyTowns: { slug: AreaSlug; label: string }[];
   faqs: { question: string; answer: string }[];
-  localParagraphs: string[];
 }
 
 export const serviceByTownSlugs: AreaSlug[] = ["stockport", "manchester"];
@@ -36,9 +37,9 @@ export const areas: AreaDefinition[] = [
     name: "Stockport",
     boroughLabel: "Stockport Metropolitan Borough",
     summary:
-      "Terraced streets around the market place, semis on the Heatons corridor, and post-war estates towards Brinnington — Stockport mixes tight access jobs with larger suburban driveways.",
-    housingNotes:
-      "Expect Victorian terraces with front steps in Cheadle End and Edgeley, 1930s semis in Bramhall and Cheadle Hulme, and maisonettes near the town centre. Parking permits and narrow alleys are common.",
+      "Stockport borough includes the town centre, suburban districts and villages across the SK postcode area.",
+    accessNotes:
+      "Describe steps, parking restrictions, permits and whether a van can reach your door or alley.",
     neighbourhoods: [
       "Edgeley",
       "Cheadle Hulme",
@@ -49,15 +50,8 @@ export const areas: AreaDefinition[] = [
       "Heaton Moor",
       "Heaton Mersey",
     ],
-    samplePostcodes: ["SK1", "SK2", "SK3", "SK4", "SK7", "SK8"],
-    typicalJobs: [
-      "Probate clearances on terraced roads off Wellington Road",
-      "Garage empty-outs in Bramhall after DIY projects",
-      "End-of-tenancy furniture pulls from Reddish terraces",
-    ],
-    hwrcName: "Bredbury Parkway Household Waste Recycling Centre",
-    hwrcNote:
-      "Residents often use Bredbury Parkway HWRC for DIY waste; we handle bulky items and mixed loads when you cannot get everything in a car.",
+    postcodeDistricts: ["SK1", "SK2", "SK3", "SK4", "SK6", "SK7", "SK8"],
+    recyclingCentreKey: "bredburyParkway",
     nearbyTowns: [
       { slug: "cheadle", label: "Cheadle" },
       { slug: "manchester", label: "Manchester" },
@@ -66,19 +60,15 @@ export const areas: AreaDefinition[] = [
     ],
     faqs: [
       {
-        question: "Do you cover SK postcodes only?",
+        question: "Which postcodes do you need?",
         answer:
-          "We cover Stockport borough SK postcodes and bordering villages. Mention your postcode in the quote form so we confirm crew routing.",
+          "Send your full postcode with the quote form so we can confirm coverage within Stockport borough.",
       },
       {
-        question: "Can you work on the A6 corridor flats?",
+        question: "What should I tell you about access?",
         answer:
-          "Yes, with lift or stair access details. Peak traffic can affect arrival windows — share a flexible time if possible.",
+          "Mention stairs, lifts, alley width, permit bays and any time windows required by a landlord or agent.",
       },
-    ],
-    localParagraphs: [
-      "Stockport’s valley topography means some jobs need extra time for steep drives in Heaton Norris or winding roads towards Marple. Tell us about steps and whether we can back a van to the door.",
-      "Landlords around Merseyway and the university hospital fringe often need fast turnarounds between tenants; photos of leftover furniture speed up sizing the right team.",
     ],
   },
   {
@@ -86,9 +76,9 @@ export const areas: AreaDefinition[] = [
     name: "Manchester",
     boroughLabel: "Manchester City Council",
     summary:
-      "From Northern Quarter lofts to Moss Side terraces and Didsbury semis, Manchester clearance work spans high-rise lifts, permit parking zones and busy student changeovers.",
-    housingNotes:
-      "City centre apartments with concierge hours, Victorian terraces in Chorlton and Levenshulme, and HMO student houses in Fallowfield and Withington dominate the mix.",
+      "Manchester city includes the city centre, inner suburbs and outer districts across M postcodes.",
+    accessNotes:
+      "City-centre and apartment jobs need lift dimensions, loading bay rules and concierge details where applicable.",
     neighbourhoods: [
       "City Centre",
       "Chorlton",
@@ -99,15 +89,8 @@ export const areas: AreaDefinition[] = [
       "Hulme",
       "Wythenshawe",
     ],
-    samplePostcodes: ["M1", "M4", "M14", "M15", "M16", "M20", "M21", "M22"],
-    typicalJobs: [
-      "Student summer clear-outs in Fallowfield",
-      "Apartment bulky collections with lift bookings in Spinningfields",
-      "Shop stock clears on Oldham Road industrial units",
-    ],
-    hwrcName: "Longley Lane Household Waste Recycling Centre",
-    hwrcNote:
-      "Longley Lane HWRC serves many Manchester residents; we pick up what will not fit a car load or needs two people to lift.",
+    postcodeDistricts: ["M1", "M4", "M14", "M15", "M16", "M20", "M21", "M22"],
+    recyclingCentreKey: "longleyLane",
     nearbyTowns: [
       { slug: "salford", label: "Salford" },
       { slug: "didsbury", label: "Didsbury" },
@@ -116,19 +99,15 @@ export const areas: AreaDefinition[] = [
     ],
     faqs: [
       {
-        question: "Do you handle city-centre permit zones?",
+        question: "Do you need lift or loading-bay information?",
         answer:
-          "Yes. Share your permit details or bay number. Waiting times for loading slots should be booked where your building requires it.",
+          "Yes for many flats — share lift sizes, booking rules and where the van can legally wait.",
       },
       {
-        question: "Can you clear during term time?",
+        question: "Can I get a price before collection?",
         answer:
-          "Student areas are busiest outside term; we can still work in term with parking plans. Early morning slots help on narrow terraced streets.",
+          "We quote from your description and photos before items are loaded.",
       },
-    ],
-    localParagraphs: [
-      "Canal-side apartments around Castlefield need careful protection of lift lobbies; we bring blankets for sofas and mark out trolley routes with building managers when asked.",
-      "Wythenshawe and Benchill estates often have generous drive access — ideal for mixed house and garden clearances in one visit.",
     ],
   },
   {
@@ -136,9 +115,9 @@ export const areas: AreaDefinition[] = [
     name: "Salford",
     boroughLabel: "Salford City Council",
     summary:
-      "MediaCity waterfront flats, Langworthy terraces and new builds at Pomona — Salford combines tight urban streets with riverside loading bays.",
-    housingNotes:
-      "High-rise living near the Quays, traditional terraces in Seedley and Weaste, and family semis in Worsley and Monton shape different access needs.",
+      "Salford borough includes Salford, Eccles, Swinton, Walkden, Worsley and waterfront areas such as Salford Quays.",
+    accessNotes:
+      "Riverside and apartment blocks may need dock or service-lift details — include them in your enquiry.",
     neighbourhoods: [
       "Salford Quays",
       "MediaCity",
@@ -149,15 +128,8 @@ export const areas: AreaDefinition[] = [
       "Worsley",
       "Ordsall",
     ],
-    samplePostcodes: ["M3", "M5", "M6", "M27", "M28", "M30", "M50"],
-    typicalJobs: [
-      "Apartment furniture removals with dock lifts at the Quays",
-      "Terrace clearances near Salford Crescent",
-      "Garage waste from Worsley cul-de-sacs",
-    ],
-    hwrcName: "Lumley Street Recycling Centre",
-    hwrcNote:
-      "Lumley Street RC is the main Salford site many residents reference for DIY trips; we handle overflow and bulky items.",
+    postcodeDistricts: ["M3", "M5", "M6", "M27", "M28", "M30", "M50"],
+    recyclingCentreKey: "lumnsLane",
     nearbyTowns: [
       { slug: "manchester", label: "Manchester" },
       { slug: "trafford", label: "Trafford" },
@@ -165,28 +137,24 @@ export const areas: AreaDefinition[] = [
     ],
     faqs: [
       {
-        question: "Do you cover M50 at the Quays?",
-        answer: "Yes. Include building name, floor and lift dimensions if you have them.",
+        question: "Do you cover Salford Quays and M50?",
+        answer: "Include your full postcode and building access notes when you enquire.",
       },
       {
-        question: "What about Swinton retail park waste?",
+        question: "What counts as commercial waste?",
         answer:
-          "Commercial strip-outs need a quick description of fixtures and whether waste is on the pavement or inside the unit.",
+          "Trade or shop waste may need separate arrangements — describe the material and location.",
       },
-    ],
-    localParagraphs: [
-      "Ordsall and Chapel Street regeneration zones often have temporary parking restrictions — a contact number on site helps crews find you quickly.",
-      "Walkden and Boothstown approaches include hillier drives; mention if a long push to the house is needed from the main road.",
     ],
   },
   {
     slug: "trafford",
     name: "Trafford",
-    boroughLabel: "Trafford (Sale, Altrincham & Stretford)",
+    boroughLabel: "Trafford Metropolitan Borough",
     summary:
-      "Leafy Sale avenues, Altrincham market-town terraces and Stretford semis — Trafford jobs often involve driveways but also tram-corridor parking pressure.",
-    housingNotes:
-      "1930s semis in Sale and Timperley, town-centre terraces near Altrincham interchange, and flats by the Trafford Centre fringe.",
+      "Trafford borough includes Sale, Altrincham, Stretford, Urmston and Timperley.",
+    accessNotes:
+      "Metrolink lines and busy A-roads can affect parking — share the best legal stopping point you know.",
     neighbourhoods: [
       "Sale",
       "Altrincham",
@@ -197,15 +165,8 @@ export const areas: AreaDefinition[] = [
       "Bowdon",
       "Hale",
     ],
-    samplePostcodes: ["M16", "M17", "M31", "M32", "M33", "WA14", "WA15"],
-    typicalJobs: [
-      "Garage clearances in Timperley",
-      "Shop back-room waste in Altrincham centre",
-      "Garden waste after hedge work in Hale",
-    ],
-    hwrcName: "Chester Road Household Waste Recycling Centre",
-    hwrcNote:
-      "Chester Road HWRC (Stretford) is widely used locally; we take bulky and mixed loads when a car is not enough.",
+    postcodeDistricts: ["M16", "M17", "M31", "M32", "M33", "WA14", "WA15"],
+    recyclingCentreKey: "chesterRoad",
     nearbyTowns: [
       { slug: "manchester", label: "Manchester" },
       { slug: "stockport", label: "Stockport" },
@@ -214,27 +175,23 @@ export const areas: AreaDefinition[] = [
     faqs: [
       {
         question: "Do you cover WA14 and WA15?",
-        answer: "Yes — Bowdon and Hale fall within our Trafford coverage.",
+        answer: "Send your postcode to confirm coverage within Trafford borough.",
       },
       {
-        question: "Metrolink works nearby — can you still access?",
+        question: "How do roadworks affect collection?",
         answer:
-          "Tell us about road closures on your street; we plan alternate parking or shorter carries.",
+          "Tell us about closures or suspended bays so we can plan a safe loading point.",
       },
-    ],
-    localParagraphs: [
-      "Sale Moor and Ashton-on-Mersey have many dropped kerbs — great for fast loading if you can keep the drive clear.",
-      "Partington and Carrington industrial edges see trade waste mixed with household clearances from nearby estates.",
     ],
   },
   {
     slug: "tameside",
     name: "Tameside",
-    boroughLabel: "Tameside (Ashton, Hyde & Denton)",
+    boroughLabel: "Tameside Metropolitan Borough",
     summary:
-      "Ashton market town streets, Hyde mill terraces and Denton post-war estates — Tameside mixes hillside access with valley-floor terraces.",
-    housingNotes:
-      "Steep gardens in Stalybridge, long terraces in Hyde, and semis in Denton and Droylsden with varied off-street parking.",
+      "Tameside borough includes Ashton-under-Lyne, Hyde, Denton, Droylsden, Stalybridge and surrounding areas.",
+    accessNotes:
+      "Hillside streets and terraced rows may need longer carries — note distance from the van to the door.",
     neighbourhoods: [
       "Ashton-under-Lyne",
       "Hyde",
@@ -245,15 +202,8 @@ export const areas: AreaDefinition[] = [
       "Mossley",
       "Dukinfield",
     ],
-    samplePostcodes: ["OL6", "OL7", "SK14", "M34", "M43"],
-    typicalJobs: [
-      "Cellar clearances on Ashton terraces",
-      "Shed dismantling in Denton gardens",
-      "Shop strip-outs on Hyde high street",
-    ],
-    hwrcName: "Ash Road Household Waste Recycling Centre",
-    hwrcNote:
-      "Ash Road HWRC at Droylsden is the familiar tip name locally; we handle what will not fit your boot.",
+    postcodeDistricts: ["OL6", "OL7", "SK14", "M34", "M43"],
+    recyclingCentreKey: "ashRoad",
     nearbyTowns: [
       { slug: "stockport", label: "Stockport" },
       { slug: "oldham", label: "Oldham" },
@@ -261,18 +211,15 @@ export const areas: AreaDefinition[] = [
     ],
     faqs: [
       {
-        question: "Do you cover SK14 (Hyde)?",
-        answer: "Yes — Hyde, Gee Cross and surrounding SK14 areas are in scope.",
+        question: "Does Tameside include SK14?",
+        answer:
+          "Hyde and surrounding SK14 areas are within Tameside — confirm with your full postcode.",
       },
       {
-        question: "Hillside access in Mossley?",
+        question: "What if my street is narrow?",
         answer:
-          "Mention narrow lanes and whether we need a smaller van or two-trip plan.",
+          "Describe the tightest point and whether we should meet you at the nearest safe pull-in.",
       },
-    ],
-    localParagraphs: [
-      "The A57 corridor through Denton can be busy at school run times — flexible arrival windows help crews load safely on the pavement.",
-      "Dukinfield and Ashton canal basins have some cobbled yards; tell us if trolleys need solid wheels only.",
     ],
   },
   {
@@ -280,9 +227,9 @@ export const areas: AreaDefinition[] = [
     name: "Oldham",
     boroughLabel: "Oldham Metropolitan Borough",
     summary:
-      "Hillside terraces above the town centre, Shaw and Royton semis, and former mill conversions — Oldham clearances often involve stairs and tight ginnels.",
-    housingNotes:
-      "Stone terraces in Lees and Waterhead, suburban semis in Chadderton, and newer estates on the Rochdale border.",
+      "Oldham borough includes Oldham town, Chadderton, Royton, Shaw and villages towards Saddleworth.",
+    accessNotes:
+      "Steep roads and ginnels are common — flag steps and whether items can be dismantled.",
     neighbourhoods: [
       "Oldham town centre",
       "Shaw",
@@ -293,15 +240,8 @@ export const areas: AreaDefinition[] = [
       "Saddleworth",
       "Derker",
     ],
-    samplePostcodes: ["OL1", "OL2", "OL4", "OL8", "OL9"],
-    typicalJobs: [
-      "Loft clearances in Royton semis",
-      "Mill apartment bulky waste in the town centre",
-      "Garden rubble from hillside extensions in Saddleworth",
-    ],
-    hwrcName: "Arkwright Street Recycling Centre",
-    hwrcNote:
-      "Arkwright Street RC is the named Oldham facility many residents use for DIY waste.",
+    postcodeDistricts: ["OL1", "OL2", "OL4", "OL8", "OL9"],
+    recyclingCentreKey: "arkwrightStreet",
     nearbyTowns: [
       { slug: "rochdale", label: "Rochdale" },
       { slug: "tameside", label: "Tameside" },
@@ -309,18 +249,14 @@ export const areas: AreaDefinition[] = [
     ],
     faqs: [
       {
-        question: "Do you go into Saddleworth villages?",
+        question: "Do you cover Saddleworth villages?",
         answer:
-          "Yes, with extra travel noted in the quote. Narrow village streets may need a meet-and-carry plan.",
+          "Enquire with your village postcode — narrow lanes may affect vehicle choice.",
       },
       {
-        question: "Failsworth border with Manchester?",
-        answer: "We cover Failsworth OL8/OL9 — include your postcode to confirm.",
+        question: "What information helps you quote?",
+        answer: "Photos, item list, postcode and access notes are enough to start.",
       },
-    ],
-    localParagraphs: [
-      "Oldham’s steep streets off Union Street reward an early slot before on-street parking fills up.",
-      "Chadderton industrial units occasionally need mixed commercial and office waste — describe racking and desk counts up front.",
     ],
   },
   {
@@ -328,9 +264,9 @@ export const areas: AreaDefinition[] = [
     name: "Bolton",
     boroughLabel: "Bolton Metropolitan Borough",
     summary:
-      "From Bolton town centre terraces to Horwich and Westhoughton semis, workloads range from student lets near the university to family garage clear-outs.",
-    housingNotes:
-      "Victorian terraces in Farnworth and Kearsley, stone cottages towards Turton, and newer estates in Lostock.",
+      "Bolton borough includes Bolton town, Farnworth, Horwich, Westhoughton and surrounding districts.",
+    accessNotes:
+      "Note drive width, slopes and whether waste is inside, outside or split across rooms.",
     neighbourhoods: [
       "Bolton town centre",
       "Horwich",
@@ -341,15 +277,8 @@ export const areas: AreaDefinition[] = [
       "Harwood",
       "Astley Bridge",
     ],
-    samplePostcodes: ["BL1", "BL2", "BL3", "BL4", "BL5", "BL6"],
-    typicalJobs: [
-      "Rental clearances near Bolton University",
-      "Builders’ waste from kitchen refits in Horwich",
-      "Shed removals in Turton gardens",
-    ],
-    hwrcName: "Raikes Lane Household Waste Recycling Centre",
-    hwrcNote:
-      "Raikes Lane HWRC is the Bolton name residents recognise for tip runs.",
+    postcodeDistricts: ["BL1", "BL2", "BL3", "BL4", "BL5", "BL6"],
+    recyclingCentreKey: "hurstwoodCourt",
     nearbyTowns: [
       { slug: "bury", label: "Bury" },
       { slug: "salford", label: "Salford" },
@@ -357,18 +286,14 @@ export const areas: AreaDefinition[] = [
     ],
     faqs: [
       {
-        question: "Do you cover BL6 Horwich?",
-        answer: "Yes — Horwich, Rivington fringe and Lostock are included.",
+        question: "Do you cover BL6?",
+        answer: "Include your full postcode — Horwich and nearby BL6 areas can be confirmed at quote stage.",
       },
       {
-        question: "Can you take soil from garden projects?",
+        question: "Can soil go with garden waste?",
         answer:
-          "Small amounts may ride with mixed garden waste; large soil volumes need declaring for weight planning.",
+          "Declare soil and rubble separately — weight and disposal route affect the quote.",
       },
-    ],
-    localParagraphs: [
-      "Astley Bridge’s hillside roads can be icy in winter — mention if access is on a slope so we bring grip mats if needed.",
-      "Middlebrook retail and arena parking rules mean commercial waste must be collected from agreed bays, not random car parks.",
     ],
   },
   {
@@ -376,9 +301,9 @@ export const areas: AreaDefinition[] = [
     name: "Bury",
     boroughLabel: "Bury Metropolitan Borough",
     summary:
-      "Bury market town terraces, Prestwich semis and Ramsbottom valley homes — a mix of tram-linked suburbs and Pennine fringe villages.",
-    housingNotes:
-      "Stone terraces in Tottington, 1930s housing in Whitefield, and village cottages on the Rossendale border.",
+      "Bury borough includes Bury, Radcliffe, Whitefield, Prestwich and Ramsbottom.",
+    accessNotes:
+      "Village lanes and terraced streets may need a meet-and-carry plan — describe the route from the van.",
     neighbourhoods: [
       "Bury town centre",
       "Prestwich",
@@ -389,15 +314,8 @@ export const areas: AreaDefinition[] = [
       "Unsworth",
       "Pilsworth",
     ],
-    samplePostcodes: ["BL0", "BL8", "BL9", "M25", "M45"],
-    typicalJobs: [
-      "Probate clearances on Bury terraces",
-      "Office chair removals in Prestwich business strips",
-      "Green waste after hedge cutting in Ramsbottom",
-    ],
-    hwrcName: "Every Street Household Waste Recycling Centre",
-    hwrcNote:
-      "Every Street HWRC in Fernhill is the Bury site name locals cite.",
+    postcodeDistricts: ["BL0", "BL8", "BL9", "M25", "M45"],
+    recyclingCentreKey: "cemeteryRoad",
     nearbyTowns: [
       { slug: "rochdale", label: "Rochdale" },
       { slug: "bolton", label: "Bolton" },
@@ -406,16 +324,13 @@ export const areas: AreaDefinition[] = [
     faqs: [
       {
         question: "Do you cover M25 Prestwich?",
-        answer: "Yes — Prestwich and Heaton Park fringe are regular routes.",
+        answer: "Send your postcode to confirm coverage on the Manchester–Bury border.",
       },
       {
-        question: "Village lanes in Holcombe?",
-        answer: "Share gate width and whether a van can pass parked cars.",
+        question: "What if parking is limited?",
+        answer:
+          "Reserve a space if you can, or tell us the nearest legal bay for loading.",
       },
-    ],
-    localParagraphs: [
-      "Metrolink works in Bury centre can shift loading spots — a mobile number for the day helps.",
-      "Radcliffe canal-side terraces sometimes need waste carried through passages; measure narrowest point if you can.",
     ],
   },
   {
@@ -423,9 +338,9 @@ export const areas: AreaDefinition[] = [
     name: "Rochdale",
     boroughLabel: "Rochdale Metropolitan Borough",
     summary:
-      "Rochdale town terraces, Middleton semis and Littleborough valley properties — clearances span flat town grids and hillside gardens.",
-    housingNotes:
-      "Mill-era terraces near the town hall, interwar semis in Middleton, and stone cottages towards the Pennines.",
+      "Rochdale borough includes Rochdale, Middleton, Heywood, Littleborough and Milnrow.",
+    accessNotes:
+      "Valley and hillside properties may have long gardens — mention carry distance.",
     neighbourhoods: [
       "Rochdale town centre",
       "Middleton",
@@ -436,15 +351,8 @@ export const areas: AreaDefinition[] = [
       "Castleton",
       "Norden",
     ],
-    samplePostcodes: ["OL10", "OL11", "OL12", "OL15", "OL16"],
-    typicalJobs: [
-      "Heywood terrace end-of-tenancy clears",
-      "Middleton garage mixed waste",
-      "Littleborough garden stone and green waste combos",
-    ],
-    hwrcName: "Spring Vale Household Waste Recycling Centre",
-    hwrcNote:
-      "Spring Vale HWRC serves Rochdale borough for resident DIY disposal.",
+    postcodeDistricts: ["OL10", "OL11", "OL12", "OL15", "OL16"],
+    recyclingCentreKey: "chichesterStreet",
     nearbyTowns: [
       { slug: "oldham", label: "Oldham" },
       { slug: "bury", label: "Bury" },
@@ -452,17 +360,14 @@ export const areas: AreaDefinition[] = [
     ],
     faqs: [
       {
-        question: "Do you cover OL16?",
-        answer: "Yes — central Rochdale and surrounding OL16 streets.",
+        question: "Is Heywood in scope?",
+        answer: "Heywood is within Rochdale borough — confirm with your postcode.",
       },
       {
-        question: "Heywood separate from Rochdale?",
-        answer: "Heywood is within our Rochdale borough coverage.",
+        question: "Do you need a loading bay booking?",
+        answer:
+          "If your building or street requires it, share the booking details with your quote request.",
       },
-    ],
-    localParagraphs: [
-      "The Esplanade and Drake Street area has timed loading restrictions — mention if you have a bay booked.",
-      "Norden and Bamford sit on steep lanes; two-person carries from the house to the van may add time.",
     ],
   },
   {
@@ -470,9 +375,9 @@ export const areas: AreaDefinition[] = [
     name: "Wigan",
     boroughLabel: "Wigan Metropolitan Borough",
     summary:
-      "Wigan town terraces, Leigh market streets and Ashton-in-Makerfield semis — plus new estates on former colliery land.",
-    housingNotes:
-      "Terraces in Ince and Hindley, semis in Standish, and bungalows in Shevington with generous front gardens.",
+      "Wigan borough includes Wigan, Leigh, Ashton-in-Makerfield, Atherton and Tyldesley. Household recycling centres are operated by Wigan Council, not R4GM.",
+    accessNotes:
+      "Canal paths and pedestrian-only routes need a safe kerbside handover point.",
     neighbourhoods: [
       "Wigan town centre",
       "Leigh",
@@ -483,15 +388,8 @@ export const areas: AreaDefinition[] = [
       "Golborne",
       "Hindley",
     ],
-    samplePostcodes: ["WN1", "WN2", "WN3", "WN4", "WN5", "WN6", "WN7"],
-    typicalJobs: [
-      "Leigh high street shop back-room clears",
-      "Garage waste in Standish",
-      "Garden fence and shed waste in Tyldesley",
-    ],
-    hwrcName: "Kirkless Household Waste Recycling Centre",
-    hwrcNote:
-      "Kirkless HWRC is the Wigan borough tip name most residents know.",
+    postcodeDistricts: ["WN1", "WN2", "WN3", "WN4", "WN5", "WN6", "WN7"],
+    recyclingCentreKey: "kirkless",
     nearbyTowns: [
       { slug: "bolton", label: "Bolton" },
       { slug: "salford", label: "Salford" },
@@ -499,18 +397,14 @@ export const areas: AreaDefinition[] = [
     ],
     faqs: [
       {
-        question: "Do you cover WN7 Leigh?",
-        answer: "Yes — Leigh, Atherton and Tyldesley are included.",
+        question: "Which recycling sites apply in Wigan?",
+        answer:
+          "Wigan Council operates its own centres — see our source note for Kirkless and other borough sites.",
       },
       {
-        question: "Can you collect from canal-side paths?",
-        answer:
-          "Only with safe van parking nearby; waste must be brought to the kerb if paths are pedestrian-only.",
+        question: "Do you cover WN7 Leigh?",
+        answer: "Include your full WN postcode when you enquire.",
       },
-    ],
-    localParagraphs: [
-      "Wigan pier and town centre flats need lift bookings where concierge rules apply.",
-      "Golborne and Lowton bridges can be weight-restricted — we plan routes to avoid surprises.",
     ],
   },
   {
@@ -518,9 +412,9 @@ export const areas: AreaDefinition[] = [
     name: "Cheadle",
     boroughLabel: "Stockport — Cheadle & Cheadle Hulme",
     summary:
-      "Village-centre cottages, 1930s semis and modern estates around Cheadle Royal — a suburban patch with drives but busy A34 parking.",
-    housingNotes:
-      "Semis near Cheadle Hulme station, bungalows off Cheadle Road, and flats above the village shops.",
+      "Cheadle and Cheadle Hulme are within Stockport borough (SK8 and nearby districts).",
+    accessNotes:
+      "A34 and village-centre parking can be busy — describe where a van can wait legally.",
     neighbourhoods: [
       "Cheadle village",
       "Cheadle Hulme",
@@ -528,15 +422,8 @@ export const areas: AreaDefinition[] = [
       "Adswood",
       "Gatley fringe",
     ],
-    samplePostcodes: ["SK8", "SK3"],
-    typicalJobs: [
-      "Driveway garage clear-outs near Cheadle Royal",
-      "Single sofa lifts from first-floor village flats",
-      "Garden waste after patio removals",
-    ],
-    hwrcName: "Bredbury Parkway Household Waste Recycling Centre",
-    hwrcNote:
-      "Many Cheadle residents already use Bredbury Parkway HWRC; we step in for bulky mixed loads.",
+    postcodeDistricts: ["SK8", "SK3"],
+    recyclingCentreKey: "adswoodRoad",
     nearbyTowns: [
       { slug: "stockport", label: "Stockport" },
       { slug: "trafford", label: "Trafford" },
@@ -546,26 +433,22 @@ export const areas: AreaDefinition[] = [
       {
         question: "Is Cheadle separate from Stockport town?",
         answer:
-          "Cheadle is its own village within Stockport borough — we treat it as a focused local patch.",
+          "Cheadle is a district within Stockport borough — we still need your full postcode.",
       },
       {
-        question: "A34 roadworks?",
-        answer: "Tell us about temporary bus lane changes affecting parking near your road.",
+        question: "What helps you quote accurately?",
+        answer: "Photos, item list and parking or drive access notes.",
       },
-    ],
-    localParagraphs: [
-      "Cheadle Hulme’s commuter streets fill with parked cars by evening — morning collections can be smoother.",
-      "School-run pressure on Cheadle Road means we may ask you to reserve a space with cones if you have a drive.",
     ],
   },
   {
     slug: "didsbury",
     name: "Didsbury",
-    boroughLabel: "Manchester — Didsbury & West Didsbury",
+    boroughLabel: "Manchester — Didsbury & Chorlton-cum-Hardy fringe",
     summary:
-      "Victorian villas on Wilmslow Road, family semis in East Didsbury and riverside flats — Didsbury mixes conservation-area care with student lets.",
-    housingNotes:
-      "Large bay-front terraces, 1930s semis towards Parrs Wood, and modern apartments off Palatine Road.",
+      "Didsbury (including West and East Didsbury) lies in Manchester with M20 and M21 postcode districts.",
+    accessNotes:
+      "Conservation-area terraces and apartments may need careful routing — share stair and lift details.",
     neighbourhoods: [
       "West Didsbury village",
       "East Didsbury",
@@ -573,15 +456,8 @@ export const areas: AreaDefinition[] = [
       "Barlow Moor",
       "Northenden fringe",
     ],
-    samplePostcodes: ["M20", "M21"],
-    typicalJobs: [
-      "Student house clearances near Wilmslow Road",
-      "Conservation-area careful furniture removal",
-      "Garden green waste from Mersey-adjacent plots",
-    ],
-    hwrcName: "Longley Lane Household Waste Recycling Centre",
-    hwrcNote:
-      "Didsbury households often travel to Longley Lane HWRC; we handle oversized items locally.",
+    postcodeDistricts: ["M20", "M21"],
+    recyclingCentreKey: "longleyLane",
     nearbyTowns: [
       { slug: "manchester", label: "Manchester" },
       { slug: "stockport", label: "Stockport" },
@@ -589,19 +465,14 @@ export const areas: AreaDefinition[] = [
     ],
     faqs: [
       {
-        question: "Do you cover M21 Chorlton border streets?",
-        answer:
-          "Yes — roads that sit between Chorlton and West Didsbury are fine; postcode confirms routing.",
+        question: "Do you cover Chorlton border streets?",
+        answer: "Use your full postcode — M21 and nearby M32/M16 streets are confirmed at quote stage.",
       },
       {
-        question: "Basements on older villas?",
+        question: "Can you quote without a site visit?",
         answer:
-          "Flag narrow stair turns and whether items can be dismantled before collection.",
+          "Yes — photos and access notes are usually enough for a written quote first.",
       },
-    ],
-    localParagraphs: [
-      "Burton Road cafes mean weekend parking is tight — weekday slots or resident permits help crews stay legal.",
-      "Mersey floodplain gardens sometimes hold damp timber waste; keep it separate from soil if possible.",
     ],
   },
 ];
@@ -612,39 +483,12 @@ export function getArea(slug: string): AreaDefinition | undefined {
   return areas.find((a) => a.slug === slug);
 }
 
-/** Unique blurbs for service×town pages — keyed `${town}:${service}` */
-export function getServiceTownBlurb(
-  town: AreaSlug,
-  service: string,
-): string {
-  const blurbs: Record<string, string> = {
-    "stockport:house-clearance":
-      "Stockport terraces near the Viaduct often need sofa pivots on tight landings — we plan two-person carries before arrival.",
-    "stockport:garden-waste":
-      "Hazel Grove and Bramhall gardens generate hedge and fence waste after winter storms; we load green and mixed timber in one go.",
-    "stockport:office-commercial-clearance":
-      "Bredbury and Portwood industrial units request desk and racking pulls without blocking shared yards.",
-    "stockport:general-junk-rubbish-removal":
-      "SK1 town-centre flats send mixed bag waste and small furniture when lifts are booked for an hour.",
-    "stockport:builders-waste":
-      "Edgeley bathroom refits produce plasterboard and tile rubble — we separate board when you flag it upfront.",
-    "stockport:single-items":
-      "Heaton Moor bay-window sofas are a common single-item job with street parking on double yellows — permits noted in quotes.",
-    "manchester:house-clearance":
-      "Fallowfield student houses need fast summer turnarounds with mattresses and desks in volume.",
-    "manchester:garden-waste":
-      "Chorlton back alleys fit green waste runs when the front street is permit-only only.",
-    "manchester:office-commercial-clearance":
-      "Northern Quarter studio offices strip small fit-outs with chairs and laminate flooring waste.",
-    "manchester:general-junk-rubbish-removal":
-      "Hulme maisonettes clear understairs junk alongside a few black bags for landlord inspections.",
-    "manchester:builders-waste":
-      "Levenshulme kitchen rip-outs stack bagged rubble ready for a morning collection slot.",
-    "manchester:single-items":
-      "City-centre fridge removals need lift padding and door taping — we bring straps and blankets.",
-  };
-  return (
-    blurbs[`${town}:${service}`] ??
-    `Local ${service.replace(/-/g, " ")} support across ${town}.`
-  );
+export function getRecyclingCentreForArea(slug: AreaSlug) {
+  const area = getArea(slug);
+  if (!area?.recyclingCentreKey) return undefined;
+  return recyclingCentres[area.recyclingCentreKey];
+}
+
+export function serviceAreaIntro(areaName: string, serviceTitle: string): string {
+  return `${serviceTitle} in ${areaName}. Share your postcode, photos and access details for a quote before collection.`;
 }

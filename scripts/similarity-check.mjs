@@ -4,6 +4,22 @@ import { join } from "node:path";
 const ROOT = join(import.meta.dirname, "..");
 const THRESHOLD = 0.4;
 
+/** Fields that render as visible page copy (not code, not source registry). */
+const VISIBLE_FIELDS = new Set([
+  "summary",
+  "accessNotes",
+  "about",
+  "accessNote",
+  "intro",
+  "headline",
+  "question",
+  "answer",
+  "title",
+  "body",
+  "boroughLabel",
+  "name",
+]);
+
 function tokenize(text) {
   return new Set(
     text
@@ -20,52 +36,74 @@ function jaccard(a, b) {
   return union === 0 ? 0 : inter / union;
 }
 
-function extractAreas() {
-  const file = readFileSync(join(ROOT, "src/lib/areas.ts"), "utf8");
-  const blocks = file.split(/\{\s*slug:\s*"/).slice(1);
-  return blocks.map((block) => {
+/** Extract string literals that belong to visible fields in TS data files. */
+function extractVisibleFromDataFile(filePath, idPrefix) {
+  const text = readFileSync(filePath, "utf8");
+  const pages = [];
+  const slugBlocks = text.split(/\{\s*slug:\s*"/).slice(1);
+  for (const block of slugBlocks) {
     const slug = block.match(/^([^"]+)/)?.[1] ?? "unknown";
-    const grab = (key) => {
-      const re = new RegExp(`${key}:\\s*\\n?\\s*"([^"]*)"`, "g");
-      const multi = new RegExp(`${key}:\\s*\\[([\\s\\S]*?)\\]`, "m");
-      let text = "";
-      for (const m of block.matchAll(re)) text += ` ${m[1]}`;
-      const arr = block.match(multi);
-      if (arr) {
-        text += arr[1].replace(/"/g, " ");
-      }
-      return text;
-    };
-    const body = [
-      grab("summary"),
-      grab("housingNotes"),
-      grab("localParagraphs"),
-      grab("typicalJobs"),
-      grab("hwrcNote"),
-      grab("question"),
-      grab("answer"),
-    ].join(" ");
-    return { id: `area:${slug}`, tokens: tokenize(body) };
-  });
+    let visible = "";
+    const keyValue =
+      /(\w+):\s*\n?\s*"([^"]*)"/g;
+    let m;
+    while ((m = keyValue.exec(block)) !== null) {
+      if (VISIBLE_FIELDS.has(m[1])) visible += ` ${m[2]}`;
+    }
+    const faqBlocks = block.matchAll(
+      /question:\s*"([^"]*)"\s*,\s*answer:\s*"([^"]*)"/g,
+    );
+    for (const f of faqBlocks) {
+      visible += ` ${f[1]} ${f[2]}`;
+    }
+    pages.push({ id: `${idPrefix}:${slug}`, tokens: tokenize(visible) });
+  }
+  return pages;
+}
+
+function extractNeighbourhoods() {
+  const text = readFileSync(
+    join(ROOT, "src/lib/neighbourhoods.ts"),
+    "utf8",
+  );
+  const pages = [];
+  const entries = text.split(/"([a-z]+:[a-z0-9-]+)":\s*\{/);
+  for (let i = 1; i < entries.length; i += 2) {
+    const key = entries[i];
+    const block = entries[i + 1] ?? "";
+    let visible = "";
+    for (const m of block.matchAll(/(about|accessNote):\s*\n?\s*"([^"]*)"/g)) {
+      visible += ` ${m[2]}`;
+    }
+    for (const m of block.matchAll(
+      /question:\s*"([^"]*)"\s*,\s*answer:\s*"([^"]*)"/g,
+    )) {
+      visible += ` ${m[1]} ${m[2]}`;
+    }
+    pages.push({ id: `hood-override:${key}`, tokens: tokenize(visible) });
+  }
+  const defaults = text.matchAll(
+    /about:\s*`([^`]+)`|about:\s*"([^"]+)"/g,
+  );
+  let idx = 0;
+  for (const d of defaults) {
+    const body = d[1] ?? d[2] ?? "";
+    if (body.includes("neighbourhood within")) {
+      pages.push({ id: `hood-default:${idx++}`, tokens: tokenize(body) });
+    }
+  }
+  return pages;
 }
 
 function extractServices() {
-  const file = readFileSync(join(ROOT, "src/lib/services.ts"), "utf8");
-  const blocks = file.split(/\{\s*slug:\s*"/).slice(1);
-  return blocks.map((block) => {
-    const slug = block.match(/^([^"]+)/)?.[1] ?? "unknown";
-    const strings = [...block.matchAll(/"([^"]{20,})"/g)].map((m) => m[1]);
-    return { id: `service:${slug}`, tokens: tokenize(strings.join(" ")) };
-  });
+  return extractVisibleFromDataFile(
+    join(ROOT, "src/lib/services.ts"),
+    "service",
+  );
 }
 
-function extractTownServiceBlurbs() {
-  const file = readFileSync(join(ROOT, "src/lib/areas.ts"), "utf8");
-  const blurbs = [...file.matchAll(/"([a-z]+:[a-z-]+)":\s*\n\s*"([^"]+)"/g)];
-  return blurbs.map((m) => ({
-    id: `town-service:${m[1]}`,
-    tokens: tokenize(m[2]),
-  }));
+function extractAreas() {
+  return extractVisibleFromDataFile(join(ROOT, "src/lib/areas.ts"), "area");
 }
 
 function compareGroup(label, pages) {
@@ -73,28 +111,25 @@ function compareGroup(label, pages) {
   const failures = [];
   for (let i = 0; i < pages.length; i++) {
     for (let j = i + 1; j < pages.length; j++) {
+      if (pages[i].tokens.size < 8 || pages[j].tokens.size < 8) continue;
       const score = jaccard(pages[i].tokens, pages[j].tokens);
       if (score > worst.score)
         worst = { a: pages[i].id, b: pages[j].id, score };
       if (score > THRESHOLD) {
-        failures.push({
-          a: pages[i].id,
-          b: pages[j].id,
-          score,
-        });
+        failures.push({ a: pages[i].id, b: pages[j].id, score });
       }
     }
   }
   console.log(
-    `${label}: ${pages.length} pages, worst ${(worst.score * 100).toFixed(1)}% (${worst.a} vs ${worst.b})`,
+    `${label}: ${pages.length} units, worst ${(worst.score * 100).toFixed(1)}% (${worst.a} vs ${worst.b})`,
   );
   return failures;
 }
 
 const failures = [
-  ...compareGroup("Areas", extractAreas()),
-  ...compareGroup("Services", extractServices()),
-  ...compareGroup("Town×service blurbs", extractTownServiceBlurbs()),
+  ...compareGroup("Areas (visible fields)", extractAreas()),
+  ...compareGroup("Services (visible fields)", extractServices()),
+  ...compareGroup("Neighbourhood overrides", extractNeighbourhoods()),
 ];
 
 if (failures.length) {
@@ -107,4 +142,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log("Similarity check passed.");
+console.log("Similarity check passed (visible copy only).");

@@ -86,14 +86,6 @@ export default async function ServicePage({
               <li key={b}>{b}</li>
             ))}
           </ul>
-          <h2 className="mt-8 font-display text-2xl text-white">
-            Typical jobs
-          </h2>
-          <ul className="mt-4 list-disc space-y-2 pl-5 text-zinc-300">
-            {service.typicalJobs.map((j) => (
-              <li key={j}>{j}</li>
-            ))}
-          </ul>
           <h2 className="mt-8 font-display text-2xl text-white">FAQs</h2>
           <dl className="mt-4 space-y-4">
             {service.faqs.map((f) => (

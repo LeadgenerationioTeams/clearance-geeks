@@ -13,7 +13,6 @@ export interface ServiceDefinition {
   headline: string;
   intro: string;
   bullets: string[];
-  typicalJobs: string[];
   faqs: { question: string; answer: string }[];
 }
 
@@ -30,11 +29,6 @@ export const services: ServiceDefinition[] = [
       "Sensitive handling for bereavement and probate instructions",
       "Items segregated for reuse and recycling where possible",
       "Sweep-down option once bulky items are out",
-    ],
-    typicalJobs: [
-      "Terraced probate clearances with narrow hallways",
-      "End-of-tenancy furniture removal",
-      "Garage and loft empty-outs bundled with house work",
     ],
     faqs: [
       {
@@ -62,11 +56,6 @@ export const services: ServiceDefinition[] = [
       "Soil and rubble where agreed (weight limits apply)",
       "Seasonal tidy-ups for landlords and homeowners",
     ],
-    typicalJobs: [
-      "Post-storm branch collections",
-      "End-of-season greenhouse clear-outs",
-      "Garden room dismantling with green waste",
-    ],
     faqs: [
       {
         question: "Is soil classed as garden waste?",
@@ -92,11 +81,6 @@ export const services: ServiceDefinition[] = [
       "Shop fit-out waste and display units",
       "Warehouses and storage units cleared in stages",
       "WEEE-aware handling for screens and printers where required",
-    ],
-    typicalJobs: [
-      "Landlord reinstatement after tenant exit",
-      "Hot-desk refits with chair and desk volumes",
-      "Stock room clearances with pallet waste",
     ],
     faqs: [
       {
@@ -124,11 +108,6 @@ export const services: ServiceDefinition[] = [
       "Bulky items alongside smaller waste",
       "Same-area runs when routes allow",
     ],
-    typicalJobs: [
-      "Pre-sale declutters with loft and garage mixed loads",
-      "Student house summer clear-outs",
-      "Fly-tipping clean-ups on private land (with permission)",
-    ],
     faqs: [
       {
         question: "What will you not take?",
@@ -155,11 +134,6 @@ export const services: ServiceDefinition[] = [
       "Timber, packaging and mixed construction waste",
       "Repeat collections for longer projects on request",
     ],
-    typicalJobs: [
-      "Bathroom rip-outs with tile and plasterboard",
-      "Kitchen refit waste in bags and loose",
-      "Garden wall dismantling with brick waste",
-    ],
     faqs: [
       {
         question: "Do you supply skips?",
@@ -185,11 +159,6 @@ export const services: ServiceDefinition[] = [
       "Fridges, freezers and white goods (door secured)",
       "Exercise equipment and pianos by prior agreement",
       "Quick collections when routes align",
-    ],
-    typicalJobs: [
-      "Sofa removal from upstairs flats with lift access",
-      "Fridge swap support for kitchen fitters",
-      "Mattress collections for landlords",
     ],
     faqs: [
       {

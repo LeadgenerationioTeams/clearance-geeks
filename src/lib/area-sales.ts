@@ -29,5 +29,5 @@ export function whyChooseUsForArea(areaName: string): string[] {
 }
 
 export function heroBenefitHeadline(areaName: string): string {
-  return `Same-week waste clearance in ${areaName} — priced before we load`;
+  return `Waste clearance in ${areaName} — priced before we load`;
 }

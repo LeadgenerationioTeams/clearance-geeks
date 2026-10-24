@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
   getArea,
-  getServiceTownBlurb,
+  serviceAreaIntro,
   serviceByTownSlugs,
   type AreaSlug,
 } from "@/lib/areas";
@@ -47,7 +47,7 @@ export async function generateMetadata({
     const area = getArea(slug);
     return buildMetadata({
       title: `Waste removal ${hood.name}, ${area?.name ?? slug}`,
-      description: hood.intro,
+      description: hood.about,
       path: `/areas/${slug}/${subslug}`,
     });
   }
@@ -57,7 +57,7 @@ export async function generateMetadata({
   if (!serviceByTownSlugs.includes(area.slug as AreaSlug)) return {};
   return buildMetadata({
     title: `${service.title} in ${area.name}`,
-    description: `${getServiceTownBlurb(area.slug as AreaSlug, subslug)} ${service.intro}`,
+    description: `${serviceAreaIntro(area.name, service.title)} ${service.intro}`,
     path: `/areas/${slug}/${subslug}`,
   });
 }
@@ -81,7 +81,7 @@ export default async function AreaSubPage({
     notFound();
   }
 
-  const localBlurb = getServiceTownBlurb(area.slug as AreaSlug, subslug);
+  const localBlurb = serviceAreaIntro(area.name, service.title);
   const faqs = [...service.faqs, ...area.faqs.slice(0, 1)];
 
   const crumbs = [
@@ -136,18 +136,10 @@ export default async function AreaSubPage({
             <h2 className="font-display text-2xl text-white">
               On-the-ground in {area.name}
             </h2>
-            <p className="mt-2 text-zinc-400">{area.housingNotes}</p>
+            <p className="mt-2 text-zinc-400">{area.accessNotes}</p>
             <p className="mt-4 text-sm text-zinc-500">
-              Postcodes we see often: {area.samplePostcodes.join(", ")}
+              Postcode districts: {area.postcodeDistricts.join(", ")}
             </p>
-            <h3 className="mt-8 font-display text-xl text-white">
-              Example jobs nearby
-            </h3>
-            <ul className="mt-2 list-disc space-y-1 pl-5 text-zinc-300">
-              {area.typicalJobs.map((j) => (
-                <li key={j}>{j}</li>
-              ))}
-            </ul>
             <h3 className="mt-8 font-display text-xl text-white">FAQs</h3>
             <dl className="mt-4 space-y-4">
               {faqs.map((f) => (

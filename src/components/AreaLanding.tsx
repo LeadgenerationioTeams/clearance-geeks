@@ -8,16 +8,16 @@ import {
   heroBenefitHeadline,
   whyChooseUsForArea,
 } from "@/lib/area-sales";
-import { pickAreaImage, images } from "@/lib/media";
+import { areaPageImage, images } from "@/lib/media";
 import { PageImage } from "./PageImage";
 import { CallButton } from "./CallButton";
 import { QuoteForm } from "./QuoteForm";
 import { StickyMobileCta } from "./StickyMobileCta";
+import { RecyclingCentreBlock } from "./RecyclingCentreBlock";
 
 export function AreaLanding({ area }: { area: AreaDefinition }) {
   const hoods = getNeighbourhoodsForArea(area.slug);
   const showServiceLinks = serviceByTownSlugs.includes(area.slug);
-  const heroImage = pickAreaImage(area.slug);
 
   return (
     <div className="pb-24 md:pb-10">
@@ -41,13 +41,13 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
               </Link>
             </div>
           </div>
-          <PageImage image={heroImage} priority className="lg:mt-0" />
+          <PageImage image={areaPageImage()} priority />
         </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-12">
         <h2 className="font-display text-3xl text-geek-lime">
-          Why {area.name} households choose us
+          Why choose us in {area.name}
         </h2>
         <ul className="mt-6 grid gap-4 sm:grid-cols-2">
           {whyChooseUsForArea(area.name).map((item) => (
@@ -60,7 +60,7 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
           ))}
         </ul>
         <div className="mt-8">
-          <CallButton className="text-sm" label="Call for a same-week slot" />
+          <CallButton className="text-sm" label="Call for a quote" />
         </div>
       </section>
 
@@ -93,8 +93,7 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
               Clearance services in {area.name}
             </h2>
             <p className="mt-3 text-zinc-400">
-              Pick a service — we will confirm access, parking and price before
-              anything is loaded.
+              Select a service type — we confirm access and price before loading.
             </p>
             <ul className="mt-6 space-y-3">
               {services.map((s) => (
@@ -120,28 +119,24 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
 
       <section className="mx-auto max-w-6xl px-4 py-12">
         <h2 className="font-display text-3xl text-white">
-          Local knowledge — streets, landmarks & parking
+          Access, postcodes & local reference
         </h2>
-        <p className="mt-4 max-w-3xl text-zinc-300">{area.housingNotes}</p>
+        <p className="mt-4 max-w-3xl text-zinc-300">{area.accessNotes}</p>
         <p className="mt-4 text-sm text-zinc-500">
-          Postcodes we route daily: {area.samplePostcodes.join(", ")}
+          Outward postcode districts for this page:{" "}
+          {area.postcodeDistricts.join(", ")} — confirm your full postcode when
+          booking.
         </p>
-        {area.hwrcName ? (
-          <p className="mt-4 text-zinc-400">
-            <strong className="text-zinc-200">{area.hwrcName}</strong>
-            {area.hwrcNote ? ` — ${area.hwrcNote}` : null}
-          </p>
-        ) : null}
-        {area.localParagraphs.map((p) => (
-          <p key={p} className="mt-4 max-w-3xl text-zinc-400">{p}</p>
-        ))}
+        <div className="mt-6 max-w-xl">
+          <RecyclingCentreBlock areaSlug={area.slug} />
+        </div>
 
         <h3 className="mt-10 font-display text-2xl text-geek-lime">
-          Neighbourhoods we cover in {area.name}
+          Neighbourhood pages in {area.name}
         </h3>
         <p className="mt-2 text-sm text-zinc-500">
-          Drill into your patch for parking notes, landmarks and typical jobs —
-          each page links back here.
+          Each link opens a focused page with access notes and cited landmarks
+          where available.
         </p>
         <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {hoods.map((h) => (
@@ -151,20 +146,11 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
                 className="block rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 hover:border-geek-lime/40"
               >
                 <span className="font-semibold text-white">{h.name}</span>
-                <p className="mt-1 text-xs text-zinc-500 line-clamp-2">
-                  {h.intro}
+                <p className="mt-1 text-xs text-zinc-500 line-clamp-3">
+                  {h.about}
                 </p>
               </Link>
             </li>
-          ))}
-        </ul>
-
-        <h3 className="mt-10 font-display text-2xl text-white">
-          Typical jobs we see in {area.name}
-        </h3>
-        <ul className="mt-4 list-disc space-y-2 pl-5 text-zinc-300">
-          {area.typicalJobs.map((j) => (
-            <li key={j}>{j}</li>
           ))}
         </ul>
 
@@ -200,18 +186,15 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
         </div>
       </section>
 
-      <section
-        id="quote"
-        className="mx-auto max-w-6xl px-4 py-12"
-      >
+      <section id="quote" className="mx-auto max-w-6xl px-4 py-12">
         <div className="grid gap-10 lg:grid-cols-2">
           <div>
             <h2 className="font-display text-3xl text-white">
-              Ready to clear in {area.name}?
+              Request a quote for {area.name}
             </h2>
             <p className="mt-3 text-zinc-400">
-              Send your postcode and a photo — we reply with a price before the
-              van rolls. No on-site haggling.
+              Postcode, photos and access notes are enough for a written quote
+              before collection.
             </p>
             <PageImage image={images.vanStreet} className="mt-6" />
           </div>
