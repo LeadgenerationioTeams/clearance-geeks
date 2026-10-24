@@ -48,7 +48,7 @@ export function BrandLogo({
       alt="The Clearance Geeks — Waste Removals"
       width={LOGO_WIDTH}
       height={LOGO_HEIGHT}
-      className={`h-12 w-auto max-w-[min(100%,320px)] object-contain object-left ${className}`}
+      className={`h-14 w-auto max-w-[min(100%,360px)] object-contain object-left ${className}`}
       priority
       unoptimized
     />

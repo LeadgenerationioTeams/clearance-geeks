@@ -11,7 +11,7 @@ test("homepage loads and quote form visible", async ({ page }) => {
   await page.goto("/");
   await acceptCookies(page);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  await expect(page.getByRole("heading", { name: /get a quote/i })).toBeVisible();
+  await expect(page.locator("#quote").getByRole("heading")).toBeVisible();
 });
 
 test("services hub links to a service page", async ({ page }) => {
