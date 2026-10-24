@@ -16,7 +16,8 @@ import { JobPhoto } from "@/components/JobPhoto";
 import { imageForService } from "@/lib/service-images";
 import { photosForTag, photosForServiceSlug } from "@/lib/gallery";
 import type { ServiceSlug } from "@/lib/services";
-import { siteConfig } from "@/config/site";
+import { getArea, serviceByTownSlugs } from "@/lib/areas";
+import { company } from "@/config/site";
 
 export function generateStaticParams() {
   return serviceSlugs.map((slug) => ({ slug }));
@@ -52,6 +53,10 @@ export default async function ServicePage({
     { name: service.title, path: `/services/${slug}` },
   ];
 
+  const hubAreas = serviceByTownSlugs
+    .map((areaSlug) => getArea(areaSlug))
+    .filter((area): area is NonNullable<typeof area> => Boolean(area));
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
       <JsonLd data={breadcrumbJsonLd(crumbs)} />
@@ -59,7 +64,7 @@ export default async function ServicePage({
         data={serviceJsonLd({
           name: service.title,
           description: service.intro,
-          areaName: siteConfig.serviceAreas.region,
+          areaName: company.region,
         })}
       />
       <JsonLd data={faqPageJsonLd(service.faqs)} />
@@ -106,22 +111,22 @@ export default async function ServicePage({
               </div>
             ))}
           </dl>
-          <p className="mt-8 text-sm text-zinc-500">
-            Local pages:{" "}
-            <Link
-              href={`/areas/stockport/${slug}`}
-              className="text-geek-lime underline"
-            >
-              Stockport
-            </Link>
-            {" · "}
-            <Link
-              href={`/areas/manchester/${slug}`}
-              className="text-geek-lime underline"
-            >
-              Manchester
-            </Link>
-          </p>
+          {hubAreas.length > 0 ? (
+            <p className="mt-8 text-sm text-zinc-500">
+              Local pages:{" "}
+              {hubAreas.map((area, index) => (
+                <span key={area.slug}>
+                  {index > 0 ? " · " : null}
+                  <Link
+                    href={`/areas/${area.slug}/${slug}`}
+                    className="text-geek-lime underline"
+                  >
+                    {area.name}
+                  </Link>
+                </span>
+              ))}
+            </p>
+          ) : null}
         </div>
         <QuoteForm />
       </div>

@@ -23,10 +23,12 @@ test("services hub links to a service page", async ({ page }) => {
 });
 
 test("areas and legal pages respond", async ({ page }) => {
-  await page.goto("/areas/stockport");
+  await page.goto("/areas/placeholder-area-01");
   await acceptCookies(page);
   await expect(
-    page.getByRole("heading", { name: /clearance in Stockport/i }),
+    page.getByRole("heading", {
+      name: /Waste clearance in PLACEHOLDER_AREA_NAME_01/i,
+    }),
   ).toBeVisible();
   await page.goto("/privacy");
   await expect(page.getByRole("heading", { name: /privacy/i })).toBeVisible();
