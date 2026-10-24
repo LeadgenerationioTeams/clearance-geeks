@@ -177,7 +177,7 @@ export type ServiceAreaEntry = {
   faqs: { question: string; answer: string }[];
 };
 
-// TO CONFIRM WITH SAM: starting set
+// Confirmed by Sam 24 Oct 2026
 export const serviceAreaEntries: ServiceAreaEntry[] = [
   {
     slug: "stockport",
