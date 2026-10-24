@@ -1,8 +1,8 @@
 import { CallButton } from "./CallButton";
-import { company } from "@/lib/company";
+import { company, isPlaceholderValue } from "@/config/site";
 
 function whatsAppHref(): string | null {
-  if (company.phone.startsWith("[")) return null;
+  if (isPlaceholderValue(company.phone)) return null;
   const digits = company.phone.replace(/\D/g, "");
   if (!digits) return null;
   const uk = digits.startsWith("0") ? `44${digits.slice(1)}` : digits;

@@ -1,27 +1,24 @@
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { company } from "@/lib/company";
-import { PageImage } from "@/components/PageImage";
-import { images } from "@/lib/media";
+import { PrivacyPolicyContent } from "@/components/legal/PrivacyPolicyContent";
+import { brandName, company } from "@/config/site";
 
 export const metadata = buildMetadata({
   title: "Privacy policy",
-  description: "Privacy policy placeholder for The Clearance Geeks website.",
+  description: `How ${company.legalName} (${brandName}) collects and uses personal data under UK GDPR.`,
   path: "/privacy",
 });
 
 export default function PrivacyPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10">
+    <div className="mx-auto max-w-3xl px-4 py-10 sm:py-12">
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Privacy" }]} />
       <h1 className="mt-4 font-display text-3xl text-geek-charcoal sm:text-4xl">
-        Privacy
+        Privacy policy
       </h1>
-      <PageImage image={images.brandedSplash} className="mt-6 max-w-md" />
-      <p className="mt-6 text-zinc-600">
-        Placeholder privacy notice for {company.legalName}. Replace with counsel-approved
-        text before launch. Contact: {company.email}.
-      </p>
+      <div className="mt-6">
+        <PrivacyPolicyContent />
+      </div>
     </div>
   );
 }

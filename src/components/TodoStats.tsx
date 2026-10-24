@@ -1,4 +1,4 @@
-import { todoMarketing } from "@/lib/company";
+import { todoMarketing } from "@/config/site";
 
 /** Renders marketing stats only when real data is provided — never fabricated. */
 export function TodoStats() {

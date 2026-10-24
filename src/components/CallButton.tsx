@@ -1,4 +1,4 @@
-import { company } from "@/lib/company";
+import { company, formatTelHref, isPlaceholderValue } from "@/config/site";
 
 export function CallButton({
   className = "",
@@ -7,9 +7,9 @@ export function CallButton({
   className?: string;
   label?: string;
 }) {
-  const href = company.phone.startsWith("[")
+  const href = isPlaceholderValue(company.phone)
     ? "#quote"
-    : `tel:${company.phone.replace(/\s/g, "")}`;
+    : formatTelHref(company.phone);
 
   return (
     <a
@@ -17,7 +17,7 @@ export function CallButton({
       className={`inline-flex min-h-11 items-center justify-center rounded-lg bg-geek-lime px-5 py-2.5 text-center text-sm font-semibold text-geek-charcoal transition hover:bg-geek-lime-bright active:scale-[0.99] ${className}`}
     >
       {label}
-      {company.phone.startsWith("[") ? "" : ` ${company.phone}`}
+      {isPlaceholderValue(company.phone) ? "" : ` ${company.phone}`}
     </a>
   );
 }

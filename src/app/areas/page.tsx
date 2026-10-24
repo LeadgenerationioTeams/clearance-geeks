@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { areas } from "@/lib/areas";
+import { formatServiceAreasCommaList } from "@/config/site";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd, breadcrumbJsonLd } from "@/lib/schema";
@@ -8,8 +9,7 @@ import { areaPageImage } from "@/lib/media";
 
 export const metadata = buildMetadata({
   title: "Areas we cover",
-  description:
-    "Waste removal and house clearance in Stockport, Manchester, Salford, Trafford, Tameside, Oldham, Bolton, Bury, Rochdale, Wigan, Cheadle and Didsbury.",
+  description: `Waste removal and house clearance in ${formatServiceAreasCommaList()}.`,
   path: "/areas",
 });
 

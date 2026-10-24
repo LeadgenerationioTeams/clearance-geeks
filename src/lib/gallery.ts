@@ -12,7 +12,7 @@ export interface JobPhoto {
   >;
 }
 
-/** Real clearance job photography (C1-branded vans excluded). */
+/** Real clearance job photography (third-party branded vans excluded). */
 export const jobPhotos: JobPhoto[] = [
   {
     id: "clearance-01",

@@ -11,7 +11,7 @@ import { services } from "@/lib/services";
 import { areas } from "@/lib/areas";
 import { photosForServiceSlug } from "@/lib/gallery";
 import { buildMetadata } from "@/lib/seo";
-import { company } from "@/lib/company";
+import { company, complianceCopy } from "@/config/site";
 
 export const metadata = buildMetadata({
   title: "Waste removal & house clearance Greater Manchester",
@@ -221,7 +221,7 @@ export default function HomePage() {
             ))}
           </div>
           <p className="mt-10 text-sm text-zinc-500">
-            {company.legalName} — waste carrier registration {company.wasteCarrierLicence} when confirmed.
+            {company.legalName} — {complianceCopy.wasteCarrierNote}
           </p>
         </div>
       </section>

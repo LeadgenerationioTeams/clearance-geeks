@@ -4,7 +4,7 @@ import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CookieConsentProvider } from "@/components/CookieConsent";
-import { company } from "@/lib/company";
+import { company } from "@/config/site";
 import { JsonLd, localBusinessJsonLd } from "@/lib/schema";
 
 const body = Inter({

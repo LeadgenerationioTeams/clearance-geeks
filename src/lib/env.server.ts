@@ -1,7 +1,9 @@
-import { siteUrl as defaultSiteUrl } from "./company";
+import { defaultSiteOrigin } from "@/config/site";
 
 export const isProduction = process.env.VERCEL_ENV === "production";
 
 export function resolveSiteUrl(): string {
-  return process.env.NEXT_PUBLIC_SITE_URL?.trim() || defaultSiteUrl;
+  const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (fromEnv) return fromEnv.replace(/\/$/, "");
+  return defaultSiteOrigin();
 }

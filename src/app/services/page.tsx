@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { services } from "@/lib/services";
+import { servicesListed } from "@/config/site";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd, breadcrumbJsonLd } from "@/lib/schema";
@@ -8,8 +9,7 @@ import { JobPhoto } from "@/components/JobPhoto";
 
 export const metadata = buildMetadata({
   title: "Waste removal services",
-  description:
-    "House clearance, garden waste, office clearances, junk removal, builders waste and single-item collections across Greater Manchester.",
+  description: `${servicesListed.join(", ")} across Greater Manchester.`,
   path: "/services",
 });
 
