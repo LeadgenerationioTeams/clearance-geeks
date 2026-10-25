@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { StickyMobileCta } from "@/components/StickyMobileCta";
 import { CookieConsentProvider } from "@/components/CookieConsent";
+import { QuoteHashFocus } from "@/components/QuoteHashFocus";
 import {
   COOKIE_BAR_HEIGHT_BOOTSTRAP_PX,
   COOKIE_CONSENT_STORAGE_KEY,
@@ -45,10 +46,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body
-        className="flex min-h-full flex-col bg-zinc-50 pb-[calc(var(--mobile-call-bar-height)+env(safe-area-inset-bottom,0px))] text-zinc-900 antialiased lg:pb-0"
-      >
+      <body className="flex min-h-full flex-col bg-zinc-50 text-zinc-900 antialiased">
         <CookieConsentProvider>
+          <QuoteHashFocus />
           <JsonLd data={localBusinessJsonLd()} />
           <SiteHeader />
           <main className="flex-1">{children}</main>

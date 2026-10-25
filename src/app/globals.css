@@ -21,6 +21,10 @@
   html {
     scroll-padding-bottom: calc(88px + var(--cookie-bar-h, 0px));
   }
+
+  body {
+    padding-bottom: calc(88px + var(--cookie-bar-h, 0px));
+  }
 }
 
 @theme inline {
