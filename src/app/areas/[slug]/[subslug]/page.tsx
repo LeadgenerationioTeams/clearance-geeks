@@ -13,7 +13,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { QuoteForm } from "@/components/QuoteForm";
 import { NeighbourhoodLanding } from "@/components/NeighbourhoodLanding";
 import { PageImage } from "@/components/PageImage";
-import { images } from "@/lib/media";
+import { areaServicePageImage } from "@/lib/media";
 import {
   JsonLd,
   breadcrumbJsonLd,
@@ -81,6 +81,7 @@ export default async function AreaSubPage({
 
   const localBlurb = serviceAreaIntro(area.name, service.title);
   const faqs = [...service.faqs, ...area.faqs.slice(0, 1)];
+  const serviceHeroImage = areaServicePageImage(subslug);
 
   const crumbs = [
     { name: "Home", path: "/" },
@@ -131,7 +132,9 @@ export default async function AreaSubPage({
               </Link>
             </div>
           </div>
-          <PageImage image={images.heroClearance} priority />
+          {serviceHeroImage ? (
+            <PageImage image={serviceHeroImage} priority />
+          ) : null}
         </div>
 
         <div id="quote" className="mt-10 grid gap-10 lg:grid-cols-2">
