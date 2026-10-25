@@ -21,9 +21,11 @@
   html {
     scroll-padding-bottom: calc(88px + var(--cookie-bar-h, 0px));
   }
+}
 
-  body {
-    padding-bottom: calc(88px + var(--cookie-bar-h, 0px));
+@media (min-width: 1024px) {
+  html {
+    scroll-padding-bottom: var(--cookie-bar-h, 0px);
   }
 }
 

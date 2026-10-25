@@ -8,20 +8,21 @@ const vanAlt =
 export function HomeHero() {
   return (
     <section
-      className="relative isolate overflow-hidden bg-zinc-950 lg:flex lg:min-h-[min(calc(100dvh-4rem),720px)] lg:items-center"
+      className="relative isolate bg-zinc-950 lg:flex lg:min-h-[min(calc(100dvh-4rem),720px)] lg:items-center"
     >
-      <Image
-        src="/brand/van-1400.webp"
-        alt={vanAlt}
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover object-[72%_42%] sm:object-[68%_40%] lg:object-[58%_38%]"
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-zinc-950/80 via-zinc-950/75 to-zinc-950/78 lg:bg-gradient-to-r lg:from-zinc-950/92 lg:via-zinc-950/78 lg:to-zinc-950/45"
-        aria-hidden
-      />
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+        <Image
+          src="/brand/van-1400.webp"
+          alt={vanAlt}
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[72%_42%] sm:object-[68%_40%] lg:object-[58%_38%]"
+        />
+        <div
+          className="absolute inset-0 bg-gradient-to-b from-zinc-950/80 via-zinc-950/75 to-zinc-950/78 lg:bg-gradient-to-r lg:from-zinc-950/92 lg:via-zinc-950/78 lg:to-zinc-950/45"
+        />
+      </div>
       <div className="site-container relative z-10 w-full pb-8 pt-6 md:pb-10 md:pt-8 lg:pb-6 lg:pt-5">
         <div className="grid gap-5 lg:grid-cols-2 lg:items-start lg:gap-5">
           <div className="max-w-xl text-white">

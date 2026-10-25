@@ -6,24 +6,30 @@ function prefersReducedMotion(): boolean {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-function quoteHashActive(): boolean {
-  return window.location.hash === "#quote";
+function quoteNameInput(): HTMLElement | null {
+  const target = document.getElementById("quote");
+  if (!target) return null;
+
+  return (
+    target.querySelector<HTMLElement>('input[name="name"]') ??
+    target.querySelector<HTMLElement>(
+      'input:not([type="hidden"]):not([disabled]), select:not([disabled]), textarea:not([disabled])',
+    )
+  );
 }
 
-function focusQuoteFirstField(): void {
-  if (!quoteHashActive()) return;
-
-  const target = document.getElementById("quote");
-  if (!target) return;
-
-  const first = target.querySelector<HTMLElement>(
-    'input:not([type="hidden"]):not([disabled]), select:not([disabled]), textarea:not([disabled])',
-  );
-  if (!first) return;
+function focusQuoteNameAfterScroll(): void {
+  const name = quoteNameInput();
+  if (!name) return;
 
   const behavior = prefersReducedMotion() ? "auto" : "smooth";
-  first.scrollIntoView({ behavior, block: "nearest" });
-  first.focus({ preventScroll: true });
+  name.scrollIntoView({ behavior, block: "nearest" });
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      name.focus({ preventScroll: true });
+    });
+  });
 }
 
 function isQuoteLink(anchor: HTMLAnchorElement): boolean {
@@ -35,19 +41,24 @@ function isQuoteLink(anchor: HTMLAnchorElement): boolean {
 export function QuoteHashFocus() {
   useEffect(() => {
     const onHashChange = () => {
-      focusQuoteFirstField();
+      if (window.location.hash !== "#quote") return;
+      focusQuoteNameAfterScroll();
     };
 
     const onDocumentClick = (event: MouseEvent) => {
       const anchor = (event.target as Element | null)?.closest?.("a");
       if (!anchor || !(anchor instanceof HTMLAnchorElement)) return;
       if (!isQuoteLink(anchor)) return;
+
       window.requestAnimationFrame(() => {
-        focusQuoteFirstField();
+        focusQuoteNameAfterScroll();
       });
     };
 
-    focusQuoteFirstField();
+    if (window.location.hash === "#quote") {
+      focusQuoteNameAfterScroll();
+    }
+
     window.addEventListener("hashchange", onHashChange);
     document.addEventListener("click", onDocumentClick);
 

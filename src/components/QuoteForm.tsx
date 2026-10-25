@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useActionState } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { submitQuote, type QuoteFormState } from "@/app/actions/quote";
 import { services } from "@/lib/services";
 
@@ -50,8 +50,27 @@ export function QuoteForm({
   variant?: "default" | "hero";
 }) {
   const [state, action, pending] = useActionState(submitQuote, initial);
+  const formRef = useRef<HTMLFormElement>(null);
   const isHero = variant === "hero";
   const tightLg = compactDesktop || isHero;
+
+  useEffect(() => {
+    const form = formRef.current;
+    if (!form) return;
+
+    const onFocusIn = (event: FocusEvent) => {
+      const el = event.target;
+      if (!(el instanceof HTMLElement)) return;
+      if (!el.matches("input, select, textarea, button")) return;
+
+      requestAnimationFrame(() => {
+        el.scrollIntoView({ block: "nearest" });
+      });
+    };
+
+    form.addEventListener("focusin", onFocusIn);
+    return () => form.removeEventListener("focusin", onFocusIn);
+  }, []);
 
   const nameField = (
     <Field label="Name" hero={isHero}>
@@ -70,10 +89,12 @@ export function QuoteForm({
     </Field>
   );
 
-  const heroPairGrid = "grid grid-cols-1 gap-3.5 lg:grid-cols-2 lg:gap-2";
+  const heroPairGrid =
+    "grid grid-cols-1 gap-3.5 overflow-visible lg:grid-cols-2 lg:gap-2";
 
   return (
     <form
+      ref={formRef}
       id={id}
       tabIndex={-1}
       action={action}
