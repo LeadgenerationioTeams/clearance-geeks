@@ -16,10 +16,8 @@ import {
   syncCookieBannerAttribute,
 } from "@/lib/cookie-consent-store";
 import { cn } from "@/lib/cn";
-import { focusRingLimeButton } from "@/lib/focus-rings";
-
-const cookieActionFocusOnDark =
-  "focus-visible:outline focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-geek-lime focus-visible:shadow-[0_0_0_3px_#7cfc00]";
+import { focusVisibleOnDarkClass } from "@/lib/focus-visible";
+import { limeButtonOnDarkClass } from "@/lib/lime-button";
 
 /** Optional analytics — only mount after explicit Accept. None configured yet. */
 function OptionalAnalytics() {
@@ -91,15 +89,15 @@ export function CookieConsentProvider({
   const compact = compactMobile;
 
   const acceptButtonClass = cn(
-    "min-h-11 rounded-xl bg-geek-lime px-4 font-bold text-[#111] border-2 border-[#111] sm:px-5",
+    "min-h-11 rounded-xl px-4 font-bold sm:px-5",
     compact ? "flex-1 text-sm" : "px-5",
-    focusRingLimeButton,
+    limeButtonOnDarkClass,
   );
 
   const rejectButtonClass = cn(
     "min-h-11 rounded-xl border border-zinc-600 px-4 text-sm font-semibold text-zinc-200 sm:px-5",
     compact ? "flex-1" : "px-5",
-    cookieActionFocusOnDark,
+    focusVisibleOnDarkClass,
   );
 
   return (

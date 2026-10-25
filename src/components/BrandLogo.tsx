@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { focusRingOnBlackTile } from "@/lib/focus-rings";
+import { focusVisibleOnDarkClass } from "@/lib/focus-visible";
 import { resolveHomeHeroVariant } from "@/lib/home-hero";
 import { lightVanHeaderLogo } from "@/lib/light-van-brand";
 
@@ -36,7 +36,10 @@ export function BrandLogo({
       </div>
     );
     return linked ? (
-      <Link href="/" className="inline-block">
+      <Link
+        href="/"
+        className={`inline-block rounded-sm ${focusVisibleOnDarkClass}`}
+      >
         {hero}
         <span className="sr-only">The Clearance Geeks — Waste Removals</span>
       </Link>
@@ -60,12 +63,11 @@ export function BrandLogo({
 
   if (!linked) return img;
 
-  const linkClass = lightVan
-    ? `inline-block rounded-lg ${focusRingOnBlackTile}`
-    : `inline-block ${focusRingOnBlackTile}`;
-
   return (
-    <Link href="/" className={linkClass}>
+    <Link
+      href="/"
+      className={`inline-block rounded-lg ${focusVisibleOnDarkClass}`}
+    >
       {img}
       <span className="sr-only">The Clearance Geeks — Waste Removals</span>
     </Link>

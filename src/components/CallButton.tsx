@@ -1,6 +1,9 @@
 import { company, isPlaceholder, telHref } from "@/config/site";
-import { focusRingLimeButton } from "@/lib/focus-rings";
 import { cn } from "@/lib/cn";
+import {
+  focusVisibleOnDarkClass,
+  focusVisibleOnLightClass,
+} from "@/lib/focus-visible";
 
 export function CallButton({
   className = "",
@@ -18,12 +21,17 @@ export function CallButton({
   const base =
     "inline-flex min-h-12 items-center justify-center rounded-xl px-6 py-3 text-center text-base font-bold transition md:text-lg";
 
+  const focusClass =
+    variant === "outline-dark"
+      ? focusVisibleOnLightClass
+      : focusVisibleOnDarkClass;
+
   const styles =
     variant === "outline"
-      ? `${base} border-2 border-white bg-transparent text-white hover:bg-white/10`
+      ? `${base} border-2 border-white bg-transparent text-white hover:bg-white/10 ${focusClass}`
       : variant === "outline-dark"
-        ? `${base} border-2 border-zinc-900 bg-transparent text-zinc-900 hover:bg-zinc-100`
-        : `${base} font-extrabold uppercase tracking-wide shadow-[0_0_24px_rgba(139,230,0,0.35)] border-2 border-[#111] bg-geek-lime text-[#111] hover:bg-geek-lime-bright ${focusRingLimeButton}`;
+        ? `${base} border-2 border-zinc-900 bg-transparent text-zinc-900 hover:bg-zinc-100 ${focusClass}`
+        : `${base} border-2 border-zinc-900 bg-geek-lime font-extrabold uppercase tracking-wide text-black shadow-[0_0_24px_rgba(139,230,0,0.35)] hover:bg-geek-lime-bright ${focusClass}`;
 
   const phoneSuffix =
     showPhone && !isPlaceholder(company.phone) ? ` ${company.phone}` : "";

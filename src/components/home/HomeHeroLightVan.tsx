@@ -17,7 +17,7 @@ const DESKTOP_VAN_FRAME_HEIGHT = 686;
 export function HomeHeroLightVan() {
   return (
     <section className="bg-[#F7F8F6] text-[#111]">
-      <div className="site-container w-full py-6 md:py-8 lg:py-6">
+      <div className="site-container w-full py-6 md:py-8 lg:pt-2 lg:pb-4">
         <div className="flex flex-col gap-6">
           <figure
             className="aspect-[16/13] w-full overflow-hidden rounded-2xl lg:hidden"
@@ -34,7 +34,7 @@ export function HomeHeroLightVan() {
           </figure>
 
           <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-10">
-            <div className="flex max-w-xl flex-col gap-5 lg:gap-6">
+            <div className="flex max-w-xl flex-col gap-5 lg:gap-3">
               <div>
                 <h1
                   className="font-display text-[2.125rem] leading-[2.375rem] tracking-tight sm:text-[2.25rem] sm:leading-[2.5rem] lg:max-w-[22ch] lg:text-[3.5rem] lg:leading-[3.75rem]"
@@ -46,7 +46,7 @@ export function HomeHeroLightVan() {
                     {siteConfig.serviceAreas.region}
                   </span>
                 </h1>
-                <p className="mt-3 text-base text-[#111]/80 md:mt-4 md:text-lg">
+                <p className="mt-3 text-base text-[#111]/80 md:mt-4 lg:mt-6 md:text-lg">
                   Fast quotes, tidy crews and responsible disposal for homes and
                   businesses.
                 </p>

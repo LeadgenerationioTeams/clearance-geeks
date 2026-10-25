@@ -40,7 +40,7 @@ export default function AreasHubPage() {
               className="block h-full rounded-2xl border border-zinc-800 bg-zinc-950 p-5 hover:border-geek-lime/50"
             >
               <h2 className="font-display text-2xl text-white">{a.name}</h2>
-              <p className="mt-1 text-xs uppercase text-zinc-500">
+              <p className="mt-1 text-base uppercase text-zinc-500">
                 {a.boroughLabel}
               </p>
               <p className="mt-2 text-sm text-zinc-400 line-clamp-4">

@@ -1,8 +1,8 @@
 import { CallButton } from "./CallButton";
 import { company, hasCallablePhone } from "@/config/site";
-import { focusRingOnDarkBg } from "@/lib/focus-rings";
-import { limeButtonOnLightClass } from "@/lib/lime-button";
 import { cn } from "@/lib/cn";
+import { focusVisibleOnDarkClass } from "@/lib/focus-visible";
+import { limeButtonOnDarkClass } from "@/lib/lime-button";
 
 function whatsAppHref(): string | null {
   if (!hasCallablePhone()) return null;
@@ -25,7 +25,7 @@ export function StickyMobileCta() {
       <div className={`grid gap-2 ${wa ? "grid-cols-2" : "grid-cols-1"}`}>
         {hasCallablePhone() ? (
           <CallButton
-            className={cn("w-full px-3 text-sm lg:hidden", focusRingOnDarkBg)}
+            className={cn("w-full px-3 text-sm lg:hidden")}
             label="Call"
             showPhone={false}
           />
@@ -34,7 +34,7 @@ export function StickyMobileCta() {
             href="#quote"
             className={cn(
               "inline-flex min-h-12 w-full items-center justify-center rounded-xl px-3 text-center text-sm font-extrabold uppercase tracking-wide lg:hidden",
-              limeButtonOnLightClass,
+              limeButtonOnDarkClass,
             )}
           >
             Get a quote
@@ -43,7 +43,10 @@ export function StickyMobileCta() {
         {wa ? (
           <a
             href={wa}
-            className="inline-flex min-h-12 items-center justify-center rounded-xl border-2 border-geek-lime bg-transparent px-3 text-center text-sm font-extrabold uppercase tracking-wide text-geek-lime"
+            className={cn(
+              "inline-flex min-h-12 items-center justify-center rounded-xl border-2 border-geek-lime bg-transparent px-3 text-center text-sm font-extrabold uppercase tracking-wide text-geek-lime",
+              focusVisibleOnDarkClass,
+            )}
             rel="noopener noreferrer"
             target="_blank"
           >
