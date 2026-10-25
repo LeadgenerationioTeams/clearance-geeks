@@ -2,7 +2,10 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
-import { COOKIE_CONSENT_STORAGE_KEY } from "@/lib/cookie-consent";
+import {
+  COOKIE_CONSENT_STORAGE_KEY,
+  COOKIE_SETTINGS_BUTTON_ID,
+} from "@/lib/cookie-consent";
 import {
   type Consent,
   consumePendingCookieBannerFocus,
@@ -13,24 +16,10 @@ import {
   syncCookieBannerAttribute,
 } from "@/lib/cookie-consent-store";
 import { cn } from "@/lib/cn";
+import { focusRingLimeButton } from "@/lib/focus-rings";
 
-const cookieActionFocus =
-  "focus-visible:outline focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-geek-lime";
-
-function focusAfterCookieChoice() {
-  requestAnimationFrame(() => {
-    const settings = document.getElementById("cookie-settings-focus");
-    if (settings instanceof HTMLElement) {
-      settings.focus({ preventScroll: true });
-      return;
-    }
-    const h1 = document.querySelector("main h1");
-    if (h1 instanceof HTMLElement) {
-      h1.tabIndex = -1;
-      h1.focus({ preventScroll: true });
-    }
-  });
-}
+const cookieActionFocusOnDark =
+  "focus-visible:outline focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-geek-lime focus-visible:shadow-[0_0_0_3px_#7cfc00]";
 
 /** Optional analytics — only mount after explicit Accept. None configured yet. */
 function OptionalAnalytics() {
@@ -59,7 +48,13 @@ export function CookieConsentProvider({
       /* ignore */
     }
     notifyConsentChange();
-    focusAfterCookieChoice();
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        document.getElementById(COOKIE_SETTINGS_BUTTON_ID)?.focus({
+          preventScroll: true,
+        });
+      });
+    });
   }, []);
 
   useEffect(() => {
@@ -96,15 +91,15 @@ export function CookieConsentProvider({
   const compact = compactMobile;
 
   const acceptButtonClass = cn(
-    "min-h-11 rounded-xl bg-geek-lime px-4 font-bold text-[#111] border border-[#111] sm:px-5",
+    "min-h-11 rounded-xl bg-geek-lime px-4 font-bold text-[#111] border-2 border-[#111] sm:px-5",
     compact ? "flex-1 text-sm" : "px-5",
-    cookieActionFocus,
+    focusRingLimeButton,
   );
 
   const rejectButtonClass = cn(
     "min-h-11 rounded-xl border border-zinc-600 px-4 text-sm font-semibold text-zinc-200 sm:px-5",
     compact ? "flex-1" : "px-5",
-    cookieActionFocus,
+    cookieActionFocusOnDark,
   );
 
   return (

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { focusRingOnBlackTile } from "@/lib/focus-rings";
 import { resolveHomeHeroVariant } from "@/lib/home-hero";
 import { lightVanHeaderLogo } from "@/lib/light-van-brand";
 
@@ -59,8 +60,12 @@ export function BrandLogo({
 
   if (!linked) return img;
 
+  const linkClass = lightVan
+    ? `inline-block rounded-lg ${focusRingOnBlackTile}`
+    : `inline-block ${focusRingOnBlackTile}`;
+
   return (
-    <Link href="/" className="inline-block">
+    <Link href="/" className={linkClass}>
       {img}
       <span className="sr-only">The Clearance Geeks — Waste Removals</span>
     </Link>

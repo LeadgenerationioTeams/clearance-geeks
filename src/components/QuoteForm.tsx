@@ -10,6 +10,7 @@ import {
   siteConfig,
   telHref,
 } from "@/config/site";
+import { limeButtonOnLightClass } from "@/lib/lime-button";
 import { services } from "@/lib/services";
 
 const initial: QuoteFormState = { ok: false, message: "" };
@@ -17,11 +18,8 @@ const initial: QuoteFormState = { ok: false, message: "" };
 const fieldScrollMargin =
   "max-lg:scroll-mb-[calc(88px+var(--cookie-bar-h,0px)+4px)] lg:scroll-mb-[calc(var(--cookie-bar-h,0px)+8px)]";
 
-const submitFocus =
-  "focus-visible:outline focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-geek-lime";
-
-const limeOnLightButton =
-  "border border-[#111] bg-geek-lime text-[#111] hover:bg-geek-lime-bright";
+const cookieBannerScrollMargin =
+  "lg:scroll-mb-[calc(var(--cookie-bar-h,0px)+8px)]";
 
 const fieldInputClass =
   `mt-1.5 min-h-11 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-base text-zinc-900 shadow-sm transition placeholder:text-zinc-400 focus:border-geek-lime focus-visible:outline focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 lg:mt-1 lg:py-2.5 ${fieldScrollMargin}`;
@@ -203,8 +201,8 @@ export function QuoteForm({
         <h2
           className={`font-display text-zinc-900 ${
             isHero
-              ? "text-2xl leading-tight sm:text-[1.65rem] lg:text-xl"
-              : `text-2xl sm:text-[1.75rem] ${tightLg ? "lg:text-xl" : ""}`
+              ? "text-2xl leading-tight sm:text-[1.65rem] lg:text-2xl"
+              : `text-2xl sm:text-[1.75rem] ${tightLg ? "lg:text-2xl" : ""}`
           }`}
         >
           {title}
@@ -305,7 +303,7 @@ export function QuoteForm({
         <button
           type="submit"
           disabled={pending}
-          className={`w-full rounded-xl font-extrabold uppercase tracking-wide transition disabled:opacity-60 ${limeOnLightButton} ${fieldScrollMargin} ${submitFocus} ${
+          className={`w-full rounded-xl font-extrabold uppercase tracking-wide transition disabled:opacity-60 ${limeButtonOnLightClass} ${fieldScrollMargin} ${
             isHero
               ? "min-h-12 px-6 py-3.5 text-base shadow-[0_0_24px_rgba(139,230,0,0.35)] sm:text-lg lg:min-h-11 lg:py-2.5 lg:text-sm"
               : "px-6 py-3 text-lg"
@@ -314,7 +312,7 @@ export function QuoteForm({
           {pending ? "Sending…" : "Send quote request"}
         </button>
         <p
-          className={`text-sm leading-snug text-zinc-600 lg:scroll-mb-[calc(var(--cookie-bar-h,0px)+8px)] ${isHero ? "text-center" : ""}`}
+          className={`text-sm leading-snug text-zinc-600 ${cookieBannerScrollMargin} ${isHero ? "text-center" : ""}`}
         >
           We&apos;ll use your details to reply to your quote request and arrange
           the job. See our{" "}
