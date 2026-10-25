@@ -127,17 +127,25 @@ export function QuoteForm({
       );
       if (!link) return;
 
+      const afterNav = () => focusQuoteNameAfterScroll(id);
+
       if (window.location.hash === hash) {
         event.preventDefault();
-        focusQuoteNameAfterScroll(id);
+        afterNav();
         return;
       }
 
       const onNextHash = () => {
         window.removeEventListener("hashchange", onNextHash);
-        focusQuoteNameAfterScroll(id);
+        afterNav();
       };
       window.addEventListener("hashchange", onNextHash);
+      window.setTimeout(() => {
+        if (window.location.hash === hash) {
+          window.removeEventListener("hashchange", onNextHash);
+          afterNav();
+        }
+      }, 0);
     };
 
     formEl?.addEventListener("focusin", onFocusIn);
@@ -251,7 +259,7 @@ export function QuoteForm({
         >
           {pending ? "Sending…" : "Send quote request"}
         </button>
-        <p className="text-center text-xs leading-snug text-zinc-500">
+        <p className="quote-form-privacy-line text-center text-xs leading-snug text-zinc-500">
           We&apos;ll use your details to reply to your quote request and arrange
           the job. See our{" "}
           <Link href="/privacy" className="font-medium text-zinc-700 underline">
@@ -261,7 +269,7 @@ export function QuoteForm({
         </p>
       </div>
 
-      {state.message ? (
+      {state.message && (siteConfig.quotesOpen || !state.ok) ? (
         <p
           className={`text-sm ${state.ok ? "text-green-800" : "text-red-700"}`}
           role="status"

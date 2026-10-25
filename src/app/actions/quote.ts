@@ -1,6 +1,6 @@
 "use server";
 
-import { company, isPlaceholder, siteConfig } from "@/config/site";
+import { siteConfig } from "@/config/site";
 
 export type QuoteFormState = {
   ok: boolean;
@@ -41,13 +41,9 @@ export async function submitQuote(
   void { name, phone, postcode, jobType, details, photo };
 
   if (!siteConfig.quotesOpen) {
-    const phoneForMessage = isPlaceholder(company.phone)
-      ? "[number]"
-      : company.phone;
-
     return {
       ok: true,
-      message: `Online quotes aren't open yet. Please call us on ${phoneForMessage}.`,
+      message: "",
     };
   }
 

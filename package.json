@@ -10,8 +10,9 @@
     "lint": "eslint",
     "check:forbidden": "node scripts/check-forbidden-strings.mjs",
     "check:similarity": "node scripts/similarity-check.mjs",
+    "test:unit": "node --experimental-strip-types --test scripts/cookie-consent-bootstrap.test.mjs",
     "test:e2e": "playwright test",
-    "test": "playwright test"
+    "test": "npm run test:unit && playwright test"
   },
   "dependencies": {
     "@playwright/test": "^1.64.1",
