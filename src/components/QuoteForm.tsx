@@ -8,7 +8,7 @@ import { services } from "@/lib/services";
 const initial: QuoteFormState = { ok: false, message: "" };
 
 const fieldInputClass =
-  "mt-1.5 min-h-11 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-base text-zinc-900 shadow-sm transition placeholder:text-zinc-400 focus:border-green-800 focus:outline-none focus:ring-2 focus:ring-green-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-800";
+  "quote-form-field mt-1.5 min-h-11 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-base text-zinc-900 shadow-sm transition placeholder:text-zinc-400";
 
 const fieldSelectClass = `${fieldInputClass} quote-form-select`;
 

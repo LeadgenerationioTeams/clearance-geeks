@@ -38,6 +38,13 @@ html[data-cookie-banner="open"] .quote-form-hero-details {
   height: 5.25rem;
 }
 
+.quote-form-field:focus-visible,
+.quote-form-select:focus-visible {
+  outline: 2px solid #18181b;
+  outline-offset: 2px;
+  outline-style: solid;
+}
+
 .quote-form-select {
   appearance: none;
   -webkit-appearance: none;
@@ -45,12 +52,13 @@ html[data-cookie-banner="open"] .quote-form-hero-details {
   background-repeat: no-repeat;
   background-position: right 1rem center;
   background-size: 1rem;
-  padding-right: 2.5rem;
+  padding-right: 3.25rem;
 }
 
-.quote-form-select:focus-visible {
-  outline: 2px solid #166534;
-  outline-offset: 2px;
+@media (min-width: 640px) {
+  .quote-form-select {
+    padding-right: 2.5rem;
+  }
 }
 
 @media (min-width: 1024px) {
