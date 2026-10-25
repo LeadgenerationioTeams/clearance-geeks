@@ -15,8 +15,10 @@ export function SiteHeader() {
   const lightVan = resolveHomeHeroVariant() === "light-van";
 
   const navLinkClass = cn(
-    "inline-flex min-h-11 items-center px-1 hover:text-geek-lime",
-    lightVan ? "text-[#111]" : "text-zinc-200",
+    "inline-flex min-h-11 items-center px-1",
+    lightVan
+      ? "text-[#111] hover:text-[#111] hover:underline"
+      : "text-zinc-200 hover:text-geek-lime",
   );
 
   return (

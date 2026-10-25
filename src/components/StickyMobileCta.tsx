@@ -33,7 +33,7 @@ export function StickyMobileCta() {
           <a
             href="#quote"
             className={cn(
-              "inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-geek-lime px-3 text-center text-sm font-extrabold uppercase tracking-wide text-black lg:hidden",
+              "inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-geek-lime px-3 text-center text-sm font-extrabold uppercase tracking-wide text-black focus-visible:outline focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-geek-lime lg:hidden",
             )}
           >
             Get a quote

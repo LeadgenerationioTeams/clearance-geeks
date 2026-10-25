@@ -15,7 +15,13 @@ import { services } from "@/lib/services";
 const initial: QuoteFormState = { ok: false, message: "" };
 
 const fieldScrollMargin =
-  "max-lg:scroll-mb-[calc(88px+var(--cookie-bar-h,0px)+4px)]";
+  "max-lg:scroll-mb-[calc(88px+var(--cookie-bar-h,0px)+4px)] lg:scroll-mb-[calc(var(--cookie-bar-h,0px)+8px)]";
+
+const submitFocus =
+  "focus-visible:outline focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-geek-lime";
+
+const limeOnLightButton =
+  "border border-[#111] bg-geek-lime text-[#111] hover:bg-geek-lime-bright";
 
 const fieldInputClass =
   `mt-1.5 min-h-11 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-base text-zinc-900 shadow-sm transition placeholder:text-zinc-400 focus:border-geek-lime focus-visible:outline focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 lg:mt-1 lg:py-2.5 ${fieldScrollMargin}`;
@@ -85,6 +91,8 @@ export function QuoteForm({
 }) {
   const [state, action, pending] = useActionState(submitQuote, initial);
   const formRef = useRef<HTMLFormElement>(null);
+  const statusRef = useRef<HTMLParagraphElement>(null);
+  const savedFieldsRef = useRef<Record<string, string> | null>(null);
   const isHero = variant === "hero";
   const tightLg = compactDesktop || isHero;
   const quotesClosed = !siteConfig.quotesOpen;
@@ -106,6 +114,42 @@ export function QuoteForm({
     form.addEventListener("focusin", onFocusIn);
     return () => form.removeEventListener("focusin", onFocusIn);
   }, []);
+
+  useEffect(() => {
+    if (!state.message || !state.info) return;
+    requestAnimationFrame(() => {
+      statusRef.current?.focus();
+    });
+  }, [state.message, state.info]);
+
+  useEffect(() => {
+    if (!state.info || !savedFieldsRef.current || !formRef.current) return;
+    const form = formRef.current;
+    const saved = savedFieldsRef.current;
+    for (const [name, value] of Object.entries(saved)) {
+      const el = form.elements.namedItem(name);
+      if (
+        el instanceof HTMLInputElement ||
+        el instanceof HTMLTextAreaElement ||
+        el instanceof HTMLSelectElement
+      ) {
+        el.value = value;
+      }
+    }
+  }, [state]);
+
+  function captureFormFields() {
+    const form = formRef.current;
+    if (!form) return;
+    savedFieldsRef.current = {
+      name: String(new FormData(form).get("name") ?? ""),
+      phone: String(new FormData(form).get("phone") ?? ""),
+      email: String(new FormData(form).get("email") ?? ""),
+      postcode: String(new FormData(form).get("postcode") ?? ""),
+      jobType: String(new FormData(form).get("jobType") ?? ""),
+      details: String(new FormData(form).get("details") ?? ""),
+    };
+  }
 
   const nameField = (
     <Field label="Name" hero={isHero}>
@@ -133,6 +177,7 @@ export function QuoteForm({
       id={id}
       tabIndex={-1}
       action={action}
+      onSubmit={quotesClosed ? captureFormFields : undefined}
       className={`flex flex-col rounded-2xl border bg-white ${
         isHero
           ? `border-zinc-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.28)] ring-1 ring-black/5 sm:p-6 lg:gap-2 lg:p-3.5 ${
@@ -164,7 +209,7 @@ export function QuoteForm({
         >
           {title}
         </h2>
-        <p className="text-sm leading-snug text-zinc-600 lg:text-xs lg:leading-snug">
+        <p className="text-sm leading-snug text-zinc-600">
           {isHero
             ? "Tell us what needs clearing — you can send photos after we reply."
             : "Tell us what needs clearing. You can send photos after we reply."}
@@ -260,7 +305,7 @@ export function QuoteForm({
         <button
           type="submit"
           disabled={pending}
-          className={`w-full rounded-xl bg-geek-lime font-extrabold uppercase tracking-wide text-black transition hover:bg-geek-lime-bright disabled:opacity-60 ${fieldScrollMargin} ${
+          className={`w-full rounded-xl font-extrabold uppercase tracking-wide transition disabled:opacity-60 ${limeOnLightButton} ${fieldScrollMargin} ${submitFocus} ${
             isHero
               ? "min-h-12 px-6 py-3.5 text-base shadow-[0_0_24px_rgba(139,230,0,0.35)] sm:text-lg lg:min-h-11 lg:py-2.5 lg:text-sm"
               : "px-6 py-3 text-lg"
@@ -269,7 +314,7 @@ export function QuoteForm({
           {pending ? "Sending…" : "Send quote request"}
         </button>
         <p
-          className={`text-sm leading-snug text-zinc-600 ${isHero ? "text-center" : ""}`}
+          className={`text-sm leading-snug text-zinc-600 lg:scroll-mb-[calc(var(--cookie-bar-h,0px)+8px)] ${isHero ? "text-center" : ""}`}
         >
           We&apos;ll use your details to reply to your quote request and arrange
           the job. See our{" "}
@@ -279,7 +324,7 @@ export function QuoteForm({
           .
         </p>
         {isHero ? (
-          <p className="text-center text-xs leading-snug text-zinc-500 lg:text-[11px] lg:leading-tight">
+          <p className="text-center text-sm leading-snug text-zinc-500">
             Written quote before we load
           </p>
         ) : null}
@@ -287,6 +332,8 @@ export function QuoteForm({
 
       {state.message ? (
         <p
+          ref={state.info ? statusRef : undefined}
+          tabIndex={state.info ? -1 : undefined}
           className={`text-sm ${
             state.info
               ? "rounded-lg border border-amber-300/80 bg-amber-50 px-3 py-2 text-amber-950"
@@ -294,7 +341,8 @@ export function QuoteForm({
                 ? "text-green-800"
                 : "text-red-700"
           }`}
-          role={state.info ? undefined : "status"}
+          role="status"
+          aria-live={state.info ? "polite" : undefined}
         >
           {state.message}
         </p>

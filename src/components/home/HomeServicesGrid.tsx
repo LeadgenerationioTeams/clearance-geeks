@@ -35,7 +35,7 @@ export function HomeServicesGrid() {
                     />
                   </div>
                   <div className="flex flex-1 flex-col p-5">
-                    <h3 className="font-display text-xl text-zinc-900 group-hover:text-geek-lime">
+                    <h3 className="font-display text-xl text-zinc-900 group-hover:underline">
                       {s.title}
                     </h3>
                     <p className="mt-2 line-clamp-2 text-sm text-zinc-600">

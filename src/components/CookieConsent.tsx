@@ -14,6 +14,24 @@ import {
 } from "@/lib/cookie-consent-store";
 import { cn } from "@/lib/cn";
 
+const cookieActionFocus =
+  "focus-visible:outline focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-geek-lime";
+
+function focusAfterCookieChoice() {
+  requestAnimationFrame(() => {
+    const settings = document.getElementById("cookie-settings-focus");
+    if (settings instanceof HTMLElement) {
+      settings.focus({ preventScroll: true });
+      return;
+    }
+    const h1 = document.querySelector("main h1");
+    if (h1 instanceof HTMLElement) {
+      h1.tabIndex = -1;
+      h1.focus({ preventScroll: true });
+    }
+  });
+}
+
 /** Optional analytics — only mount after explicit Accept. None configured yet. */
 function OptionalAnalytics() {
   return null;
@@ -41,6 +59,7 @@ export function CookieConsentProvider({
       /* ignore */
     }
     notifyConsentChange();
+    focusAfterCookieChoice();
   }, []);
 
   useEffect(() => {
@@ -76,6 +95,18 @@ export function CookieConsentProvider({
 
   const compact = compactMobile;
 
+  const acceptButtonClass = cn(
+    "min-h-11 rounded-xl bg-geek-lime px-4 font-bold text-[#111] border border-[#111] sm:px-5",
+    compact ? "flex-1 text-sm" : "px-5",
+    cookieActionFocus,
+  );
+
+  const rejectButtonClass = cn(
+    "min-h-11 rounded-xl border border-zinc-600 px-4 text-sm font-semibold text-zinc-200 sm:px-5",
+    compact ? "flex-1" : "px-5",
+    cookieActionFocus,
+  );
+
   return (
     <>
       {children}
@@ -84,7 +115,7 @@ export function CookieConsentProvider({
         <div
           ref={bannerRef}
           className={cn(
-            "fixed bottom-[calc(var(--mobile-call-bar-height)+env(safe-area-inset-bottom,0px))] left-0 right-0 z-[100] border-t border-geek-lime/30 bg-zinc-950/95 shadow-2xl backdrop-blur lg:bottom-0",
+            "fixed bottom-[calc(var(--mobile-call-bar-height)+env(safe-area-inset-bottom,0px))] left-0 right-0 z-[100] border-t border-geek-lime/30 bg-zinc-950 shadow-2xl lg:bottom-0",
             compact
               ? "max-lg:max-h-[110px] max-lg:overflow-hidden max-lg:p-2.5 lg:p-5"
               : "p-4 sm:p-5",
@@ -93,65 +124,50 @@ export function CookieConsentProvider({
           aria-labelledby="cookie-title"
         >
           {compact ? (
-            <>
-              <div
-                className="mx-auto flex max-w-6xl flex-col gap-2 max-lg:gap-2 lg:flex-row lg:items-center lg:justify-between lg:gap-4"
+            <div
+              className="mx-auto flex max-w-6xl flex-col gap-2 max-lg:gap-2 lg:flex-row lg:items-center lg:justify-between lg:gap-4"
+            >
+              <p
+                id="cookie-title"
+                className="text-sm leading-snug text-zinc-300 max-lg:truncate max-lg:text-sm max-lg:leading-snug lg:font-semibold lg:text-white"
               >
-                <p
-                  id="cookie-title"
-                  className="text-sm leading-snug text-zinc-300 max-lg:truncate max-lg:text-xs max-lg:leading-tight lg:font-semibold lg:text-white"
-                >
-                  <span className="max-lg:inline lg:hidden">
-                    We only store your cookie choice.{" "}
+                <span className="max-lg:inline lg:hidden">
+                  We only store your cookie choice.{" "}
+                  <Link href="/cookies" className="text-white underline">
+                    Cookies
+                  </Link>
+                  {" · "}
+                  <Link href="/privacy" className="text-white underline">
+                    Privacy
+                  </Link>
+                </span>
+                <span className="hidden lg:block">
+                  <span className="font-semibold text-white">
+                    Cookies on this site
+                  </span>
+                  <span className="mt-1 block font-normal">
+                    We don&apos;t use analytics or marketing cookies at the
+                    moment. We only store your cookie choice. See{" "}
                     <Link href="/cookies" className="text-geek-lime underline">
-                      Cookies
-                    </Link>
-                    {" · "}
+                      cookies
+                    </Link>{" "}
+                    and{" "}
                     <Link href="/privacy" className="text-geek-lime underline">
-                      Privacy
+                      privacy
                     </Link>
+                    .
                   </span>
-                  <span className="hidden lg:block">
-                    <span className="font-semibold text-white">
-                      Cookies on this site
-                    </span>
-                    <span className="mt-1 block font-normal">
-                      We don&apos;t use analytics or marketing cookies at the
-                      moment. We only store your cookie choice. See{" "}
-                      <Link href="/cookies" className="text-geek-lime underline">
-                        cookies
-                      </Link>{" "}
-                      and{" "}
-                      <Link href="/privacy" className="text-geek-lime underline">
-                        privacy
-                      </Link>
-                      .
-                    </span>
-                  </span>
-                </p>
-                <div
-                  className={cn(
-                    "flex shrink-0 gap-2",
-                    compact ? "max-lg:flex-row max-lg:gap-2" : "flex-col sm:flex-row",
-                  )}
-                >
-                  <button
-                    type="button"
-                    onClick={() => save("granted")}
-                    className="min-h-11 flex-1 rounded-xl bg-geek-lime px-4 text-sm font-bold text-black sm:px-5"
-                  >
-                    Accept
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => save("denied")}
-                    className="min-h-11 flex-1 rounded-xl border border-zinc-600 px-4 text-sm font-semibold text-zinc-200 sm:px-5"
-                  >
-                    Reject
-                  </button>
-                </div>
+                </span>
+              </p>
+              <div className="flex shrink-0 gap-2 max-lg:flex-row">
+                <button type="button" onClick={() => save("granted")} className={acceptButtonClass}>
+                  Accept
+                </button>
+                <button type="button" onClick={() => save("denied")} className={rejectButtonClass}>
+                  Reject
+                </button>
               </div>
-            </>
+            </div>
           ) : (
             <div className="mx-auto flex max-w-6xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="text-sm text-zinc-300">
@@ -172,18 +188,10 @@ export function CookieConsentProvider({
                 </p>
               </div>
               <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-                <button
-                  type="button"
-                  onClick={() => save("granted")}
-                  className="min-h-11 rounded-xl bg-geek-lime px-5 font-bold text-black"
-                >
+                <button type="button" onClick={() => save("granted")} className={acceptButtonClass}>
                   Accept
                 </button>
-                <button
-                  type="button"
-                  onClick={() => save("denied")}
-                  className="min-h-11 rounded-xl border border-zinc-600 px-5 font-semibold text-zinc-200"
-                >
+                <button type="button" onClick={() => save("denied")} className={rejectButtonClass}>
                   Reject
                 </button>
               </div>

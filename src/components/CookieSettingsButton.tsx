@@ -7,7 +7,12 @@ const className =
 
 export function CookieSettingsButton() {
   return (
-    <button type="button" className={className} onClick={() => openCookieSettings()}>
+    <button
+      type="button"
+      id="cookie-settings-focus"
+      className={className}
+      onClick={() => openCookieSettings()}
+    >
       Cookie settings
     </button>
   );

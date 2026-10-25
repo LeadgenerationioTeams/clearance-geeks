@@ -63,7 +63,7 @@ export function SiteFooter() {
           </ul>
         </div>
       </div>
-      <div className="site-container border-t border-zinc-800 py-6 text-xs text-zinc-600">
+      <div className="site-container border-t border-zinc-800 py-6 text-sm text-zinc-600">
         <p>© 2026 {company.name}.</p>
         <p className="mt-2 max-w-3xl text-zinc-500">
           {siteConfig.compliance.wasteCarrierNote}

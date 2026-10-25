@@ -22,7 +22,7 @@ export function CallButton({
       ? `${base} border-2 border-white bg-transparent text-white hover:bg-white/10`
       : variant === "outline-dark"
         ? `${base} border-2 border-zinc-900 bg-transparent text-zinc-900 hover:bg-zinc-100`
-        : `${base} bg-geek-lime font-extrabold uppercase tracking-wide text-black shadow-[0_0_24px_rgba(139,230,0,0.35)] hover:bg-geek-lime-bright`;
+        : `${base} border border-[#111] bg-geek-lime font-extrabold uppercase tracking-wide text-[#111] shadow-[0_0_24px_rgba(139,230,0,0.35)] hover:bg-geek-lime-bright`;
 
   const phoneSuffix =
     showPhone && !isPlaceholder(company.phone) ? ` ${company.phone}` : "";
