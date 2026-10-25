@@ -123,7 +123,7 @@ export default async function ServicePage({
                   {index > 0 ? " · " : null}
                   <Link
                     href={`/areas/${area.slug}/${slug}`}
-                    className="text-geek-lime underline"
+                    className="inline-flex min-h-11 items-center text-geek-lime underline"
                   >
                     {area.name}
                   </Link>
