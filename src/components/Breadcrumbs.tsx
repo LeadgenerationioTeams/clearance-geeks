@@ -14,7 +14,7 @@ export function Breadcrumbs({
             {item.href ? (
               <Link
                 href={item.href}
-                className="inline-flex min-h-11 min-w-11 items-center justify-center px-2 py-1 hover:text-geek-lime"
+                className="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center px-3 py-1 hover:text-geek-lime"
               >
                 {item.label}
               </Link>

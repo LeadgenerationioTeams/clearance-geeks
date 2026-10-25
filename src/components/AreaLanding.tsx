@@ -153,7 +153,7 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
                 className="block rounded-xl border border-zinc-200 bg-white px-4 py-3 hover:border-geek-lime/40"
               >
                 <span className="font-semibold text-zinc-900">{h.name}</span>
-                <p className="mt-1 text-xs text-zinc-500 line-clamp-3">
+                <p className="mt-1 text-sm text-zinc-500 line-clamp-3">
                   {h.about}
                 </p>
               </Link>

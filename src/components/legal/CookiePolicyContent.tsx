@@ -44,7 +44,7 @@ export function CookiePolicyContent() {
           </thead>
           <tbody>
             <tr className="border-b border-zinc-800">
-              <td className="py-3 pr-4 font-mono text-xs">tcg_cookie_consent_v1</td>
+              <td className="py-3 pr-4 font-mono text-sm">tcg_cookie_consent_v1</td>
               <td className="py-3 pr-4">Local storage</td>
               <td className="py-3 pr-4">{company.name}</td>
               <td className="py-3 pr-4">Remembers your cookie choice</td>
