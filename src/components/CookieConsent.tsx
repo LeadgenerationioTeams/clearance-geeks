@@ -1,7 +1,26 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useSyncExternalStore } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useLayoutEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
+
+type CookieBannerState = { open: boolean; height: number };
+
+const CookieBannerContext = createContext<CookieBannerState>({
+  open: false,
+  height: 0,
+});
+
+export function useCookieBanner() {
+  return useContext(CookieBannerContext);
+}
 
 const STORAGE_KEY = "tcg_cookie_consent_v1";
 
@@ -41,15 +60,48 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
     () => "unknown" as Consent,
   );
 
-  useEffect(() => {
+  const bannerRef = useRef<HTMLDivElement>(null);
+  const [bannerState, setBannerState] = useState<CookieBannerState>({
+    open: false,
+    height: 0,
+  });
+
+  useLayoutEffect(() => {
     const root = document.documentElement;
-    if (consent === "unknown") {
-      root.dataset.cookieBanner = "open";
-    } else {
+
+    const clearBannerOffset = () => {
       delete root.dataset.cookieBanner;
+      root.style.setProperty("--cookie-consent-bar-height", "0px");
+      setBannerState({ open: false, height: 0 });
+    };
+
+    if (consent !== "unknown") {
+      clearBannerOffset();
+      return;
     }
+
+    root.dataset.cookieBanner = "open";
+    const el = bannerRef.current;
+    if (!el) {
+      setBannerState({ open: true, height: 0 });
+      return;
+    }
+
+    const syncBannerHeight = () => {
+      const height = el.getBoundingClientRect().height;
+      root.style.setProperty("--cookie-consent-bar-height", `${height}px`);
+      setBannerState({ open: true, height });
+    };
+
+    syncBannerHeight();
+    const observer = new ResizeObserver(syncBannerHeight);
+    observer.observe(el);
+    window.addEventListener("resize", syncBannerHeight);
+
     return () => {
-      delete root.dataset.cookieBanner;
+      observer.disconnect();
+      window.removeEventListener("resize", syncBannerHeight);
+      clearBannerOffset();
     };
   }, [consent]);
 
@@ -63,12 +115,13 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
   }, []);
 
   return (
-    <>
+    <CookieBannerContext.Provider value={bannerState}>
       {children}
       {consent === "granted" ? <OptionalAnalytics /> : null}
       {consent === "unknown" ? (
         <div
-          className="fixed bottom-[calc(var(--mobile-call-bar-height)+env(safe-area-inset-bottom,0px))] left-0 right-0 z-[100] border-t border-geek-lime/30 bg-zinc-950/95 p-4 shadow-2xl backdrop-blur sm:p-5 lg:bottom-0"
+          ref={bannerRef}
+          className="fixed bottom-[calc(var(--mobile-call-bar-height)+env(safe-area-inset-bottom,0px))] left-0 right-0 z-[100] border-t border-geek-lime/30 bg-zinc-950/95 p-4 shadow-2xl backdrop-blur sm:p-5 lg:bottom-0 lg:py-4"
           role="dialog"
           aria-labelledby="cookie-title"
         >
@@ -109,7 +162,7 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
           </div>
         </div>
       ) : null}
-    </>
+    </CookieBannerContext.Provider>
   );
 }
 
