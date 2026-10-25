@@ -195,10 +195,15 @@ html[data-cookie-banner="open"] .quote-form-hero .quote-form-privacy-line {
   outline-style: solid;
 }
 
-.cookie-settings-link:focus-visible {
+.cookie-settings-link:focus-visible,
+.cookie-banner-control:focus-visible {
   outline: 2px solid var(--geek-lime);
   outline-offset: 2px;
   outline-style: solid;
+}
+
+.cookie-consent-banner {
+  background-color: #09090b;
 }
 
 @media (min-width: 1024px) {
