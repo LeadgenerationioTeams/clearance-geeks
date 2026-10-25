@@ -15,6 +15,44 @@ html[data-cookie-banner="open"] {
   --cookie-consent-bar-height: 8.5rem;
 }
 
+/* Hero quote form: compact layout when cookie banner is open (set before first paint). */
+html[data-cookie-banner="open"] .quote-form-hero {
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+html[data-cookie-banner="open"] .quote-form-hero-header {
+  padding-bottom: 0.5rem;
+}
+
+html[data-cookie-banner="open"] .quote-form-hero-header > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 0.125rem;
+}
+
+html[data-cookie-banner="open"] .quote-form-hero-fields {
+  gap: 0.5rem;
+}
+
+html[data-cookie-banner="open"] .quote-form-hero-details {
+  min-height: 5.25rem;
+  height: 5.25rem;
+}
+
+.quote-form-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2371717a' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1rem;
+  padding-right: 2.5rem;
+}
+
+.quote-form-select:focus-visible {
+  outline: 2px solid #166534;
+  outline-offset: 2px;
+}
+
 @media (min-width: 1024px) {
   html[data-cookie-banner="open"] .home-hero {
     align-items: flex-start;

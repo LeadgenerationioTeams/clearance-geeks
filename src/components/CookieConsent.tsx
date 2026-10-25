@@ -22,7 +22,7 @@ export function useCookieBanner() {
   return useContext(CookieBannerContext);
 }
 
-const STORAGE_KEY = "tcg_cookie_consent_v1";
+import { COOKIE_CONSENT_STORAGE_KEY as STORAGE_KEY } from "@/lib/cookie-consent-bootstrap";
 
 export type Consent = "unknown" | "granted" | "denied";
 

@@ -6,6 +6,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { StickyMobileCta } from "@/components/StickyMobileCta";
 import { CookieConsentProvider } from "@/components/CookieConsent";
 import { company } from "@/config/site";
+import { cookieBannerBootstrapScript } from "@/lib/cookie-consent-bootstrap";
 import { JsonLd, localBusinessJsonLd } from "@/lib/schema";
 
 const display = Bangers({
@@ -34,6 +35,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-GB" className={`${display.variable} ${body.variable} h-full`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: cookieBannerBootstrapScript }} />
+      </head>
       <body
         className="flex min-h-full flex-col bg-zinc-50 pb-[calc(var(--mobile-call-bar-height)+env(safe-area-inset-bottom,0px))] text-zinc-900 antialiased lg:pb-0"
       >

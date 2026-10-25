@@ -3,13 +3,14 @@
 import type { ReactNode } from "react";
 import { useActionState } from "react";
 import { submitQuote, type QuoteFormState } from "@/app/actions/quote";
-import { useCookieBanner } from "@/components/CookieConsent";
 import { services } from "@/lib/services";
 
 const initial: QuoteFormState = { ok: false, message: "" };
 
 const fieldInputClass =
-  "mt-1.5 min-h-11 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-base text-zinc-900 shadow-sm transition placeholder:text-zinc-400 focus:border-green-800 focus:outline-none focus:ring-2 focus:ring-green-800";
+  "mt-1.5 min-h-11 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-base text-zinc-900 shadow-sm transition placeholder:text-zinc-400 focus:border-green-800 focus:outline-none focus:ring-2 focus:ring-green-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-800";
+
+const fieldSelectClass = `${fieldInputClass} quote-form-select`;
 
 function Field({
   label,
@@ -47,33 +48,25 @@ export function QuoteForm({
 }) {
   const [state, action, pending] = useActionState(submitQuote, initial);
   const isHero = variant === "hero";
-  const cookieBanner = useCookieBanner();
-  const compactHero = isHero && cookieBanner.open;
 
-  const fieldsGap = compactHero
-    ? "flex flex-col gap-2"
-    : isHero
-      ? "flex flex-col gap-3.5"
-      : "flex flex-col gap-4";
+  const fieldsGap = isHero
+    ? "quote-form-hero-fields flex flex-col gap-3.5"
+    : "flex flex-col gap-4";
 
   return (
     <form
       id={id}
       action={action}
       className={`flex flex-col rounded-2xl border bg-white ${
-        compactHero
-          ? "gap-2 border-zinc-200/90 p-4 shadow-[0_20px_50px_rgba(0,0,0,0.28)] ring-1 ring-black/5"
-          : isHero
-            ? "gap-3.5 border-zinc-200/90 p-5 shadow-[0_20px_50px_rgba(0,0,0,0.28)] ring-1 ring-black/5 sm:p-6"
-            : "gap-4 border-zinc-200/80 p-5 sm:p-6"
+        isHero
+          ? "quote-form-hero gap-3.5 border-zinc-200/90 p-5 shadow-[0_20px_50px_rgba(0,0,0,0.28)] ring-1 ring-black/5 sm:p-6"
+          : "gap-4 border-zinc-200/80 p-5 sm:p-6"
       } ${className}`}
     >
       <header
         className={
           isHero
-            ? compactHero
-              ? "space-y-0.5 border-b border-zinc-100 pb-2"
-              : "space-y-1 border-b border-zinc-100 pb-3"
+            ? "quote-form-hero-header space-y-1 border-b border-zinc-100 pb-3"
             : "space-y-1"
         }
       >
@@ -123,7 +116,7 @@ export function QuoteForm({
           />
         </Field>
         <Field label="Service" hero={isHero}>
-          <select name="jobType" className={fieldInputClass}>
+          <select name="jobType" className={fieldSelectClass}>
             {services.map((s) => (
               <option key={s.slug} value={s.slug}>
                 {s.title}
@@ -134,9 +127,9 @@ export function QuoteForm({
         <Field label="What needs clearing?" hero={isHero}>
           <textarea
             name="details"
-            rows={compactHero ? 2 : isHero ? 3 : 4}
+            rows={isHero ? 3 : 4}
             required
-            className={`${fieldInputClass} resize-y`}
+            className={`${fieldInputClass} resize-y${isHero ? " quote-form-hero-details" : ""}`}
           />
         </Field>
       </div>
