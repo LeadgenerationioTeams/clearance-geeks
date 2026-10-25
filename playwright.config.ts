@@ -12,8 +12,13 @@ export default defineConfig({
   webServer: {
     command: "npm run build && npm run start -- -p 3000",
     url: "http://127.0.0.1:3000",
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
     timeout: 120_000,
+    env: {
+      ...process.env,
+      VERCEL_GIT_COMMIT_REF:
+        process.env.VERCEL_GIT_COMMIT_REF ?? "cursor/cg-light-van-hero-2b91",
+    },
   },
   projects: [
     {

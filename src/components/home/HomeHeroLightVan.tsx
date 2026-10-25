@@ -17,8 +17,8 @@ const DESKTOP_VAN_FRAME_HEIGHT = 686;
 export function HomeHeroLightVan() {
   return (
     <section className="bg-[#F7F8F6] text-[#111]">
-      <div className="site-container w-full py-6 md:py-8 lg:pt-0 lg:pb-3">
-        <div className="flex flex-col gap-6">
+      <div className="site-container w-full py-6 md:py-8 lg:py-0 lg:pb-2">
+        <div className="flex flex-col gap-6 lg:gap-3">
           <figure
             className="aspect-[16/13] w-full overflow-hidden rounded-2xl lg:hidden"
           >
@@ -66,7 +66,7 @@ export function HomeHeroLightVan() {
                 variant="hero"
                 compactDesktop
                 title="Get a free quote"
-                className="lg:-mt-[3.75rem]"
+                className="lg:[&>header]:hidden"
               />
             </div>
 

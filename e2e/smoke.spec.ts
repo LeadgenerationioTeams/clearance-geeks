@@ -33,8 +33,31 @@ async function readCls(page: import("@playwright/test").Page): Promise<number> {
 test("homepage loads and quote form visible", async ({ page }) => {
   await page.goto("/");
   await acceptCookies(page);
+  await expect(page.locator("html")).toHaveAttribute("data-home-hero", "light-van");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  await expect(page.locator("#quote").getByRole("heading")).toBeVisible();
+  const quote = page.locator("#quote");
+  await expect(quote.getByRole("textbox", { name: /^name$/i })).toBeVisible();
+});
+
+test("light hero: submit clears cookie banner at 1440", async ({ page }, testInfo) => {
+  test.skip(
+    testInfo.project.name !== "desktop-1440",
+    "desktop layout only",
+  );
+  await page.goto("/");
+  await page.evaluate(() => window.scrollTo(0, 0));
+  const accept = page.getByRole("button", { name: /^accept$/i });
+  await expect(accept).toBeVisible();
+  const submit = page
+    .locator("#quote")
+    .getByRole("button", { name: /send quote request/i });
+  await expect(submit).toBeVisible();
+  const submitBox = await submit.boundingBox();
+  const bannerBox = await accept.boundingBox();
+  expect(submitBox).not.toBeNull();
+  expect(bannerBox).not.toBeNull();
+  const submitBottom = (submitBox?.y ?? 0) + (submitBox?.height ?? 0);
+  expect(submitBottom).toBeLessThan(bannerBox?.y ?? 900);
 });
 
 test("homepage quote form does not shift after load (CLS)", async ({ page }) => {

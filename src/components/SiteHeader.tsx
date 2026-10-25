@@ -30,7 +30,12 @@ export function SiteHeader() {
           : "border-b border-white/10 bg-black/95 backdrop-blur-md",
       )}
     >
-      <div className="site-container flex items-center justify-between gap-4 py-3 lg:grid lg:grid-cols-[auto_1fr_auto] lg:gap-8">
+      <div
+        className={cn(
+          "site-container flex items-center justify-between gap-4 lg:grid lg:grid-cols-[auto_1fr_auto] lg:gap-8",
+          lightVan ? "py-2.5 lg:py-2" : "py-3",
+        )}
+      >
         {lightVan ? (
           <div className="shrink-0 rounded-lg bg-black p-1.5">
             <LogoLockup className="[&_img]:h-10 [&_img]:max-w-[min(100%,280px)]" />
