@@ -8,38 +8,40 @@ import {
 } from "@/config/site";
 
 export function PrivacyPolicyContent() {
-  const controller = company.legalName;
   const address = formatRegisteredAddress();
   const email = company.email;
   const phone = company.phone;
+  const ico = siteConfig.compliance.icoRegistrationNumber;
+  const retentionUnconverted = siteConfig.compliance.quoteRetentionIfNotBooked;
+
   const contactLine = isPlaceholder(email)
     ? "the contact details published on this website once live"
-    : `${email}${isPlaceholder(phone) ? "" : ` or ${phone}`}`;
+    : email;
+
+  const dpoLine = isPlaceholder(email)
+    ? "We have not appointed a data protection officer; contact us using the contact details published on this website once live."
+    : `We have not appointed a data protection officer; contact us at ${email}.`;
 
   return (
     <article className="prose prose-invert prose-zinc mt-8 max-w-none break-words text-zinc-300">
       <p className="lead text-zinc-400">
-        Last updated: 24 October 2026. This privacy notice explains how{" "}
-        {controller} (&quot;we&quot;, &quot;us&quot;) collects and uses personal
-        data when you use our website and when you enquire about or book waste
-        removal and clearance services.
+        Last updated: 24 October 2026. This privacy notice explains how we
+        collect and use personal data when you use our website and when you
+        enquire about or book waste removal and clearance services.
       </p>
 
       <h2 className="font-display text-geek-lime">1. Who we are</h2>
       <p>
-        {controller} is the data controller for personal data described in this
-        notice.
+        {company.legalName} (company number {company.companyNumber}, registered
+        office {address}), trading as {company.name}, is the controller. ICO
+        registration: {ico}.
       </p>
       <ul>
         <li>
-          <strong>Company number:</strong> {company.companyNumber}
-        </li>
-        <li>
-          <strong>Registered address:</strong> {address}
-        </li>
-        <li>
           <strong>Contact:</strong> {contactLine}
+          {isPlaceholder(phone) ? null : ` · ${phone}`}
         </li>
+        <li>{dpoLine}</li>
       </ul>
 
       <h2 className="font-display text-geek-lime">2. What data we collect</h2>
@@ -52,7 +54,8 @@ export function PrivacyPolicyContent() {
         </li>
         <li>
           <strong>Job information</strong> — descriptions of waste or items to
-          clear, photos you upload, preferred dates and special instructions.
+          clear, photos you send us after we reply, preferred dates and special
+          instructions.
         </li>
         <li>
           <strong>Technical data</strong> — IP address, browser type, device
@@ -83,21 +86,24 @@ export function PrivacyPolicyContent() {
           perform waste removal services you request.
         </li>
         <li>
-          <strong>Legitimate interests</strong> — to respond to enquiries, improve
-          our services, prevent fraud, manage complaints and keep business
-          records, balanced against your rights.
+          <strong>Legitimate interests</strong> — our interest in responding to
+          enquiries and running our business, balanced against your rights.
         </li>
         <li>
           <strong>Legal obligation</strong> — waste transfer notes, carrier
           records and accounting where the law requires.
         </li>
         <li>
-          <strong>Consent</strong> — where you opt in to optional cookies or
-          marketing (we do not sell your data).
+          <strong>Consent</strong> — where you opt in to optional cookies (we do
+          not sell your data).
         </li>
       </ul>
 
       <h2 className="font-display text-geek-lime">4. Sharing your data</h2>
+      <p>
+        Quote requests are currently handled internally. When online quoting is
+        live, recipients will be: {siteConfig.compliance.leadRecipient}.
+      </p>
       <p>We may share personal data with:</p>
       <ul>
         <li>
@@ -134,6 +140,10 @@ export function PrivacyPolicyContent() {
         required). Website logs and cookie preferences are kept for shorter
         periods.
       </p>
+      <p>
+        If you don&apos;t book, we delete your quote request after{" "}
+        {retentionUnconverted}.
+      </p>
 
       <h2 className="font-display text-geek-lime">7. Security</h2>
       <p>
@@ -153,6 +163,10 @@ export function PrivacyPolicyContent() {
         <li>Withdraw consent where processing is based on consent.</li>
       </ul>
       <p>
+        You can object at any time to us using your data on the basis of
+        legitimate interests.
+      </p>
+      <p>
         To exercise rights, contact us using {contactLine}. We may need to
         verify your identity. You also have the right to lodge a complaint with
         the Information Commissioner&apos;s Office (ICO) at{" "}
@@ -162,8 +176,8 @@ export function PrivacyPolicyContent() {
           rel="noopener noreferrer"
         >
           ico.org.uk
-        </a>
-        .
+        </a>{" "}
+        or by calling 0303 123 1113.
       </p>
 
       <h2 className="font-display text-geek-lime">9. Children</h2>

@@ -3,34 +3,14 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
 import { COOKIE_CONSENT_STORAGE_KEY } from "@/lib/cookie-consent";
-
-export type Consent = "unknown" | "granted" | "denied";
-
-function readConsent(): Consent {
-  if (typeof window === "undefined") return "unknown";
-  try {
-    const v = localStorage.getItem(COOKIE_CONSENT_STORAGE_KEY);
-    if (v === "granted" || v === "denied") return v;
-  } catch {
-    return "denied";
-  }
-  return "unknown";
-}
-
-const listeners = new Set<() => void>();
-
-function subscribe(onChange: () => void) {
-  listeners.add(onChange);
-  return () => listeners.delete(onChange);
-}
-
-function notifyConsentChange() {
-  listeners.forEach((l) => l());
-}
-
-function setCookieBarHeight(px: number) {
-  document.documentElement.style.setProperty("--cookie-bar-h", `${px}px`);
-}
+import {
+  type Consent,
+  notifyConsentChange,
+  readConsent,
+  setCookieBarHeight,
+  subscribeConsent,
+  syncCookieBannerAttribute,
+} from "@/lib/cookie-consent-store";
 
 /** Optional analytics — only mount after explicit Accept. None configured yet. */
 function OptionalAnalytics() {
@@ -39,7 +19,7 @@ function OptionalAnalytics() {
 
 export function CookieConsentProvider({ children }: { children: React.ReactNode }) {
   const consent = useSyncExternalStore(
-    subscribe,
+    subscribeConsent,
     readConsent,
     () => "unknown" as Consent,
   );
@@ -55,6 +35,8 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
   }, []);
 
   useEffect(() => {
+    syncCookieBannerAttribute(consent);
+
     if (consent !== "unknown") {
       setCookieBarHeight(0);
       return;
@@ -73,7 +55,6 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
 
     return () => {
       ro.disconnect();
-      setCookieBarHeight(0);
     };
   }, [consent]);
 
@@ -94,8 +75,8 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
                 Cookies on this site
               </p>
               <p className="mt-1">
-                We use essential cookies to remember your choice. Analytics and
-                marketing tags load only if you accept. See{" "}
+                We don&apos;t use analytics or marketing cookies at the moment. We
+                only store your cookie choice. See{" "}
                 <Link href="/cookies" className="text-geek-lime underline">
                   cookies
                 </Link>{" "}

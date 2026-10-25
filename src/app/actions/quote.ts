@@ -1,5 +1,7 @@
 "use server";
 
+import { company } from "@/config/site";
+
 export type QuoteFormState = {
   ok: boolean;
   message: string;
@@ -28,7 +30,6 @@ export async function submitQuote(
 
   return {
     ok: true,
-    message:
-      "Thanks — your request is recorded locally for now. We will confirm once contact details are live.",
+    message: `Online quotes aren't open yet. Please call us on ${company.phone}.`,
   };
 }

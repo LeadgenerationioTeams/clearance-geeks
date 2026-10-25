@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { useActionState, useEffect, useRef } from "react";
+import Link from "next/link";
 import { submitQuote, type QuoteFormState } from "@/app/actions/quote";
 import { services } from "@/lib/services";
 
@@ -122,8 +123,8 @@ export function QuoteForm({
         </h2>
         <p className="text-sm leading-snug text-zinc-600 lg:text-xs lg:leading-snug">
           {isHero
-            ? "Tell us what needs clearing — photos optional but help us size the van."
-            : "Tell us what needs clearing. Optional photo helps us size the van."}
+            ? "Tell us what needs clearing — you can send photos after we reply."
+            : "Tell us what needs clearing. You can send photos after we reply."}
         </p>
       </header>
 
@@ -208,7 +209,11 @@ export function QuoteForm({
         </Field>
       </div>
 
-      <div className={isHero ? "space-y-2 pt-0 lg:space-y-1" : ""}>
+      <div
+        className={
+          isHero ? "space-y-2 pt-0 lg:space-y-1" : "mt-4 space-y-2"
+        }
+      >
         <button
           type="submit"
           disabled={pending}
@@ -220,9 +225,19 @@ export function QuoteForm({
         >
           {pending ? "Sending…" : "Send quote request"}
         </button>
+        <p
+          className={`text-zinc-600 ${isHero ? "text-center text-xs leading-snug lg:text-[11px] lg:leading-tight" : "text-sm leading-snug"}`}
+        >
+          We&apos;ll use your details to reply to your quote request and arrange
+          the job. See our{" "}
+          <Link href="/privacy" className="font-semibold text-zinc-900 underline">
+            privacy notice
+          </Link>
+          .
+        </p>
         {isHero ? (
           <p className="text-center text-xs leading-snug text-zinc-500 lg:text-[11px] lg:leading-tight">
-            Written quote before we load · Your details are only used to respond
+            Written quote before we load
           </p>
         ) : null}
       </div>

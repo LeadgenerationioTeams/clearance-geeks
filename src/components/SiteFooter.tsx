@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CookieSettingsButton } from "@/components/CookieSettingsButton";
 import { company, siteConfig } from "@/config/site";
 
 const footerLinkClass =
@@ -55,6 +56,9 @@ export function SiteFooter() {
               <Link href="/terms" className={footerLinkClass}>
                 Terms
               </Link>
+            </li>
+            <li>
+              <CookieSettingsButton />
             </li>
           </ul>
         </div>

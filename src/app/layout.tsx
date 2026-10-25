@@ -42,7 +42,7 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var k=${JSON.stringify(COOKIE_CONSENT_STORAGE_KEY)},v=localStorage.getItem(k);document.documentElement.style.setProperty("--cookie-bar-h",(v==="granted"||v==="denied")?"0px":"${COOKIE_BAR_HEIGHT_BOOTSTRAP_PX}px");}catch(e){document.documentElement.style.setProperty("--cookie-bar-h","0px");}})();`,
+            __html: `(function(){try{var k=${JSON.stringify(COOKIE_CONSENT_STORAGE_KEY)},v=localStorage.getItem(k);var open=!(v==="granted"||v==="denied");document.documentElement.style.setProperty("--cookie-bar-h",open?"${COOKIE_BAR_HEIGHT_BOOTSTRAP_PX}px":"0px");document.documentElement.setAttribute("data-cookie-banner",open?"open":"closed");}catch(e){document.documentElement.style.setProperty("--cookie-bar-h","0px");document.documentElement.setAttribute("data-cookie-banner","closed");}})();`,
           }}
         />
       </head>
