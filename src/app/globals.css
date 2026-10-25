@@ -9,10 +9,27 @@
   /* Sticky mobile Call bar (p-3 + min-h-12 row); 0 on lg+ */
   --mobile-call-bar-height: 4.5rem;
   --cookie-consent-bar-height: 0px;
+  --cookie-bar-h: 0px;
 }
 
 html[data-cookie-banner="open"] {
   --cookie-consent-bar-height: 8.5rem;
+  --cookie-bar-h: 8.5rem;
+}
+
+@media (max-width: 1023px) {
+  html {
+    scroll-padding-bottom: calc(88px + var(--cookie-bar-h, 0px));
+  }
+
+  .quote-form-field,
+  .quote-form-submit {
+    scroll-margin-bottom: calc(88px + var(--cookie-bar-h, 0px) + 4px);
+  }
+
+  #quote {
+    scroll-margin-bottom: calc(88px + var(--cookie-bar-h, 0px) + 1rem);
+  }
 }
 
 /* Hero quote form: compact layout when cookie banner is open (set before first paint). */
@@ -51,14 +68,14 @@ html[data-cookie-banner="open"] .quote-form-hero-details {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2371717a' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 1rem center;
-  background-size: 1rem;
-  padding-right: 3.25rem;
+  background-size: 0.75rem;
+  padding-right: 2.5rem;
 }
 
-@media (min-width: 640px) {
-  .quote-form-select {
-    padding-right: 2.5rem;
-  }
+.sticky-call-link:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+  outline-style: solid;
 }
 
 @media (min-width: 1024px) {
@@ -125,8 +142,10 @@ body {
   background-color: color-mix(in srgb, var(--geek-lime) 10%, #ffffff);
 }
 
-#quote {
-  scroll-margin-bottom: calc(var(--cookie-consent-bar-height) + 1rem);
+@media (min-width: 1024px) {
+  #quote {
+    scroll-margin-bottom: calc(var(--cookie-consent-bar-height) + 1rem);
+  }
 }
 
 @media (min-width: 768px) {

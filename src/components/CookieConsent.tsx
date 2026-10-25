@@ -72,6 +72,7 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
     const clearBannerOffset = () => {
       delete root.dataset.cookieBanner;
       root.style.setProperty("--cookie-consent-bar-height", "0px");
+      root.style.setProperty("--cookie-bar-h", "0px");
       setBannerState({ open: false, height: 0 });
     };
 
@@ -89,7 +90,9 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
 
     const syncBannerHeight = () => {
       const height = el.getBoundingClientRect().height;
-      root.style.setProperty("--cookie-consent-bar-height", `${height}px`);
+      const heightPx = `${height}px`;
+      root.style.setProperty("--cookie-consent-bar-height", heightPx);
+      root.style.setProperty("--cookie-bar-h", heightPx);
       setBannerState({ open: true, height });
     };
 

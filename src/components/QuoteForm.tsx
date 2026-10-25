@@ -138,7 +138,7 @@ export function QuoteForm({
         <button
           type="submit"
           disabled={pending}
-          className={`w-full scroll-mb-[calc(var(--cookie-consent-bar-height)+1rem)] rounded-xl bg-geek-lime font-extrabold uppercase tracking-wide text-black transition hover:bg-geek-lime-bright focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-2 disabled:opacity-60 ${
+          className={`quote-form-submit w-full rounded-xl bg-geek-lime font-extrabold uppercase tracking-wide text-black transition hover:bg-geek-lime-bright focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-2 disabled:opacity-60 ${
             isHero
               ? "min-h-12 px-6 py-3.5 text-base shadow-[0_0_24px_rgba(139,230,0,0.35)] sm:text-lg"
               : "min-h-12 px-6 py-3 text-lg"
