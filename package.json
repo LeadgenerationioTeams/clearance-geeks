@@ -13,6 +13,7 @@
     "lint": "eslint",
     "check:forbidden": "node scripts/check-forbidden-strings.mjs",
     "check:similarity": "node scripts/similarity-check.mjs",
+    "verify:neighbourhood-images": "node scripts/verify-neighbourhood-images.mjs",
     "test:e2e": "playwright test",
     "test": "playwright test"
   },
