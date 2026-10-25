@@ -23,7 +23,10 @@ export function useCookieBanner() {
 }
 
 import { COOKIE_CONSENT_STORAGE_KEY as STORAGE_KEY } from "@/lib/cookie-consent-bootstrap";
-import { registerCookieConsentReset } from "@/lib/reset-cookie-consent";
+import {
+  consumeFocusCookieBanner,
+  registerCookieConsentReset,
+} from "@/lib/reset-cookie-consent";
 
 export type Consent = "unknown" | "granted" | "denied";
 
@@ -102,6 +105,14 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
     };
 
     syncBannerHeight();
+
+    if (consumeFocusCookieBanner()) {
+      window.requestAnimationFrame(() => {
+        const accept = el.querySelector<HTMLButtonElement>("button");
+        accept?.focus({ preventScroll: false });
+      });
+    }
+
     const observer = new ResizeObserver(syncBannerHeight);
     observer.observe(el);
     window.addEventListener("resize", syncBannerHeight);

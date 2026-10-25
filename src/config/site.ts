@@ -584,6 +584,15 @@ export function isPlaceholder(value: string): boolean {
   return value.includes("PLACEHOLDER_") || value.startsWith("[");
 }
 
+/** Shown on quote forms and post-submit while quotes are not wired / phone not live. */
+export const quoteClosedPublicMessage =
+  "Online quotes aren't open yet. Please check back soon.";
+
+export function publicPhoneNumber(): string | null {
+  const phone = siteConfig.company.phone;
+  return isPlaceholder(phone) ? null : phone;
+}
+
 export const siteConfig = {
   /** When false, quote forms show a call-first notice and submitQuote does not persist leads. */
   quotesOpen: false,
@@ -655,7 +664,7 @@ export const company = {
   address: formatRegisteredAddress(),
   phone: siteConfig.company.phone,
   phoneTel: isPlaceholder(siteConfig.company.phone)
-    ? "tel:PLACEHOLDER_PHONE"
+    ? "#quote"
     : `tel:${siteConfig.company.phone.replace(/\s/g, "")}`,
   email: siteConfig.company.email,
   wasteCarrierLicence: siteConfig.company.wasteCarrierLicence,

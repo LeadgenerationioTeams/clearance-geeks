@@ -5,6 +5,7 @@ import {
 
 /** Registered by CookieConsentProvider so footer "Cookie settings" can reopen the banner. */
 let onReset: (() => void) | null = null;
+let focusBannerOnOpen = false;
 
 export function registerCookieConsentReset(handler: () => void) {
   onReset = handler;
@@ -25,5 +26,12 @@ export function resetCookieConsentChoice() {
   root.style.setProperty("--cookie-bar-h", COOKIE_BAR_INITIAL_HEIGHT);
   root.style.setProperty("--cookie-consent-bar-height", COOKIE_BAR_INITIAL_HEIGHT);
 
+  focusBannerOnOpen = true;
   onReset?.();
+}
+
+export function consumeFocusCookieBanner(): boolean {
+  const shouldFocus = focusBannerOnOpen;
+  focusBannerOnOpen = false;
+  return shouldFocus;
 }

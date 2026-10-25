@@ -1,4 +1,9 @@
-import { company, serviceAreasListText, siteConfig } from "@/config/site";
+import {
+  company,
+  isPlaceholder,
+  serviceAreasListText,
+  siteConfig,
+} from "@/config/site";
 import { resolveSiteUrl } from "@/lib/env.server";
 
 export function GET() {
@@ -21,7 +26,7 @@ ${serviceAreasListText()}.
 ## Contact
 Quote form: ${origin}/#quote
 Email: ${company.email}
-Phone: ${company.phone}
+${isPlaceholder(company.phone) ? "" : `Phone: ${company.phone}\n`}
 
 ## Policies
 - Privacy: ${origin}/privacy

@@ -4,7 +4,12 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { useActionState, useEffect, useRef } from "react";
 import { submitQuote, type QuoteFormState } from "@/app/actions/quote";
-import { company, isPlaceholder, siteConfig, telHref } from "@/config/site";
+import {
+  publicPhoneNumber,
+  quoteClosedPublicMessage,
+  siteConfig,
+  telHref,
+} from "@/config/site";
 import { services } from "@/lib/services";
 
 const initial: QuoteFormState = { ok: false, message: "" };
@@ -47,22 +52,23 @@ function focusQuoteNameAfterScroll(formId: string) {
 function QuoteClosedNotice() {
   if (siteConfig.quotesOpen) return null;
 
-  const phone = company.phone;
+  const phone = publicPhoneNumber();
 
   return (
     <p
-      className="quote-form-closed-notice rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm leading-snug text-amber-950"
-      role="status"
+      className="quote-form-closed-notice quote-form-meta-text rounded-lg border border-amber-200 bg-amber-50 px-2.5 py-1.5 text-amber-950"
     >
-      Online quotes aren&apos;t open yet. Please call us on{" "}
-      {isPlaceholder(phone) ? (
-        phone
+      {phone ? (
+        <>
+          Online quotes aren&apos;t open yet. Please call us on{" "}
+          <a href={telHref(phone)} className="font-semibold underline">
+            {phone}
+          </a>
+          .
+        </>
       ) : (
-        <a href={telHref(phone)} className="font-semibold underline">
-          {phone}
-        </a>
+        quoteClosedPublicMessage
       )}
-      .
     </p>
   );
 }
@@ -164,6 +170,10 @@ export function QuoteForm({
     ? "quote-form-hero-fields flex flex-col gap-3.5"
     : "flex flex-col gap-4";
 
+  const closedNoticeVisible = !siteConfig.quotesOpen;
+  const hideDuplicateClosedMessage =
+    closedNoticeVisible && state.message === quoteClosedPublicMessage;
+
   return (
     <form
       ref={formRef}
@@ -259,7 +269,7 @@ export function QuoteForm({
         >
           {pending ? "Sending…" : "Send quote request"}
         </button>
-        <p className="quote-form-privacy-line text-center text-xs leading-snug text-zinc-500">
+        <p className="quote-form-privacy-line quote-form-meta-text text-center text-zinc-500">
           We&apos;ll use your details to reply to your quote request and arrange
           the job. See our{" "}
           <Link href="/privacy" className="font-medium text-zinc-700 underline">
@@ -269,9 +279,15 @@ export function QuoteForm({
         </p>
       </div>
 
-      {state.message && (siteConfig.quotesOpen || !state.ok) ? (
+      {state.message && !hideDuplicateClosedMessage ? (
         <p
-          className={`text-sm ${state.ok ? "text-green-800" : "text-red-700"}`}
+          className={
+            !siteConfig.quotesOpen
+              ? "quote-form-meta-text rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-zinc-700"
+              : state.ok
+                ? "text-sm text-green-800"
+                : "text-sm text-red-700"
+          }
           role="status"
         >
           {state.message}

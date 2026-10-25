@@ -1,6 +1,6 @@
 "use server";
 
-import { siteConfig } from "@/config/site";
+import { quoteClosedPublicMessage, siteConfig } from "@/config/site";
 
 export type QuoteFormState = {
   ok: boolean;
@@ -43,7 +43,7 @@ export async function submitQuote(
   if (!siteConfig.quotesOpen) {
     return {
       ok: true,
-      message: "",
+      message: quoteClosedPublicMessage,
     };
   }
 

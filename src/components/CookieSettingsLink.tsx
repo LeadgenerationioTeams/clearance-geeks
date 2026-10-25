@@ -3,7 +3,7 @@
 import { resetCookieConsentChoice } from "@/lib/reset-cookie-consent";
 
 const linkClass =
-  "inline-flex min-h-11 items-center hover:text-geek-lime";
+  "cookie-settings-link inline-flex min-h-11 items-center hover:text-geek-lime";
 
 export function CookieSettingsLink() {
   return (
