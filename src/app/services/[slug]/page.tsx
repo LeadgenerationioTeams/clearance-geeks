@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getService, serviceSlugs } from "@/lib/services";
+import { limeButtonOnLightClass } from "@/lib/lime-button";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { QuoteForm } from "@/components/QuoteForm";
@@ -81,7 +82,7 @@ export default async function ServicePage({
       <p className="mt-6">
         <Link
           href="#quote"
-          className="inline-flex min-h-11 items-center rounded-xl bg-geek-lime px-6 font-bold text-black"
+          className={`inline-flex min-h-11 items-center rounded-xl px-6 font-bold ${limeButtonOnLightClass}`}
         >
           Get a free quote
         </Link>

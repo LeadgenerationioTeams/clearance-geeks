@@ -2,7 +2,10 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
-import { COOKIE_CONSENT_STORAGE_KEY } from "@/lib/cookie-consent";
+import {
+  COOKIE_CONSENT_STORAGE_KEY,
+  COOKIE_SETTINGS_BUTTON_ID,
+} from "@/lib/cookie-consent";
 import {
   type Consent,
   consumePendingCookieBannerFocus,
@@ -36,6 +39,11 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
       /* ignore */
     }
     notifyConsentChange();
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        document.getElementById(COOKIE_SETTINGS_BUTTON_ID)?.focus();
+      });
+    });
   }, []);
 
   useEffect(() => {

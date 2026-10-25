@@ -66,13 +66,6 @@ export const jobPhotos: JobPhoto[] = [
     tags: ["general"],
   },
   {
-    id: "7585",
-    src: "/gallery/job-IMG_7585jpg.webp",
-    alt: "White box van on a city street between office buildings",
-    caption: "Van on site between city office buildings.",
-    tags: ["general"],
-  },
-  {
     id: "7586",
     src: "/gallery/job-IMG_7586jpg.webp",
     alt: "Bulk bags of commercial flooring and cardboard waste",
@@ -165,7 +158,6 @@ export const homeGalleryPhotoIds = [
   "7851",
   "live-0",
   "8183",
-  "7585",
 ] as const;
 
 export function homeGalleryPhotos(): JobPhoto[] {
