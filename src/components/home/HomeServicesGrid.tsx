@@ -5,7 +5,7 @@ import { photosForServiceSlug } from "@/lib/gallery";
 
 export function HomeServicesGrid() {
   return (
-    <section className="section-pad bg-zinc-50">
+    <section className="section-pad bg-white">
       <div className="site-container">
         <div className="max-w-2xl">
           <h2 className="font-display text-3xl text-zinc-900 md:text-4xl">

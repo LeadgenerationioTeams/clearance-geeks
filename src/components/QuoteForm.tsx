@@ -8,7 +8,7 @@ import { services } from "@/lib/services";
 const initial: QuoteFormState = { ok: false, message: "" };
 
 const fieldInputClass =
-  "mt-1.5 min-h-11 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-base text-zinc-900 shadow-sm transition placeholder:text-zinc-400 focus:border-geek-lime focus:outline-none focus:ring-2 focus:ring-geek-lime/35 lg:mt-1 lg:py-2.5";
+  "mt-1.5 min-h-11 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-base text-zinc-900 shadow-sm transition placeholder:text-zinc-400 focus:border-geek-lime focus:outline-none focus:ring-2 focus:ring-geek-lime/35";
 
 function Field({
   label,
@@ -35,37 +35,19 @@ export function QuoteForm({
   id = "quote",
   className = "",
   title = "Get a quote",
-  compactDesktop = false,
   variant = "default",
 }: {
   id?: string;
   className?: string;
   title?: string;
+  /** @deprecated Single-column layout at all breakpoints; kept for API compatibility */
   compactDesktop?: boolean;
   variant?: "default" | "hero";
 }) {
   const [state, action, pending] = useActionState(submitQuote, initial);
   const isHero = variant === "hero";
-  const tightLg = compactDesktop || isHero;
 
-  const nameField = (
-    <Field label="Name" hero={isHero}>
-      <input name="name" required autoComplete="name" className={fieldInputClass} />
-    </Field>
-  );
-  const phoneField = (
-    <Field label="Phone" hero={isHero}>
-      <input
-        name="phone"
-        type="tel"
-        required
-        autoComplete="tel"
-        className={fieldInputClass}
-      />
-    </Field>
-  );
-
-  const heroPairGrid = "grid grid-cols-1 gap-3.5 lg:grid-cols-2 lg:gap-2";
+  const fieldsGap = isHero ? "flex flex-col gap-3.5" : "flex flex-col gap-4";
 
   return (
     <form
@@ -73,92 +55,60 @@ export function QuoteForm({
       action={action}
       className={`flex flex-col rounded-2xl border bg-white ${
         isHero
-          ? "gap-3.5 border-zinc-200/90 p-5 shadow-[0_20px_50px_rgba(0,0,0,0.28)] ring-1 ring-black/5 sm:p-6 lg:gap-2 lg:p-3.5"
+          ? "gap-3.5 border-zinc-200/90 p-5 shadow-[0_20px_50px_rgba(0,0,0,0.28)] ring-1 ring-black/5 sm:p-6"
           : "gap-4 border-zinc-200/80 p-5 sm:p-6"
-      } ${tightLg && !isHero ? "lg:gap-2 lg:p-4" : ""} ${className}`}
+      } ${className}`}
     >
       <header
         className={
-          isHero
-            ? "space-y-1 border-b border-zinc-100 pb-3 lg:space-y-0.5 lg:pb-2"
-            : ""
+          isHero ? "space-y-1 border-b border-zinc-100 pb-3" : "space-y-1"
         }
       >
         <h2
           className={`font-display text-zinc-900 ${
             isHero
-              ? "text-2xl leading-tight sm:text-[1.65rem] lg:text-xl"
-              : `text-2xl sm:text-[1.75rem] ${tightLg ? "lg:text-xl" : ""}`
+              ? "text-2xl leading-tight sm:text-[1.65rem]"
+              : "text-2xl sm:text-[1.75rem]"
           }`}
         >
           {title}
         </h2>
-        <p className="text-sm leading-snug text-zinc-600 lg:text-xs lg:leading-snug">
+        <p className="text-sm leading-snug text-zinc-600">
           {isHero
             ? "Tell us what needs clearing — photos optional but help us size the van."
             : "Tell us what needs clearing. Optional photo helps us size the van."}
         </p>
       </header>
 
-      <div
-        className={
-          isHero
-            ? "flex flex-col gap-3.5 lg:gap-2"
-            : tightLg
-              ? "space-y-3 lg:space-y-2"
-              : "space-y-4"
-        }
-      >
-        {isHero ? (
-          <>
-            <div className={heroPairGrid}>
-              {nameField}
-              {phoneField}
-            </div>
-            <div className={heroPairGrid}>
-              <Field label="Email" hero={isHero}>
-                <input
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  className={fieldInputClass}
-                />
-              </Field>
-              <Field label="Postcode" hero={isHero}>
-                <input
-                  name="postcode"
-                  required
-                  autoComplete="postal-code"
-                  className={fieldInputClass}
-                />
-              </Field>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className={`grid gap-4 sm:grid-cols-2 ${tightLg ? "lg:gap-2" : ""}`}>
-              {nameField}
-              {phoneField}
-            </div>
-            <Field label="Email" hero={isHero}>
-              <input
-                name="email"
-                type="email"
-                autoComplete="email"
-                className={fieldInputClass}
-              />
-            </Field>
-            <Field label="Postcode" hero={isHero}>
-              <input
-                name="postcode"
-                required
-                autoComplete="postal-code"
-                className={fieldInputClass}
-              />
-            </Field>
-          </>
-        )}
-
+      <div className={fieldsGap}>
+        <Field label="Name" hero={isHero}>
+          <input name="name" required autoComplete="name" className={fieldInputClass} />
+        </Field>
+        <Field label="Phone" hero={isHero}>
+          <input
+            name="phone"
+            type="tel"
+            required
+            autoComplete="tel"
+            className={fieldInputClass}
+          />
+        </Field>
+        <Field label="Email" hero={isHero}>
+          <input
+            name="email"
+            type="email"
+            autoComplete="email"
+            className={fieldInputClass}
+          />
+        </Field>
+        <Field label="Postcode" hero={isHero}>
+          <input
+            name="postcode"
+            required
+            autoComplete="postal-code"
+            className={fieldInputClass}
+          />
+        </Field>
         <Field label="Service" hero={isHero}>
           <select name="jobType" className={fieldInputClass}>
             {services.map((s) => (
@@ -171,27 +121,27 @@ export function QuoteForm({
         <Field label="What needs clearing?" hero={isHero}>
           <textarea
             name="details"
-            rows={isHero ? 2 : tightLg ? 2 : 4}
+            rows={isHero ? 3 : 4}
             required
-            className={`${fieldInputClass} resize-y ${isHero || tightLg ? "lg:min-h-0 lg:py-2" : ""}`}
+            className={`${fieldInputClass} resize-y`}
           />
         </Field>
       </div>
 
-      <div className={isHero ? "space-y-2 pt-0 lg:space-y-1" : ""}>
+      <div className={isHero ? "space-y-2" : "space-y-2"}>
         <button
           type="submit"
           disabled={pending}
-          className={`w-full rounded-xl bg-geek-lime font-extrabold uppercase tracking-wide text-black transition hover:bg-geek-lime-bright disabled:opacity-60 ${
+          className={`w-full rounded-xl bg-geek-lime font-extrabold uppercase tracking-wide text-black transition hover:bg-geek-lime-bright focus:outline-none focus:ring-2 focus:ring-geek-lime focus:ring-offset-2 disabled:opacity-60 ${
             isHero
-              ? "min-h-12 px-6 py-3.5 text-base shadow-[0_0_24px_rgba(139,230,0,0.35)] sm:text-lg lg:min-h-11 lg:py-2.5 lg:text-sm"
-              : "px-6 py-3 text-lg"
+              ? "min-h-12 px-6 py-3.5 text-base shadow-[0_0_24px_rgba(139,230,0,0.35)] sm:text-lg"
+              : "min-h-12 px-6 py-3 text-lg"
           }`}
         >
           {pending ? "Sending…" : "Send quote request"}
         </button>
         {isHero ? (
-          <p className="text-center text-xs leading-snug text-zinc-500 lg:text-[11px] lg:leading-tight">
+          <p className="text-center text-xs leading-snug text-zinc-500">
             Written quote before we load · Your details are only used to respond
           </p>
         ) : null}

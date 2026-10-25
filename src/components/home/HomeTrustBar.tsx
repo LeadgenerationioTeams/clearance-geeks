@@ -4,7 +4,7 @@ import { hubAreaName, siteConfig } from "@/config/site";
 function Icon({ children }: { children: ReactNode }) {
   return (
     <span
-      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-geek-lime/30 bg-geek-lime/10 text-geek-lime"
+      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-geek-lime/40 bg-geek-lime/15 text-zinc-900"
       aria-hidden
     >
       {children}
@@ -61,18 +61,28 @@ export function HomeTrustBar() {
   const regionSub = `${hubAreaName(0)}, ${hubAreaName(1)} & beyond`;
   const items = trustItems(siteConfig.serviceAreas.region, regionSub);
   return (
-    <section className="border-y border-white/10 bg-zinc-950">
-      <ul className="site-container grid gap-6 py-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8 lg:py-10">
-        {items.map((item) => (
-          <li key={item.title} className="flex gap-4">
-            <Icon>{item.icon}</Icon>
-            <div>
-              <p className="font-semibold text-white">{item.title}</p>
-              <p className="mt-1 text-sm text-zinc-400">{item.body}</p>
-            </div>
-          </li>
-        ))}
-      </ul>
+    <section className="section-pad section-lime-wash border-y border-zinc-200/80" aria-label="Why choose us">
+      <div className="site-container">
+        <div className="max-w-2xl">
+          <h2 className="font-display text-3xl text-zinc-900 md:text-4xl">
+            Why choose us
+          </h2>
+          <p className="mt-3 text-zinc-600">
+            Clear pricing, careful crews and disposal done properly.
+          </p>
+        </div>
+        <ul className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
+          {items.map((item) => (
+            <li key={item.title} className="flex gap-4">
+              <Icon>{item.icon}</Icon>
+              <div>
+                <p className="font-semibold text-zinc-900">{item.title}</p>
+                <p className="mt-1 text-sm text-zinc-600">{item.body}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 }

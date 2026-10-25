@@ -36,12 +36,7 @@ export function HomeHero() {
           </div>
 
           <div className="lg:sticky lg:top-24">
-            <QuoteForm
-              id="quote"
-              variant="hero"
-              compactDesktop
-              title="Get a free quote"
-            />
+            <QuoteForm id="quote" variant="hero" title="Get a free quote" />
           </div>
         </div>
       </div>

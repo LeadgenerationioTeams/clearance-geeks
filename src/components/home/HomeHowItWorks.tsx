@@ -18,14 +18,19 @@ const steps = [
 
 export function HomeHowItWorks() {
   return (
-    <section id="how-it-works" className="section-pad bg-zinc-950 text-white">
+    <section id="how-it-works" className="section-pad bg-white">
       <div className="site-container">
-        <h2 className="font-display text-3xl md:text-4xl">How it works</h2>
+        <div className="max-w-2xl">
+          <h2 className="font-display text-3xl text-zinc-900 md:text-4xl">How it works</h2>
+          <p className="mt-3 text-zinc-600">
+            From first message to a cleared space — three straightforward steps.
+          </p>
+        </div>
         <ol className="mt-12 grid gap-8 md:grid-cols-3 md:gap-6">
           {steps.map((s) => (
             <li
               key={s.step}
-              className="relative rounded-2xl border border-white/10 bg-black/40 p-6 pt-8"
+              className="relative rounded-2xl border border-zinc-200 bg-zinc-50 p-6 pt-8 shadow-sm"
             >
               <span
                 className="font-display text-7xl leading-none text-geek-lime md:text-8xl"
@@ -33,8 +38,8 @@ export function HomeHowItWorks() {
               >
                 {s.step}
               </span>
-              <h3 className="mt-4 font-display text-2xl">{s.title}</h3>
-              <p className="mt-3 text-sm text-zinc-400 md:text-base">{s.body}</p>
+              <h3 className="mt-4 font-display text-2xl text-zinc-900">{s.title}</h3>
+              <p className="mt-3 text-sm text-zinc-600 md:text-base">{s.body}</p>
             </li>
           ))}
         </ol>

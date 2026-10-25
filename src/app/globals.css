@@ -58,6 +58,10 @@ body {
   padding-bottom: 3.5rem;
 }
 
+.section-lime-wash {
+  background-color: color-mix(in srgb, var(--geek-lime) 10%, #ffffff);
+}
+
 @media (min-width: 768px) {
   .section-pad {
     padding-top: 5rem;

@@ -41,8 +41,11 @@ export default function HomePage() {
 
       <section className="section-pad bg-white">
         <div className="site-container max-w-3xl">
-          <h2 className="font-display text-3xl text-zinc-900">Common questions</h2>
-          <dl className="mt-8 space-y-6">
+          <h2 className="font-display text-3xl text-zinc-900 md:text-4xl">Common questions</h2>
+          <p className="mt-3 text-zinc-600">
+            Quick answers before you book a clearance.
+          </p>
+          <dl className="mt-10 space-y-6">
             {faq.map((item) => (
               <div key={item.q}>
                 <dt className="font-semibold text-zinc-900">{item.q}</dt>

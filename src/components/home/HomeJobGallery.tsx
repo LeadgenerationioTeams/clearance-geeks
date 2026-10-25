@@ -6,7 +6,7 @@ export function HomeJobGallery() {
   const featured = homeGalleryPhotos();
 
   return (
-    <section id="gallery" className="section-pad bg-white">
+    <section id="gallery" className="section-pad bg-zinc-50">
       <div className="site-container">
         <div className="max-w-2xl">
           <h2 className="font-display text-3xl text-zinc-900 md:text-4xl">
