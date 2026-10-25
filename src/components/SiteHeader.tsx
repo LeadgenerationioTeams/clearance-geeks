@@ -33,7 +33,7 @@ export function SiteHeader() {
       <div
         className={cn(
           "site-container flex items-center justify-between gap-4 lg:grid lg:grid-cols-[auto_1fr_auto] lg:gap-8",
-          lightVan ? "py-2.5 lg:py-1.5" : "py-3",
+          lightVan ? "py-2.5 lg:py-2" : "py-3",
         )}
       >
         {lightVan ? (

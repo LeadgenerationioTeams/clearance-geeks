@@ -35,8 +35,8 @@ function QuotesNotOpenNotice({ hero }: { hero: boolean }) {
 
   return (
     <p
-      className={`rounded-lg border border-amber-300/80 bg-amber-50 text-sm leading-tight text-amber-950 ${
-        hero ? "px-2.5 py-1 lg:px-2 lg:py-0.5 lg:text-[0.8125rem]" : "px-3 py-2 leading-snug"
+      className={`rounded-lg border border-amber-300/80 bg-amber-50 text-sm leading-snug text-amber-950 ${
+        hero ? "px-2.5 py-1.5" : "px-3 py-2"
       }`}
     >
       {callable ? (
@@ -67,7 +67,7 @@ function Field({
     <label
       className={
         hero
-          ? "block text-sm font-semibold text-zinc-800 lg:text-[0.8125rem]"
+          ? "block text-sm font-semibold text-zinc-800"
           : "block text-sm text-zinc-700"
       }
     >
@@ -100,13 +100,8 @@ export function QuoteForm({
     undefined,
   );
   const isHero = variant === "hero";
-  const heroCompactLg = isHero && compactDesktop;
   const tightLg = compactDesktop || isHero;
   const quotesClosed = !siteConfig.quotesOpen;
-
-  const heroFieldInputClass = heroCompactLg
-    ? `${fieldInputClass} lg:mt-0.5 lg:min-h-10 lg:py-2`
-    : fieldInputClass;
 
   useEffect(() => {
     const form = formRef.current;
@@ -115,7 +110,7 @@ export function QuoteForm({
     const onFocusIn = (event: FocusEvent) => {
       const el = event.target;
       if (!(el instanceof HTMLElement)) return;
-      if (!el.matches("input, select, textarea, button")) return;
+      if (!el.matches("input, select, textarea, button, a")) return;
 
       requestAnimationFrame(() => {
         el.scrollIntoView({ block: "nearest" });
@@ -182,12 +177,7 @@ export function QuoteForm({
 
   const nameField = (
     <Field label="Name" hero={isHero}>
-      <input
-        name="name"
-        required
-        autoComplete="name"
-        className={heroCompactLg ? heroFieldInputClass : fieldInputClass}
-      />
+      <input name="name" required autoComplete="name" className={fieldInputClass} />
     </Field>
   );
   const phoneField = (
@@ -197,14 +187,13 @@ export function QuoteForm({
         type="tel"
         required
         autoComplete="tel"
-        className={heroCompactLg ? heroFieldInputClass : fieldInputClass}
+        className={fieldInputClass}
       />
     </Field>
   );
 
-  const heroPairGrid = heroCompactLg
-    ? "grid grid-cols-1 gap-3.5 overflow-visible lg:grid-cols-2 lg:gap-1"
-    : "grid grid-cols-1 gap-3.5 overflow-visible lg:grid-cols-2 lg:gap-2";
+  const heroPairGrid =
+    "grid grid-cols-1 gap-3.5 overflow-visible lg:grid-cols-2 lg:gap-2";
 
   return (
     <form
@@ -215,11 +204,7 @@ export function QuoteForm({
       onSubmit={quotesClosed ? captureFormFields : undefined}
       className={`flex flex-col rounded-2xl border bg-white ${
         isHero
-          ? `border-zinc-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.28)] ring-1 ring-black/5 sm:p-6 ${
-              heroCompactLg
-                ? "lg:gap-1 lg:p-2"
-                : "lg:gap-2 lg:p-3.5"
-            } ${
+          ? `border-zinc-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.28)] ring-1 ring-black/5 sm:p-6 lg:gap-2 lg:p-3.5 ${
               quotesClosed
                 ? "gap-2 p-4 lg:gap-1.5"
                 : "gap-3.5 p-5"
@@ -232,11 +217,9 @@ export function QuoteForm({
         className={
           isHero
             ? `border-b border-zinc-100 ${
-                heroCompactLg
-                  ? "space-y-0.5 pb-2 lg:space-y-0 lg:border-b-0 lg:pb-0"
-                  : quotesClosed
-                    ? "space-y-0.5 pb-2 lg:pb-1.5"
-                    : "space-y-1 pb-3 lg:space-y-0.5 lg:pb-2"
+                quotesClosed
+                  ? "space-y-0.5 pb-2 lg:pb-1.5"
+                  : "space-y-1 pb-3 lg:space-y-0.5 lg:pb-2"
               }`
             : ""
         }
@@ -244,19 +227,13 @@ export function QuoteForm({
         <h2
           className={`font-display text-zinc-900 ${
             isHero
-              ? heroCompactLg
-                ? "text-2xl leading-tight sm:text-[1.65rem] lg:text-xl lg:leading-snug"
-                : "text-2xl leading-tight sm:text-[1.65rem] lg:text-2xl"
+              ? "text-2xl leading-tight sm:text-[1.65rem] lg:text-2xl"
               : `text-2xl sm:text-[1.75rem] ${tightLg ? "lg:text-2xl" : ""}`
           }`}
         >
           {title}
         </h2>
-        <p
-          className={`text-sm leading-snug text-zinc-600 ${
-            heroCompactLg ? "lg:hidden" : ""
-          }`}
-        >
+        <p className="text-sm leading-snug text-zinc-600">
           {isHero
             ? "Tell us what needs clearing — you can send photos after we reply."
             : "Tell us what needs clearing. You can send photos after we reply."}
@@ -266,9 +243,7 @@ export function QuoteForm({
       <div
         className={
           isHero
-            ? heroCompactLg
-              ? "flex flex-col gap-3.5 lg:gap-1"
-              : "flex flex-col gap-3.5 lg:gap-2"
+            ? "flex flex-col gap-3.5 lg:gap-2"
             : tightLg
               ? "space-y-3 lg:space-y-2"
               : "space-y-4"
@@ -286,7 +261,7 @@ export function QuoteForm({
                   name="email"
                   type="email"
                   autoComplete="email"
-                  className={heroCompactLg ? heroFieldInputClass : fieldInputClass}
+                  className={fieldInputClass}
                 />
               </Field>
               <Field label="Postcode" hero={isHero}>
@@ -294,7 +269,7 @@ export function QuoteForm({
                   name="postcode"
                   required
                   autoComplete="postal-code"
-                  className={heroCompactLg ? heroFieldInputClass : fieldInputClass}
+                  className={fieldInputClass}
                 />
               </Field>
             </div>
@@ -327,13 +302,7 @@ export function QuoteForm({
         <Field label="Service" hero={isHero}>
           <select
             name="jobType"
-            className={
-              isHero
-                ? heroCompactLg
-                  ? `${heroFieldInputClass} appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2024%2024%22%20stroke%3D%22%2371717a%22%20stroke-width%3D%222%22%3E%3Cpath%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20d%3D%22M6%209l6%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-[length:0.75rem_0.75rem] bg-[position:right_0.75rem_center] bg-no-repeat pr-10`
-                  : heroSelectClass
-                : fieldInputClass
-            }
+            className={isHero ? heroSelectClass : fieldInputClass}
           >
             {services.map((s) => (
               <option key={s.slug} value={s.slug}>
@@ -345,20 +314,16 @@ export function QuoteForm({
         <Field label="What needs clearing?" hero={isHero}>
           <textarea
             name="details"
-            rows={isHero || tightLg ? 2 : 4}
+            rows={isHero ? 3 : tightLg ? 2 : 4}
             required
-            className={`${heroCompactLg ? heroFieldInputClass : fieldInputClass} resize-y ${isHero || tightLg ? "lg:min-h-0 lg:py-2" : ""}`}
+            className={`${fieldInputClass} resize-y ${isHero || tightLg ? "lg:min-h-0 lg:py-2" : ""}`}
           />
         </Field>
       </div>
 
       <div
         className={
-          isHero
-            ? heroCompactLg
-              ? "space-y-1.5 pt-0 lg:space-y-0"
-              : "space-y-2 pt-0 lg:space-y-1"
-            : "mt-4 space-y-2"
+          isHero ? "space-y-2 pt-0 lg:space-y-1" : "mt-4 space-y-2"
         }
       >
         <button
@@ -366,44 +331,27 @@ export function QuoteForm({
           disabled={pending}
           className={`w-full rounded-xl font-extrabold uppercase tracking-wide transition disabled:opacity-60 ${limeButtonOnLightClass} ${fieldScrollMargin} ${
             isHero
-              ? heroCompactLg
-                ? "min-h-12 px-6 py-3.5 text-base shadow-[0_0_24px_rgba(139,230,0,0.35)] sm:text-lg lg:min-h-10 lg:py-2 lg:text-sm"
-                : "min-h-12 px-6 py-3.5 text-base shadow-[0_0_24px_rgba(139,230,0,0.35)] sm:text-lg lg:min-h-11 lg:py-2.5 lg:text-sm"
+              ? "min-h-12 px-6 py-3.5 text-base shadow-[0_0_24px_rgba(139,230,0,0.35)] sm:text-lg lg:min-h-11 lg:py-2.5 lg:text-sm"
               : "px-6 py-3 text-lg"
           }`}
         >
           {pending ? "Sending…" : "Send quote request"}
         </button>
         <p
-          className={`text-sm leading-snug text-zinc-600 ${cookieBannerScrollMargin} ${isHero ? "text-center" : ""} ${
-            heroCompactLg ? "lg:text-xs lg:leading-tight" : ""
-          }`}
+          className={`text-sm leading-snug text-zinc-600 ${cookieBannerScrollMargin} ${isHero ? "text-center" : ""}`}
         >
-          {heroCompactLg ? (
-            <>
-              <span className="lg:hidden">
-                We&apos;ll use your details to reply to your quote request and
-                arrange the job.{" "}
-              </span>
-              <span className="hidden lg:inline">See our </span>
-            </>
-          ) : (
-            <>
-              We&apos;ll use your details to reply to your quote request and
-              arrange the job.{" "}
-            </>
-          )}
-          <Link href="/privacy" className="font-semibold text-zinc-900 underline">
+          We&apos;ll use your details to reply to your quote request and arrange
+          the job. See our{" "}
+          <Link
+            href="/privacy"
+            className={`font-semibold text-zinc-900 underline ${fieldScrollMargin}`}
+          >
             privacy notice
           </Link>
           .
         </p>
         {isHero ? (
-          <p
-            className={`text-center text-sm leading-snug text-zinc-500 ${
-              heroCompactLg ? "lg:hidden" : ""
-            }`}
-          >
+          <p className="text-center text-sm leading-snug text-zinc-500">
             Written quote before we load
           </p>
         ) : null}

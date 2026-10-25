@@ -44,34 +44,87 @@ test("homepage loads and quote form visible", async ({ page }, testInfo) => {
   }
 });
 
-test("light hero: submit clears cookie banner at 1440", async ({ page }, testInfo) => {
+async function cookieBannerTop(
+  page: import("@playwright/test").Page,
+): Promise<number> {
+  const accept = page.getByRole("button", { name: /^accept$/i });
+  await expect(accept).toBeVisible();
+  const box = await accept.boundingBox();
+  return box?.y ?? 900;
+}
+
+async function assertFocusClearsBanner(
+  page: import("@playwright/test").Page,
+  target: import("@playwright/test").Locator,
+) {
+  await target.focus();
+  await page.waitForTimeout(150);
+  const box = await target.boundingBox();
+  expect(box).not.toBeNull();
+  const bannerTop = await cookieBannerTop(page);
+  expect(box!.y + box!.height).toBeLessThanOrEqual(bannerTop + 1);
+}
+
+async function assertFocusFullyInViewport(
+  page: import("@playwright/test").Page,
+  target: import("@playwright/test").Locator,
+) {
+  await target.focus();
+  await page.waitForTimeout(150);
+  const box = await target.boundingBox();
+  const vh = page.viewportSize()?.height ?? 900;
+  expect(box).not.toBeNull();
+  expect(box!.y).toBeGreaterThanOrEqual(-1);
+  expect(box!.y + box!.height).toBeLessThanOrEqual(vh + 1);
+}
+
+test("light hero: quote controls clear cookie banner when focused", async ({
+  page,
+}, testInfo) => {
   test.skip(
     testInfo.project.name !== "desktop-1440",
     "desktop layout only",
   );
   await page.goto("/");
-  await page.evaluate(() => window.scrollTo(0, 0));
-  const accept = page.getByRole("button", { name: /^accept$/i });
-  await expect(accept).toBeVisible();
-  const submit = page
-    .locator("#quote")
-    .getByRole("button", { name: /send quote request/i });
-  await expect(submit).toBeVisible();
-  const submitBox = await submit.boundingBox();
-  const bannerBox = await accept.boundingBox();
-  expect(submitBox).not.toBeNull();
-  expect(bannerBox).not.toBeNull();
-  const submitBottom = (submitBox?.y ?? 0) + (submitBox?.height ?? 0);
-  expect(submitBottom).toBeLessThan(bannerBox?.y ?? 900);
-  const privacy = page.locator("#quote").getByRole("link", { name: /privacy notice/i });
-  await expect(privacy).toBeVisible();
-  const privacyBox = await privacy.boundingBox();
-  expect(privacyBox).not.toBeNull();
-  const privacyBottom = (privacyBox?.y ?? 0) + (privacyBox?.height ?? 0);
-  expect(privacyBottom).toBeLessThan(bannerBox?.y ?? 900);
-  await expect(
-    page.locator("#quote").getByRole("heading", { name: /get a free quote/i }),
-  ).toBeVisible();
+  const quote = page.locator("#quote");
+  const fields = [
+    quote.getByRole("textbox", { name: /^name$/i }),
+    quote.getByRole("textbox", { name: /^phone$/i }),
+    quote.getByRole("textbox", { name: /^email$/i }),
+    quote.getByRole("textbox", { name: /^postcode$/i }),
+    quote.locator('select[name="jobType"]'),
+    quote.getByRole("textbox", { name: /what needs clearing/i }),
+    quote.getByRole("button", { name: /send quote request/i }),
+    quote.getByRole("link", { name: /privacy notice/i }),
+  ];
+  for (const field of fields) {
+    await assertFocusClearsBanner(page, field);
+  }
+});
+
+test("light hero: quote controls fully visible when banner closed", async ({
+  page,
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name !== "desktop-1440",
+    "desktop layout only",
+  );
+  await page.goto("/");
+  await acceptCookies(page);
+  const quote = page.locator("#quote");
+  const fields = [
+    quote.getByRole("textbox", { name: /^name$/i }),
+    quote.getByRole("textbox", { name: /^phone$/i }),
+    quote.getByRole("textbox", { name: /^email$/i }),
+    quote.getByRole("textbox", { name: /^postcode$/i }),
+    quote.locator('select[name="jobType"]'),
+    quote.getByRole("textbox", { name: /what needs clearing/i }),
+    quote.getByRole("button", { name: /send quote request/i }),
+    quote.getByRole("link", { name: /privacy notice/i }),
+  ];
+  for (const field of fields) {
+    await assertFocusFullyInViewport(page, field);
+  }
 });
 
 test("homepage quote form does not shift after load (CLS)", async ({ page }) => {
