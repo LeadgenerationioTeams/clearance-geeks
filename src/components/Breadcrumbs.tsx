@@ -21,8 +21,8 @@ export function Breadcrumbs({
               <Link
                 href={item.href}
                 className={lvCn(
-                  "inline-flex min-h-11 items-center py-1 text-zinc-700 underline-offset-2 hover:text-[#111] hover:underline",
-                  "inline-flex min-h-11 items-center py-1 hover:text-geek-lime",
+                  "inline-flex min-h-11 min-w-11 items-center justify-center px-2 py-1 text-zinc-700 underline-offset-2 hover:text-[#111] hover:underline",
+                  "inline-flex min-h-11 min-w-11 items-center justify-center px-2 py-1 hover:text-geek-lime",
                 )}
               >
                 {item.label}

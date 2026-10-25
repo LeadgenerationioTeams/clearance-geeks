@@ -11,7 +11,11 @@ export function PageImage({
   priority?: boolean;
   className?: string;
 }) {
-  const isLocal = image.src.startsWith("/");
+  const creditHref =
+    image.creditUrl.startsWith("http://") ||
+    image.creditUrl.startsWith("https://")
+      ? image.creditUrl
+      : null;
 
   return (
     <figure
@@ -26,27 +30,28 @@ export function PageImage({
           alt={image.alt}
           fill
           className="object-cover"
-          sizes="(max-width: 768px) 100vw, 50vw"
+          sizes="(max-width: 1024px) 100vw, min(50vw, 36rem)"
           priority={priority}
-          unoptimized={isLocal}
         />
       </div>
-      {image.credit && image.creditUrl !== "/" ? (
+      {image.credit ? (
         <figcaption
           className={`px-3 py-2 text-base ${lvCn("text-zinc-600", "text-zinc-500")}`}
         >
           {image.illustrative ? "Illustrative — " : "Photo: "}
-          <a
-            href={image.creditUrl}
-            className={lvPageClasses.link()}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            {image.credit}
-          </a>
+          {creditHref ? (
+            <a
+              href={creditHref}
+              className={lvPageClasses.link()}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {image.credit}
+            </a>
+          ) : (
+            image.credit
+          )}
         </figcaption>
-      ) : image.credit ? (
-        <figcaption className="px-3 py-2 text-base text-zinc-500">{image.credit}</figcaption>
       ) : null}
     </figure>
   );

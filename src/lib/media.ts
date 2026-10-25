@@ -15,14 +15,14 @@ export const images = {
     src: "/gallery/job-clearance-02.webp",
     alt: "Empty living room after house clearance",
     credit: "The Clearance Geeks",
-    creditUrl: "/gallery",
+    creditUrl: "",
     illustrative: false,
   },
   gardenWaste: {
     src: "/gallery/job-clearance-03.webp",
     alt: "Back garden with bare soil patch after structure removal",
     credit: "The Clearance Geeks",
-    creditUrl: "/gallery",
+    creditUrl: "",
     illustrative: false,
   },
   clearanceGeeksVan: {
@@ -45,4 +45,13 @@ export const images = {
 /** Branded van photo for area and service trust sections. */
 export function areaPageImage(): SiteImage {
   return images.clearanceGeeksVan;
+}
+
+/** Hero image on borough × service landings; omit builders-waste. */
+export function areaServicePageImage(
+  serviceSlug: string,
+): SiteImage | null {
+  if (serviceSlug === "builders-waste") return null;
+  if (serviceSlug === "garden-waste") return images.gardenWaste;
+  return images.heroClearance;
 }
