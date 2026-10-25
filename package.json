@@ -10,6 +10,7 @@
     "lint": "eslint",
     "check:forbidden": "node scripts/check-forbidden-strings.mjs",
     "check:similarity": "node scripts/similarity-check.mjs",
+    "brand:light-van": "node scripts/process-light-van-brand.mjs",
     "test:e2e": "playwright test",
     "test": "playwright test"
   },

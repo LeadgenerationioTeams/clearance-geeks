@@ -1,4 +1,4 @@
-import { HomeHero } from "@/components/home/HomeHero";
+import { HomeHeroSection } from "@/components/home/HomeHeroSection";
 import { HomeTrustBar } from "@/components/home/HomeTrustBar";
 import { HomeServicesGrid } from "@/components/home/HomeServicesGrid";
 import { HomeJobGallery } from "@/components/home/HomeJobGallery";
@@ -32,7 +32,7 @@ const faq = [
 export default function HomePage() {
   return (
     <div>
-      <HomeHero />
+      <HomeHeroSection />
       <HomeTrustBar />
       <HomeServicesGrid />
       <HomeJobGallery />

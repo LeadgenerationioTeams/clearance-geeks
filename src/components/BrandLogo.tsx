@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import { resolveHomeHeroVariant } from "@/lib/home-hero";
+import { lightVanHeaderLogo } from "@/lib/light-van-brand";
 
 /** Sam's cargo-panel crop — public/brand/logo-master.png (from brand/logo-crop.png). */
 export const LOGO_WIDTH = 1024;
@@ -42,12 +44,13 @@ export function BrandLogo({
     );
   }
 
+  const lightVan = resolveHomeHeroVariant() === "light-van";
   const img = (
     <Image
-      src="/brand/logo-lockup.webp"
+      src={lightVan ? lightVanHeaderLogo.src : "/brand/logo-lockup.webp"}
       alt="The Clearance Geeks — Waste Removals"
-      width={LOGO_WIDTH}
-      height={LOGO_HEIGHT}
+      width={lightVan ? lightVanHeaderLogo.width : LOGO_WIDTH}
+      height={lightVan ? lightVanHeaderLogo.height : LOGO_HEIGHT}
       className={`h-14 w-auto max-w-[min(100%,360px)] object-contain object-left ${className}`}
       priority
       unoptimized
