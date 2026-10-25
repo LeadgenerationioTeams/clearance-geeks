@@ -9,6 +9,8 @@ export type Consent = "unknown" | "granted" | "denied";
 
 const listeners = new Set<() => void>();
 
+let pendingCookieBannerFocus = false;
+
 export function subscribeConsent(onChange: () => void) {
   listeners.add(onChange);
   return () => listeners.delete(onChange);
@@ -41,6 +43,13 @@ export function syncCookieBannerAttribute(consent: Consent) {
   }
 }
 
+/** True once after openCookieSettings until the banner consumes it for focus. */
+export function consumePendingCookieBannerFocus(): boolean {
+  const pending = pendingCookieBannerFocus;
+  pendingCookieBannerFocus = false;
+  return pending;
+}
+
 /** Clear stored choice and reopen the banner (Cookie settings). */
 export function openCookieSettings() {
   try {
@@ -50,5 +59,6 @@ export function openCookieSettings() {
   }
   setCookieBarHeight(COOKIE_BAR_HEIGHT_BOOTSTRAP_PX);
   document.documentElement.setAttribute("data-cookie-banner", "open");
+  pendingCookieBannerFocus = true;
   notifyConsentChange();
 }

@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
 import { COOKIE_CONSENT_STORAGE_KEY } from "@/lib/cookie-consent";
 import {
   type Consent,
+  consumePendingCookieBannerFocus,
   notifyConsentChange,
   readConsent,
   setCookieBarHeight,
@@ -52,6 +53,13 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
     syncHeight();
     const ro = new ResizeObserver(syncHeight);
     ro.observe(el);
+
+    if (consumePendingCookieBannerFocus()) {
+      requestAnimationFrame(() => {
+        const accept = el.querySelector<HTMLButtonElement>("button");
+        accept?.focus();
+      });
+    }
 
     return () => {
       ro.disconnect();

@@ -1,9 +1,9 @@
 import { CallButton } from "./CallButton";
-import { company, isPlaceholder } from "@/config/site";
+import { company, hasCallablePhone } from "@/config/site";
 import { cn } from "@/lib/cn";
 
 function whatsAppHref(): string | null {
-  if (isPlaceholder(company.phone)) return null;
+  if (!hasCallablePhone()) return null;
   const digits = company.phone.replace(/\D/g, "");
   if (!digits) return null;
   const uk = digits.startsWith("0") ? `44${digits.slice(1)}` : digits;
@@ -21,13 +21,24 @@ export function StickyMobileCta() {
       style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
     >
       <div className={`grid gap-2 ${wa ? "grid-cols-2" : "grid-cols-1"}`}>
-        <CallButton
-          className={cn(
-            "w-full px-3 text-sm focus-visible:outline focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:hidden",
-          )}
-          label="Call"
-          showPhone={false}
-        />
+        {hasCallablePhone() ? (
+          <CallButton
+            className={cn(
+              "w-full px-3 text-sm focus-visible:outline focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:hidden",
+            )}
+            label="Call"
+            showPhone={false}
+          />
+        ) : (
+          <a
+            href="#quote"
+            className={cn(
+              "inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-geek-lime px-3 text-center text-sm font-extrabold uppercase tracking-wide text-black lg:hidden",
+            )}
+          >
+            Get a quote
+          </a>
+        )}
         {wa ? (
           <a
             href={wa}

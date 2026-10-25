@@ -3,7 +3,7 @@
 import { openCookieSettings } from "@/lib/cookie-consent-store";
 
 const className =
-  "inline-flex min-h-11 items-center hover:text-geek-lime";
+  "inline-flex min-h-11 items-center scroll-mb-[calc(var(--cookie-bar-h,0px)+4px)] hover:text-geek-lime focus-visible:outline focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-geek-lime";
 
 export function CookieSettingsButton() {
   return (

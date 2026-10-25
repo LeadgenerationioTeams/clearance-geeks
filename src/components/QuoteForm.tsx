@@ -4,7 +4,12 @@ import type { ReactNode } from "react";
 import { useActionState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { submitQuote, type QuoteFormState } from "@/app/actions/quote";
-import { company, isPlaceholder, siteConfig, telHref } from "@/config/site";
+import {
+  hasCallablePhone,
+  quotesClosedNoticeMessage,
+  siteConfig,
+  telHref,
+} from "@/config/site";
 import { services } from "@/lib/services";
 
 const initial: QuoteFormState = { ok: false, message: "" };
@@ -20,27 +25,26 @@ const heroSelectClass = `${fieldInputClass} appearance-none bg-[url('data:image/
 function QuotesNotOpenNotice({ hero }: { hero: boolean }) {
   if (siteConfig.quotesOpen) return null;
 
-  const phone = company.phone;
-  const callable = !isPlaceholder(company.phone);
+  const message = quotesClosedNoticeMessage();
+  const callable = hasCallablePhone();
 
   return (
     <p
-      role="status"
-      className={`rounded-lg border border-amber-300/80 bg-amber-50 px-3 py-2 text-amber-950 ${
-        hero
-          ? "text-xs leading-snug lg:px-2.5 lg:py-1.5 lg:text-[11px] lg:leading-tight"
-          : "text-sm leading-snug"
+      className={`rounded-lg border border-amber-300/80 bg-amber-50 text-sm leading-tight text-amber-950 ${
+        hero ? "px-2.5 py-1" : "px-3 py-2 leading-snug"
       }`}
     >
-      Online quotes aren&apos;t open yet. Please call us on{" "}
       {callable ? (
-        <a href={telHref(company.phone)} className="font-semibold underline">
-          {phone}
-        </a>
+        <>
+          Online quotes aren&apos;t open yet. Please call us on{" "}
+          <a href={telHref()} className="font-semibold underline">
+            {siteConfig.company.phone}
+          </a>
+          .
+        </>
       ) : (
-        <span className="font-semibold">{phone}</span>
+        message
       )}
-      .
     </p>
   );
 }
@@ -83,6 +87,7 @@ export function QuoteForm({
   const formRef = useRef<HTMLFormElement>(null);
   const isHero = variant === "hero";
   const tightLg = compactDesktop || isHero;
+  const quotesClosed = !siteConfig.quotesOpen;
 
   useEffect(() => {
     const form = formRef.current;
@@ -130,7 +135,11 @@ export function QuoteForm({
       action={action}
       className={`flex flex-col rounded-2xl border bg-white ${
         isHero
-          ? "gap-3.5 border-zinc-200/90 p-5 shadow-[0_20px_50px_rgba(0,0,0,0.28)] ring-1 ring-black/5 sm:p-6 lg:gap-2 lg:p-3.5"
+          ? `border-zinc-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.28)] ring-1 ring-black/5 sm:p-6 lg:gap-2 lg:p-3.5 ${
+              quotesClosed
+                ? "gap-2 p-4 lg:gap-1.5"
+                : "gap-3.5 p-5"
+            }`
           : "gap-4 border-zinc-200/80 p-5 sm:p-6"
       } ${tightLg && !isHero ? "lg:gap-2 lg:p-4" : ""} ${className}`}
     >
@@ -138,7 +147,11 @@ export function QuoteForm({
       <header
         className={
           isHero
-            ? "space-y-1 border-b border-zinc-100 pb-3 lg:space-y-0.5 lg:pb-2"
+            ? `border-b border-zinc-100 ${
+                quotesClosed
+                  ? "space-y-0.5 pb-2 lg:pb-1.5"
+                  : "space-y-1 pb-3 lg:space-y-0.5 lg:pb-2"
+              }`
             : ""
         }
       >
@@ -256,7 +269,7 @@ export function QuoteForm({
           {pending ? "Sending…" : "Send quote request"}
         </button>
         <p
-          className={`text-zinc-600 ${isHero ? "text-center text-xs leading-snug lg:text-[11px] lg:leading-tight" : "text-sm leading-snug"}`}
+          className={`text-sm leading-snug text-zinc-600 ${isHero ? "text-center" : ""}`}
         >
           We&apos;ll use your details to reply to your quote request and arrange
           the job. See our{" "}
@@ -274,8 +287,14 @@ export function QuoteForm({
 
       {state.message ? (
         <p
-          className={`text-sm ${state.ok ? "text-green-800" : "text-red-700"}`}
-          role="status"
+          className={`text-sm ${
+            state.info
+              ? "rounded-lg border border-amber-300/80 bg-amber-50 px-3 py-2 text-amber-950"
+              : state.ok
+                ? "text-green-800"
+                : "text-red-700"
+          }`}
+          role={state.info ? undefined : "status"}
         >
           {state.message}
         </p>

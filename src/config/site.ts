@@ -584,6 +584,20 @@ export function isPlaceholder(value: string): boolean {
   return value.includes("PLACEHOLDER_") || value.startsWith("[");
 }
 
+export function hasCallablePhone(
+  phone: string = siteConfig.company.phone,
+): boolean {
+  return !isPlaceholder(phone);
+}
+
+/** Shown when quotesOpen is false — never includes a placeholder phone string. */
+export function quotesClosedNoticeMessage(): string {
+  if (hasCallablePhone()) {
+    return `Online quotes aren't open yet. Please call us on ${siteConfig.company.phone}.`;
+  }
+  return "Online quotes aren't open yet. Please check back soon.";
+}
+
 export const siteConfig = {
   /** Set true when submitQuote is wired to a live lead destination. */
   quotesOpen: false,
@@ -654,9 +668,9 @@ export const company = {
   companyNumber: siteConfig.company.companyNumber,
   address: formatRegisteredAddress(),
   phone: siteConfig.company.phone,
-  phoneTel: isPlaceholder(siteConfig.company.phone)
-    ? "tel:PLACEHOLDER_PHONE"
-    : `tel:${siteConfig.company.phone.replace(/\s/g, "")}`,
+  phoneTel: hasCallablePhone()
+    ? `tel:${siteConfig.company.phone.replace(/\s/g, "")}`
+    : "#quote",
   email: siteConfig.company.email,
   wasteCarrierLicence: siteConfig.company.wasteCarrierLicence,
   region: siteConfig.serviceAreas.region,

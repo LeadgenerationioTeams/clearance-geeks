@@ -1,10 +1,11 @@
 "use server";
 
-import { company } from "@/config/site";
+import { quotesClosedNoticeMessage, siteConfig } from "@/config/site";
 
 export type QuoteFormState = {
   ok: boolean;
   message: string;
+  info?: boolean;
 };
 
 export async function submitQuote(
@@ -28,8 +29,16 @@ export async function submitQuote(
   // TODO: Wire lead destination (CRM, email, webhook). Intentionally sends nowhere.
   void { name, phone, postcode, jobType, details, photo };
 
+  if (!siteConfig.quotesOpen) {
+    return {
+      ok: false,
+      info: true,
+      message: quotesClosedNoticeMessage(),
+    };
+  }
+
   return {
     ok: true,
-    message: `Online quotes aren't open yet. Please call us on ${company.phone}.`,
+    message: "Thanks — we will be in touch shortly.",
   };
 }

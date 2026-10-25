@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { CookieSettingsButton } from "@/components/CookieSettingsButton";
-import { company, siteConfig } from "@/config/site";
+import { company, hasCallablePhone, siteConfig } from "@/config/site";
 
 const footerLinkClass =
   "inline-flex min-h-11 items-center hover:text-geek-lime";
@@ -14,7 +14,7 @@ export function SiteFooter() {
         <div>
           <p className="font-display text-xl text-geek-lime">{company.legalName}</p>
           <p className="mt-3 break-words text-zinc-400">{company.address}</p>
-          <p className="mt-2">{company.phone}</p>
+          {hasCallablePhone() ? <p className="mt-2">{company.phone}</p> : null}
           <p className="break-all">{company.email}</p>
         </div>
         <div>

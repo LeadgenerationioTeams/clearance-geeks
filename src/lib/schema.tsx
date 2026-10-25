@@ -1,4 +1,4 @@
-import { company, siteConfig } from "@/config/site";
+import { company, hasCallablePhone, siteConfig } from "@/config/site";
 import { resolveSiteUrl } from "@/lib/env.server";
 
 export function localBusinessJsonLd() {
@@ -11,7 +11,7 @@ export function localBusinessJsonLd() {
     name: company.legalName,
     description: company.defaultDescription,
     url: siteUrl,
-    telephone: company.phone,
+    ...(hasCallablePhone() ? { telephone: company.phone } : {}),
     email: company.email,
     address: {
       "@type": "PostalAddress",
