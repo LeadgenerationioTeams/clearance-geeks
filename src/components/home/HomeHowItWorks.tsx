@@ -20,20 +20,15 @@ export function HomeHowItWorks() {
   return (
     <section id="how-it-works" className="section-pad bg-white">
       <div className="site-container">
-        <div className="max-w-2xl">
-          <h2 className="font-display text-3xl text-zinc-900 md:text-4xl">How it works</h2>
-          <p className="mt-3 text-zinc-600">
-            From first message to a cleared space — three straightforward steps.
-          </p>
-        </div>
+        <h2 className="font-display text-3xl text-zinc-900 md:text-4xl">How it works</h2>
         <ol className="mt-12 grid gap-8 md:grid-cols-3 md:gap-6">
           {steps.map((s) => (
             <li
               key={s.step}
-              className="relative rounded-2xl border border-zinc-200 bg-zinc-50 p-6 pt-8 shadow-sm"
+              className="relative rounded-2xl border border-zinc-200 bg-zinc-50 p-6 shadow-sm"
             >
               <span
-                className="font-display text-7xl leading-none text-geek-lime md:text-8xl"
+                className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-zinc-900 font-display text-3xl leading-none text-geek-lime"
                 aria-hidden
               >
                 {s.step}

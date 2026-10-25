@@ -8,7 +8,7 @@ import { services } from "@/lib/services";
 const initial: QuoteFormState = { ok: false, message: "" };
 
 const fieldInputClass =
-  "mt-1.5 min-h-11 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-base text-zinc-900 shadow-sm transition placeholder:text-zinc-400 focus:border-geek-lime focus:outline-none focus:ring-2 focus:ring-geek-lime/35";
+  "mt-1.5 min-h-11 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-base text-zinc-900 shadow-sm transition placeholder:text-zinc-400 focus:border-green-800 focus:outline-none focus:ring-2 focus:ring-green-800/45";
 
 function Field({
   label,
@@ -132,7 +132,7 @@ export function QuoteForm({
         <button
           type="submit"
           disabled={pending}
-          className={`w-full rounded-xl bg-geek-lime font-extrabold uppercase tracking-wide text-black transition hover:bg-geek-lime-bright focus:outline-none focus:ring-2 focus:ring-geek-lime focus:ring-offset-2 disabled:opacity-60 ${
+          className={`w-full scroll-mb-[calc(var(--cookie-consent-bar-height)+1rem)] rounded-xl bg-geek-lime font-extrabold uppercase tracking-wide text-black transition hover:bg-geek-lime-bright focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-2 disabled:opacity-60 ${
             isHero
               ? "min-h-12 px-6 py-3.5 text-base shadow-[0_0_24px_rgba(139,230,0,0.35)] sm:text-lg"
               : "min-h-12 px-6 py-3 text-lg"

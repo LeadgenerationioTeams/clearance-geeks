@@ -8,6 +8,17 @@
   --container: 75rem;
   /* Sticky mobile Call bar (p-3 + min-h-12 row); 0 on lg+ */
   --mobile-call-bar-height: 4.5rem;
+  --cookie-consent-bar-height: 0px;
+}
+
+html[data-cookie-banner="open"] {
+  --cookie-consent-bar-height: 12.5rem;
+}
+
+@media (min-width: 640px) {
+  html[data-cookie-banner="open"] {
+    --cookie-consent-bar-height: 6.75rem;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -60,6 +71,10 @@ body {
 
 .section-lime-wash {
   background-color: color-mix(in srgb, var(--geek-lime) 10%, #ffffff);
+}
+
+#quote {
+  scroll-margin-bottom: calc(var(--cookie-consent-bar-height) + 1rem);
 }
 
 @media (min-width: 768px) {

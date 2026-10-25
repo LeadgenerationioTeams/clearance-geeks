@@ -22,7 +22,7 @@ export function HomeHero() {
         className="pointer-events-none absolute inset-0 bg-gradient-to-b from-zinc-950/80 via-zinc-950/75 to-zinc-950/78 lg:bg-gradient-to-r lg:from-zinc-950/92 lg:via-zinc-950/78 lg:to-zinc-950/45"
         aria-hidden
       />
-      <div className="site-container relative z-10 w-full pb-8 pt-6 md:pb-10 md:pt-8 lg:pb-6 lg:pt-5">
+      <div className="site-container relative z-10 w-full pb-[calc(2rem+var(--cookie-consent-bar-height))] pt-6 md:pb-[calc(2.5rem+var(--cookie-consent-bar-height))] md:pt-8 lg:pb-[calc(1.5rem+var(--cookie-consent-bar-height))] lg:pt-5">
         <div className="grid gap-5 lg:grid-cols-2 lg:items-start lg:gap-5">
           <div className="max-w-xl text-white">
             <h1 className="font-display text-[2rem] leading-[1.08] tracking-tight sm:text-[2.25rem] md:text-5xl lg:max-w-[22ch] lg:text-[3.5rem]">

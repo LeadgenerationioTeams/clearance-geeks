@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useSyncExternalStore } from "react";
 
 const STORAGE_KEY = "tcg_cookie_consent_v1";
 
@@ -40,6 +40,18 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
     readConsent,
     () => "unknown" as Consent,
   );
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (consent === "unknown") {
+      root.dataset.cookieBanner = "open";
+    } else {
+      delete root.dataset.cookieBanner;
+    }
+    return () => {
+      delete root.dataset.cookieBanner;
+    };
+  }, [consent]);
 
   const save = useCallback((value: "granted" | "denied") => {
     try {
