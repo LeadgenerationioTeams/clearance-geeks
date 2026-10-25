@@ -85,6 +85,8 @@ export function QuoteForm({
 }) {
   const [state, action, pending] = useActionState(submitQuote, initial);
   const formRef = useRef<HTMLFormElement>(null);
+  const statusRef = useRef<HTMLParagraphElement>(null);
+  const savedFieldsRef = useRef<Record<string, string> | null>(null);
   const isHero = variant === "hero";
   const tightLg = compactDesktop || isHero;
   const quotesClosed = !siteConfig.quotesOpen;
@@ -106,6 +108,42 @@ export function QuoteForm({
     form.addEventListener("focusin", onFocusIn);
     return () => form.removeEventListener("focusin", onFocusIn);
   }, []);
+
+  useEffect(() => {
+    if (!state.message || !state.info) return;
+    requestAnimationFrame(() => {
+      statusRef.current?.focus();
+    });
+  }, [state.message, state.info]);
+
+  useEffect(() => {
+    if (!state.info || !savedFieldsRef.current || !formRef.current) return;
+    const form = formRef.current;
+    const saved = savedFieldsRef.current;
+    for (const [name, value] of Object.entries(saved)) {
+      const el = form.elements.namedItem(name);
+      if (
+        el instanceof HTMLInputElement ||
+        el instanceof HTMLTextAreaElement ||
+        el instanceof HTMLSelectElement
+      ) {
+        el.value = value;
+      }
+    }
+  }, [state]);
+
+  function captureFormFields() {
+    const form = formRef.current;
+    if (!form) return;
+    savedFieldsRef.current = {
+      name: String(new FormData(form).get("name") ?? ""),
+      phone: String(new FormData(form).get("phone") ?? ""),
+      email: String(new FormData(form).get("email") ?? ""),
+      postcode: String(new FormData(form).get("postcode") ?? ""),
+      jobType: String(new FormData(form).get("jobType") ?? ""),
+      details: String(new FormData(form).get("details") ?? ""),
+    };
+  }
 
   const nameField = (
     <Field label="Name" hero={isHero}>
@@ -133,6 +171,7 @@ export function QuoteForm({
       id={id}
       tabIndex={-1}
       action={action}
+      onSubmit={quotesClosed ? captureFormFields : undefined}
       className={`flex flex-col rounded-2xl border bg-white ${
         isHero
           ? `border-zinc-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.28)] ring-1 ring-black/5 sm:p-6 lg:gap-2 lg:p-3.5 ${
@@ -287,6 +326,8 @@ export function QuoteForm({
 
       {state.message ? (
         <p
+          ref={state.info ? statusRef : undefined}
+          tabIndex={state.info ? -1 : undefined}
           className={`text-sm ${
             state.info
               ? "rounded-lg border border-amber-300/80 bg-amber-50 px-3 py-2 text-amber-950"
@@ -294,7 +335,8 @@ export function QuoteForm({
                 ? "text-green-800"
                 : "text-red-700"
           }`}
-          role={state.info ? undefined : "status"}
+          role="status"
+          aria-live={state.info ? "polite" : undefined}
         >
           {state.message}
         </p>
