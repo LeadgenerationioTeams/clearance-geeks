@@ -13,8 +13,8 @@ const logoSrc = "brand/logo-crop.png";
 
 /** Cargo panel — logo, checklist, service icons, furniture photo. */
 const boxExtract = { left: 240, top: 50, width: 940, height: 890 };
-/** Tighter panel for 16:10 mobile — mascot + wordmark + service row. */
-const mobileExtract = { left: 200, top: 45, width: 700, height: 880 };
+/** Box-side panel for 4:3 mobile — keep mascot hair + wordmark in frame. */
+const mobileExtract = { left: 175, top: 18, width: 740, height: 820 };
 
 const desktopSizes = [
   { w: 480, h: 360, name: "van-desktop-480.webp" },
@@ -24,9 +24,9 @@ const desktopSizes = [
 ];
 
 const mobileSizes = [
-  { w: 390, h: 244, name: "van-mobile-390.webp" },
-  { w: 640, h: 400, name: "van-mobile-640.webp" },
-  { w: 800, h: 500, name: "van-mobile-800.webp" },
+  { w: 390, h: 293, name: "van-mobile-390.webp" },
+  { w: 640, h: 480, name: "van-mobile-640.webp" },
+  { w: 800, h: 600, name: "van-mobile-800.webp" },
 ];
 
 for (const { w, h, name } of desktopSizes) {
@@ -40,7 +40,7 @@ for (const { w, h, name } of desktopSizes) {
 for (const { w, h, name } of mobileSizes) {
   await sharp(vanSrc)
     .extract(mobileExtract)
-    .resize(w, h, { fit: "cover", position: "centre" })
+    .resize(w, h, { fit: "cover", position: "north" })
     .webp({ quality: 88 })
     .toFile(`${OUT}/${name}`);
 }
@@ -100,7 +100,7 @@ await sharp(logoMasterPath)
 
 const manifest = {
   vanDesktop: { width: 1200, height: 900, src: "/brand/light-van/van-desktop-1200.webp" },
-  vanMobile: { width: 800, height: 500, src: "/brand/light-van/van-mobile-800.webp" },
+  vanMobile: { width: 800, height: 600, src: "/brand/light-van/van-mobile-800.webp" },
   headerLogo: {
     width: logoMeta.width,
     height: logoMeta.height,

@@ -8,7 +8,7 @@ export const lightVanHeroDesktop = {
 export const lightVanHeroMobile = {
   src: "/brand/light-van/van-mobile-800.webp",
   width: 800,
-  height: 500,
+  height: 600,
 };
 
 /** @2x header lockup from box-side artwork (displayed at h-14). */
