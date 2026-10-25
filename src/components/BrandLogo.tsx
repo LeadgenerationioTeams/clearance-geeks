@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { focusVisibleOnDarkClass } from "@/lib/focus-visible";
 
 /** Sam's cargo-panel crop — public/brand/logo-master.png (from brand/logo-crop.png). */
 export const LOGO_WIDTH = 1024;
@@ -33,7 +34,10 @@ export function BrandLogo({
       </div>
     );
     return linked ? (
-      <Link href="/" className="inline-block">
+      <Link
+        href="/"
+        className={`inline-block rounded-sm ${focusVisibleOnDarkClass}`}
+      >
         {hero}
         <span className="sr-only">The Clearance Geeks — Waste Removals</span>
       </Link>
@@ -57,7 +61,10 @@ export function BrandLogo({
   if (!linked) return img;
 
   return (
-    <Link href="/" className="inline-block">
+    <Link
+      href="/"
+      className={`inline-block rounded-sm ${focusVisibleOnDarkClass}`}
+    >
       {img}
       <span className="sr-only">The Clearance Geeks — Waste Removals</span>
     </Link>

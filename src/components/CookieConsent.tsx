@@ -15,10 +15,8 @@ import {
   subscribeConsent,
   syncCookieBannerAttribute,
 } from "@/lib/cookie-consent-store";
-import {
-  focusVisibleOnDarkClass,
-  focusVisibleOnLightClass,
-} from "@/lib/focus-visible";
+import { focusVisibleOnDarkClass } from "@/lib/focus-visible";
+import { limeButtonOnDarkClass } from "@/lib/lime-button";
 
 /** Optional analytics — only mount after explicit Accept. None configured yet. */
 function OptionalAnalytics() {
@@ -111,7 +109,7 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
               <button
                 type="button"
                 onClick={() => save("granted")}
-                className={`min-h-11 rounded-xl border-2 border-zinc-900 bg-geek-lime px-5 font-bold text-black ${focusVisibleOnLightClass}`}
+                className={`min-h-11 rounded-xl px-5 font-bold ${limeButtonOnDarkClass}`}
               >
                 Accept
               </button>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { focusVisibleOnLightClass } from "@/lib/focus-visible";
 
 export function HomeCtaBand() {
   return (
@@ -14,7 +15,7 @@ export function HomeCtaBand() {
         </div>
         <Link
           href="#quote"
-          className="inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-black px-8 py-3 text-center font-bold text-white hover:bg-zinc-900 sm:w-auto"
+          className={`inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-black px-8 py-3 text-center font-bold text-white hover:bg-zinc-900 sm:w-auto ${focusVisibleOnLightClass}`}
         >
           Get a free quote
         </Link>

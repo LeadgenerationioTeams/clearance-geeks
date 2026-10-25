@@ -26,7 +26,7 @@ export function PageImage({
         />
       </div>
       {image.credit && image.creditUrl !== "/" ? (
-        <figcaption className="px-3 py-2 text-xs text-zinc-500">
+        <figcaption className="px-3 py-2 text-base text-zinc-500">
           {image.illustrative ? "Illustrative — " : "Photo: "}
           <a
             href={image.creditUrl}
@@ -38,7 +38,7 @@ export function PageImage({
           </a>
         </figcaption>
       ) : image.credit ? (
-        <figcaption className="px-3 py-2 text-xs text-zinc-500">{image.credit}</figcaption>
+        <figcaption className="px-3 py-2 text-base text-zinc-500">{image.credit}</figcaption>
       ) : null}
     </figure>
   );
