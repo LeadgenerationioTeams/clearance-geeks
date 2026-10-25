@@ -585,6 +585,8 @@ export function isPlaceholder(value: string): boolean {
 }
 
 export const siteConfig = {
+  /** Set true when submitQuote is wired to a live lead destination. */
+  quotesOpen: false,
   domain: {
     // TODO(Sam): Set production domain (also set NEXT_PUBLIC_SITE_URL on Vercel).
     url: "https://PLACEHOLDER_DOMAIN",

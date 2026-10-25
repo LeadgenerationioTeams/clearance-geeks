@@ -101,8 +101,9 @@ export function PrivacyPolicyContent() {
 
       <h2 className="font-display text-geek-lime">4. Sharing your data</h2>
       <p>
-        Quote requests are currently handled internally. When online quoting is
-        live, recipients will be: {siteConfig.compliance.leadRecipient}.
+        Online quote requests aren&apos;t open yet, so we don&apos;t keep anything
+        you type into the form. When online quoting is live, recipients will be:{" "}
+        {siteConfig.compliance.leadRecipient}.
       </p>
       <p>We may share personal data with:</p>
       <ul>

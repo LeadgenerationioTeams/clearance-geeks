@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { useActionState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { submitQuote, type QuoteFormState } from "@/app/actions/quote";
+import { company, isPlaceholder, siteConfig, telHref } from "@/config/site";
 import { services } from "@/lib/services";
 
 const initial: QuoteFormState = { ok: false, message: "" };
@@ -15,6 +16,34 @@ const fieldInputClass =
   `mt-1.5 min-h-11 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-base text-zinc-900 shadow-sm transition placeholder:text-zinc-400 focus:border-geek-lime focus-visible:outline focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 lg:mt-1 lg:py-2.5 ${fieldScrollMargin}`;
 
 const heroSelectClass = `${fieldInputClass} appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2024%2024%22%20stroke%3D%22%2371717a%22%20stroke-width%3D%222%22%3E%3Cpath%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20d%3D%22M6%209l6%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-[length:0.75rem_0.75rem] bg-[position:right_0.75rem_center] bg-no-repeat pr-10`;
+
+function QuotesNotOpenNotice({ hero }: { hero: boolean }) {
+  if (siteConfig.quotesOpen) return null;
+
+  const phone = company.phone;
+  const callable = !isPlaceholder(company.phone);
+
+  return (
+    <p
+      role="status"
+      className={`rounded-lg border border-amber-300/80 bg-amber-50 px-3 py-2 text-amber-950 ${
+        hero
+          ? "text-xs leading-snug lg:px-2.5 lg:py-1.5 lg:text-[11px] lg:leading-tight"
+          : "text-sm leading-snug"
+      }`}
+    >
+      Online quotes aren&apos;t open yet. Please call us on{" "}
+      {callable ? (
+        <a href={telHref(company.phone)} className="font-semibold underline">
+          {phone}
+        </a>
+      ) : (
+        <span className="font-semibold">{phone}</span>
+      )}
+      .
+    </p>
+  );
+}
 
 function Field({
   label,
@@ -105,6 +134,7 @@ export function QuoteForm({
           : "gap-4 border-zinc-200/80 p-5 sm:p-6"
       } ${tightLg && !isHero ? "lg:gap-2 lg:p-4" : ""} ${className}`}
     >
+      <QuotesNotOpenNotice hero={isHero} />
       <header
         className={
           isHero
