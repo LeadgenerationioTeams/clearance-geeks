@@ -5,7 +5,7 @@ import { photosForServiceSlug } from "@/lib/gallery";
 
 export function HomeServicesGrid() {
   return (
-    <section className="section-pad bg-white">
+    <section className="home-services-grid section-pad bg-white">
       <div className="site-container">
         <div className="max-w-2xl">
           <h2 className="font-display text-3xl text-zinc-900 md:text-4xl">
@@ -23,7 +23,7 @@ export function HomeServicesGrid() {
               <li key={s.slug}>
                 <Link
                   href={`/services/${s.slug}`}
-                  className="group flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-md ring-1 ring-zinc-200/80 transition duration-200 hover:-translate-y-1 hover:shadow-xl"
+                  className="home-service-card-link group flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-md ring-1 ring-zinc-200/80 transition duration-200 hover:-translate-y-1 hover:shadow-xl"
                 >
                   <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-200">
                     <Image

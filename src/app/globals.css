@@ -12,6 +12,10 @@
   --cookie-bar-h: 0px;
 }
 
+html {
+  background-color: #000000;
+}
+
 html[data-cookie-banner="open"] {
   --cookie-consent-bar-height: 8.5rem;
   --cookie-bar-h: 8.5rem;
@@ -93,6 +97,11 @@ html[data-cookie-banner="open"] .quote-form-hero-details {
 @media (min-width: 1024px) {
   body {
     padding-bottom: var(--cookie-bar-h, 0px);
+  }
+
+  .home-service-card-link {
+    scroll-margin-bottom: calc(var(--cookie-bar-h, 0px) + 4px);
+    -webkit-scroll-margin-bottom: calc(var(--cookie-bar-h, 0px) + 4px);
   }
 
   html[data-cookie-banner="open"] .home-hero {
