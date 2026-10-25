@@ -15,9 +15,10 @@ import {
   subscribeConsent,
   syncCookieBannerAttribute,
 } from "@/lib/cookie-consent-store";
-
-const cookieActionFocus =
-  "focus-visible:outline focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-geek-lime";
+import {
+  focusVisibleOnDarkClass,
+  focusVisibleOnLightClass,
+} from "@/lib/focus-visible";
 
 /** Optional analytics — only mount after explicit Accept. None configured yet. */
 function OptionalAnalytics() {
@@ -110,14 +111,14 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
               <button
                 type="button"
                 onClick={() => save("granted")}
-                className={`min-h-11 rounded-xl bg-geek-lime px-5 font-bold text-black ${cookieActionFocus}`}
+                className={`min-h-11 rounded-xl border-2 border-zinc-900 bg-geek-lime px-5 font-bold text-black ${focusVisibleOnLightClass}`}
               >
                 Accept
               </button>
               <button
                 type="button"
                 onClick={() => save("denied")}
-                className={`min-h-11 rounded-xl border border-zinc-600 px-5 font-semibold text-zinc-200 ${cookieActionFocus}`}
+                className={`min-h-11 rounded-xl border border-zinc-600 px-5 font-semibold text-zinc-200 ${focusVisibleOnDarkClass}`}
               >
                 Reject
               </button>

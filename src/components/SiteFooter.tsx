@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { CookieSettingsButton } from "@/components/CookieSettingsButton";
 import { company, hasCallablePhone, siteConfig } from "@/config/site";
+import { focusVisibleOnDarkClass } from "@/lib/focus-visible";
 
-const footerLinkClass =
-  "inline-flex min-h-11 items-center hover:text-geek-lime";
+const footerLinkClass = `inline-flex min-h-11 items-center rounded-sm hover:text-geek-lime ${focusVisibleOnDarkClass}`;
 
 export function SiteFooter() {
   return (

@@ -1,6 +1,8 @@
 import { CallButton } from "./CallButton";
 import { company, hasCallablePhone } from "@/config/site";
 import { cn } from "@/lib/cn";
+import { focusVisibleOnDarkClass } from "@/lib/focus-visible";
+import { limeButtonOnLightClass } from "@/lib/lime-button";
 
 function whatsAppHref(): string | null {
   if (!hasCallablePhone()) return null;
@@ -24,7 +26,8 @@ export function StickyMobileCta() {
         {hasCallablePhone() ? (
           <CallButton
             className={cn(
-              "w-full px-3 text-sm focus-visible:outline focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:hidden",
+              "w-full px-3 text-sm lg:hidden",
+              focusVisibleOnDarkClass,
             )}
             label="Call"
             showPhone={false}
@@ -33,7 +36,8 @@ export function StickyMobileCta() {
           <a
             href="#quote"
             className={cn(
-              "inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-geek-lime px-3 text-center text-sm font-extrabold uppercase tracking-wide text-black focus-visible:outline focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-geek-lime lg:hidden",
+              "inline-flex min-h-12 w-full items-center justify-center rounded-xl px-3 text-center text-sm font-extrabold uppercase tracking-wide lg:hidden",
+              limeButtonOnLightClass,
             )}
           >
             Get a quote
@@ -42,7 +46,10 @@ export function StickyMobileCta() {
         {wa ? (
           <a
             href={wa}
-            className="inline-flex min-h-12 items-center justify-center rounded-xl border-2 border-geek-lime bg-transparent px-3 text-center text-sm font-extrabold uppercase tracking-wide text-geek-lime"
+            className={cn(
+              "inline-flex min-h-12 items-center justify-center rounded-xl border-2 border-geek-lime bg-transparent px-3 text-center text-sm font-extrabold uppercase tracking-wide text-geek-lime",
+              focusVisibleOnDarkClass,
+            )}
             rel="noopener noreferrer"
             target="_blank"
           >
