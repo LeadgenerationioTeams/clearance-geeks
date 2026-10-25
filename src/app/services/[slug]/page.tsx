@@ -3,7 +3,6 @@ import Link from "next/link";
 import { getService, serviceSlugs } from "@/lib/services";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { CallButton } from "@/components/CallButton";
 import { QuoteForm } from "@/components/QuoteForm";
 import {
   JsonLd,
@@ -79,9 +78,14 @@ export default async function ServicePage({
         {service.headline}
       </h1>
       <p className="mt-4 max-w-3xl text-lg text-zinc-700">{service.intro}</p>
-      <div className="mt-6">
-        <CallButton />
-      </div>
+      <p className="mt-6">
+        <Link
+          href="#quote"
+          className="inline-flex min-h-11 items-center rounded-xl bg-geek-lime px-6 font-bold text-black"
+        >
+          Get a free quote
+        </Link>
+      </p>
       <PageImage
         image={imageForService(slug as ServiceSlug)}
         className="mt-8 max-w-3xl"
@@ -94,7 +98,7 @@ export default async function ServicePage({
           <JobPhoto key={photo.id} photo={photo} sizes="(max-width: 640px) 100vw, 30vw" />
         ))}
       </div>
-      <div className="mt-10 grid gap-10 lg:grid-cols-2">
+      <div id="quote" className="mt-10 grid gap-10 lg:grid-cols-2">
         <div>
           <h2 className="font-display text-2xl text-zinc-900">What we take</h2>
           <ul className="mt-4 list-disc space-y-2 pl-5 text-zinc-700">

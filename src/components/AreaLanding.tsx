@@ -11,9 +11,7 @@ import {
 import { photosForTag, gallerySlice } from "@/lib/gallery";
 import { JobPhoto } from "./JobPhoto";
 import { VanBrandImage } from "./VanBrandImage";
-import { CallButton } from "./CallButton";
 import { QuoteForm } from "./QuoteForm";
-import { StickyMobileCta } from "./StickyMobileCta";
 import { RecyclingCentreBlock } from "./RecyclingCentreBlock";
 
 export function AreaLanding({ area }: { area: AreaDefinition }) {
@@ -21,7 +19,7 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
   const showServiceLinks = serviceByTownSlugs.includes(area.slug);
 
   return (
-    <div className="pb-24 md:pb-10">
+    <div>
       <section className="relative overflow-hidden border-b border-zinc-200 bg-white">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 lg:grid-cols-2 lg:items-start">
           <div>
@@ -32,8 +30,7 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
               {heroBenefitHeadline(area.name)}
             </h1>
             <p className="mt-4 text-lg text-zinc-700">{area.summary}</p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <CallButton />
+            <div className="mt-6">
               <Link
                 href="#quote"
                 className="inline-flex min-h-12 items-center rounded-xl border-2 border-zinc-900 px-5 font-bold text-zinc-900"
@@ -67,9 +64,6 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
             </li>
           ))}
         </ul>
-        <div className="mt-8">
-          <CallButton className="text-sm" label="Call for a quote" />
-        </div>
       </section>
 
       <section className="border-y border-zinc-200 bg-zinc-50 py-12">
@@ -193,9 +187,6 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
               </div>
             ))}
           </dl>
-          <div className="mt-8">
-            <CallButton />
-          </div>
         </div>
       </section>
 
@@ -214,8 +205,6 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
           <QuoteForm />
         </div>
       </section>
-
-      <StickyMobileCta />
     </div>
   );
 }

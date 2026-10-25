@@ -10,11 +10,9 @@ import { getService, serviceSlugs } from "@/lib/services";
 import { getNeighbourhood, neighbourhoods } from "@/lib/neighbourhoods";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { CallButton } from "@/components/CallButton";
 import { QuoteForm } from "@/components/QuoteForm";
 import { NeighbourhoodLanding } from "@/components/NeighbourhoodLanding";
 import { PageImage } from "@/components/PageImage";
-import { StickyMobileCta } from "@/components/StickyMobileCta";
 import { images } from "@/lib/media";
 import {
   JsonLd,
@@ -92,7 +90,7 @@ export default async function AreaSubPage({
   ];
 
   return (
-    <div className="pb-24 md:pb-10">
+    <div>
       <div className="mx-auto max-w-6xl px-4 py-10">
         <JsonLd data={breadcrumbJsonLd(crumbs)} />
         <JsonLd
@@ -118,11 +116,16 @@ export default async function AreaSubPage({
             </h1>
             <p className="mt-4 text-lg text-geek-lime/90">{localBlurb}</p>
             <p className="mt-2 text-zinc-300">{service.intro}</p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <CallButton />
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <Link
+                href="#quote"
+                className="inline-flex min-h-11 items-center rounded-xl bg-geek-lime px-5 font-bold text-black"
+              >
+                Get a quote
+              </Link>
               <Link
                 href={`/services/${subslug}`}
-                className="text-sm font-semibold text-zinc-400 underline"
+                className="inline-flex min-h-11 items-center text-sm font-semibold text-zinc-400 underline"
               >
                 UK-wide service detail
               </Link>
@@ -131,7 +134,7 @@ export default async function AreaSubPage({
           <PageImage image={images.heroClearance} priority />
         </div>
 
-        <div className="mt-10 grid gap-10 lg:grid-cols-2">
+        <div id="quote" className="mt-10 grid gap-10 lg:grid-cols-2">
           <div>
             <h2 className="font-display text-2xl text-white">
               On-the-ground in {area.name}
@@ -153,7 +156,6 @@ export default async function AreaSubPage({
           <QuoteForm />
         </div>
       </div>
-      <StickyMobileCta />
     </div>
   );
 }

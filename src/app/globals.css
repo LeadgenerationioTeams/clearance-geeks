@@ -6,6 +6,14 @@
   --geek-lime: #7cfc00;
   --geek-lime-bright: #8be600;
   --container: 75rem;
+  /* Sticky mobile Call bar (p-3 + min-h-12 row); 0 on lg+ */
+  --mobile-call-bar-height: 4.5rem;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --mobile-call-bar-height: 0px;
+  }
 }
 
 @theme inline {

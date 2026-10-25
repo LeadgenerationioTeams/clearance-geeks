@@ -56,7 +56,7 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
       {consent === "granted" ? <OptionalAnalytics /> : null}
       {consent === "unknown" ? (
         <div
-          className="fixed bottom-0 left-0 right-0 z-[100] border-t border-geek-lime/30 bg-zinc-950/95 p-4 shadow-2xl backdrop-blur sm:p-5"
+          className="fixed bottom-[calc(var(--mobile-call-bar-height)+env(safe-area-inset-bottom,0px))] left-0 right-0 z-[100] border-t border-geek-lime/30 bg-zinc-950/95 p-4 shadow-2xl backdrop-blur sm:p-5 lg:bottom-0"
           role="dialog"
           aria-labelledby="cookie-title"
         >

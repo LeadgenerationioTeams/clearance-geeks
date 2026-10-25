@@ -1,5 +1,6 @@
 import { CallButton } from "./CallButton";
 import { company, isPlaceholder } from "@/config/site";
+import { cn } from "@/lib/cn";
 
 function whatsAppHref(): string | null {
   if (isPlaceholder(company.phone)) return null;
@@ -14,11 +15,17 @@ export function StickyMobileCta() {
 
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 z-40 border-t border-geek-lime/40 bg-black/95 p-3 backdrop-blur md:hidden"
+      className={cn(
+        "fixed bottom-0 left-0 right-0 z-40 border-t border-geek-lime/40 bg-black/95 p-3 backdrop-blur lg:hidden",
+      )}
       style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
     >
       <div className={`grid gap-2 ${wa ? "grid-cols-2" : "grid-cols-1"}`}>
-        <CallButton className="w-full text-sm px-3" label="Call" />
+        <CallButton
+          className={cn("w-full px-3 text-sm lg:hidden")}
+          label="Call"
+          showPhone={false}
+        />
         {wa ? (
           <a
             href={wa}

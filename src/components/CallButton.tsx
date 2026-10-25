@@ -1,4 +1,5 @@
 import { company, isPlaceholder, telHref } from "@/config/site";
+import { cn } from "@/lib/cn";
 
 export function CallButton({
   className = "",
@@ -27,22 +28,9 @@ export function CallButton({
     showPhone && !isPlaceholder(company.phone) ? ` ${company.phone}` : "";
 
   return (
-    <a href={href} className={`${styles} ${className}`}>
+    <a href={href} className={cn(styles, className)}>
       {label}
       {variant === "primary" ? phoneSuffix : null}
-    </a>
-  );
-}
-
-export function PhoneLink({ className = "" }: { className?: string }) {
-  const href = telHref(company.phone);
-
-  return (
-    <a
-      href={href}
-      className={`font-semibold text-white hover:text-geek-lime ${className}`}
-    >
-      {isPlaceholder(company.phone) ? "Call for a quote" : company.phone}
     </a>
   );
 }

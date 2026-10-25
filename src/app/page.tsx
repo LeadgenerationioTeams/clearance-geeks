@@ -1,4 +1,3 @@
-import { StickyMobileCta } from "@/components/StickyMobileCta";
 import { HomeHero } from "@/components/home/HomeHero";
 import { HomeTrustBar } from "@/components/home/HomeTrustBar";
 import { HomeServicesGrid } from "@/components/home/HomeServicesGrid";
@@ -32,7 +31,7 @@ const faq = [
 
 export default function HomePage() {
   return (
-    <div className="pb-20 md:pb-0">
+    <div>
       <HomeHero />
       <HomeTrustBar />
       <HomeServicesGrid />
@@ -55,7 +54,6 @@ export default function HomePage() {
       </section>
 
       <HomeCtaBand />
-      <StickyMobileCta />
     </div>
   );
 }

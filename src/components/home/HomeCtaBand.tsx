@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { CallButton } from "@/components/CallButton";
 
 export function HomeCtaBand() {
   return (
@@ -13,20 +12,12 @@ export function HomeCtaBand() {
             Send photos and your postcode — we will confirm price before we load.
           </p>
         </div>
-        <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-          <Link
-            href="#quote"
-            className="inline-flex min-h-12 items-center justify-center rounded-xl bg-black px-8 py-3 text-center font-bold text-white hover:bg-zinc-900"
-          >
-            Get a free quote
-          </Link>
-          <CallButton
-            variant="outline-dark"
-            label="Call now"
-            showPhone={false}
-            className="border-black text-black hover:bg-black/10"
-          />
-        </div>
+        <Link
+          href="#quote"
+          className="inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-black px-8 py-3 text-center font-bold text-white hover:bg-zinc-900 sm:w-auto"
+        >
+          Get a free quote
+        </Link>
       </div>
     </section>
   );

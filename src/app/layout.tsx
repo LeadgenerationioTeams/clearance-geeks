@@ -3,6 +3,7 @@ import { Bangers, Inter } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { StickyMobileCta } from "@/components/StickyMobileCta";
 import { CookieConsentProvider } from "@/components/CookieConsent";
 import { company } from "@/config/site";
 import { JsonLd, localBusinessJsonLd } from "@/lib/schema";
@@ -33,12 +34,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-GB" className={`${display.variable} ${body.variable} h-full`}>
-      <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-900 antialiased">
+      <body
+        className="flex min-h-full flex-col bg-zinc-50 pb-[calc(var(--mobile-call-bar-height)+env(safe-area-inset-bottom,0px))] text-zinc-900 antialiased lg:pb-0"
+      >
         <CookieConsentProvider>
           <JsonLd data={localBusinessJsonLd()} />
           <SiteHeader />
           <main className="flex-1">{children}</main>
           <SiteFooter />
+          <StickyMobileCta />
         </CookieConsentProvider>
       </body>
     </html>

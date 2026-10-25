@@ -9,9 +9,7 @@ import {
 } from "@/lib/area-sales";
 import { areaPageImage, images } from "@/lib/media";
 import { PageImage } from "./PageImage";
-import { CallButton } from "./CallButton";
 import { QuoteForm } from "./QuoteForm";
-import { StickyMobileCta } from "./StickyMobileCta";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { RecyclingCentreBlock } from "./RecyclingCentreBlock";
 
@@ -25,7 +23,7 @@ export function NeighbourhoodLanding({
   const showServiceLinks = serviceByTownSlugs.includes(area.slug);
 
   return (
-    <div className="pb-24 md:pb-10">
+    <div>
       <div className="mx-auto max-w-6xl px-4 pt-8">
         <Breadcrumbs
           items={[
@@ -44,11 +42,16 @@ export function NeighbourhoodLanding({
           </h1>
           <p className="mt-4 text-lg text-zinc-300">{hood.about}</p>
           <p className="mt-3 text-zinc-400">{hood.accessNote}</p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <CallButton />
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <Link
+              href="#quote"
+              className="inline-flex min-h-11 items-center rounded-xl bg-geek-lime px-5 font-bold text-black"
+            >
+              Get a quote
+            </Link>
             <Link
               href={`/areas/${area.slug}`}
-              className="text-sm font-semibold text-zinc-400 underline"
+              className="inline-flex min-h-11 items-center text-sm font-semibold text-zinc-400 underline"
             >
               All of {area.name}
             </Link>
@@ -136,9 +139,6 @@ export function NeighbourhoodLanding({
             </li>
           ))}
         </ul>
-        <div className="mt-6">
-          <CallButton label="Call for a quote" />
-        </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-10">
@@ -153,11 +153,9 @@ export function NeighbourhoodLanding({
         </dl>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-10">
+      <section id="quote" className="mx-auto max-w-6xl px-4 py-10">
         <QuoteForm />
       </section>
-
-      <StickyMobileCta />
     </div>
   );
 }
