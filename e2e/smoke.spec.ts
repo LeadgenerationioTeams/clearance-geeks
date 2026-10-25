@@ -30,13 +30,18 @@ async function readCls(page: import("@playwright/test").Page): Promise<number> {
   });
 }
 
-test("homepage loads and quote form visible", async ({ page }) => {
+test("homepage loads and quote form visible", async ({ page }, testInfo) => {
   await page.goto("/");
   await acceptCookies(page);
   await expect(page.locator("html")).toHaveAttribute("data-home-hero", "light-van");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   const quote = page.locator("#quote");
   await expect(quote.getByRole("textbox", { name: /^name$/i })).toBeVisible();
+  if (testInfo.project.name === "desktop-1440") {
+    await expect(
+      quote.getByRole("heading", { name: /get a free quote/i }),
+    ).toBeVisible();
+  }
 });
 
 test("light hero: submit clears cookie banner at 1440", async ({ page }, testInfo) => {
@@ -58,6 +63,15 @@ test("light hero: submit clears cookie banner at 1440", async ({ page }, testInf
   expect(bannerBox).not.toBeNull();
   const submitBottom = (submitBox?.y ?? 0) + (submitBox?.height ?? 0);
   expect(submitBottom).toBeLessThan(bannerBox?.y ?? 900);
+  const privacy = page.locator("#quote").getByRole("link", { name: /privacy notice/i });
+  await expect(privacy).toBeVisible();
+  const privacyBox = await privacy.boundingBox();
+  expect(privacyBox).not.toBeNull();
+  const privacyBottom = (privacyBox?.y ?? 0) + (privacyBox?.height ?? 0);
+  expect(privacyBottom).toBeLessThan(bannerBox?.y ?? 900);
+  await expect(
+    page.locator("#quote").getByRole("heading", { name: /get a free quote/i }),
+  ).toBeVisible();
 });
 
 test("homepage quote form does not shift after load (CLS)", async ({ page }) => {

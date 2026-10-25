@@ -17,8 +17,8 @@ const DESKTOP_VAN_FRAME_HEIGHT = 686;
 export function HomeHeroLightVan() {
   return (
     <section className="bg-[#F7F8F6] text-[#111]">
-      <div className="site-container w-full py-6 md:py-8 lg:py-0 lg:pb-2">
-        <div className="flex flex-col gap-6 lg:gap-3">
+      <div className="site-container w-full py-6 md:py-8 lg:pt-9 lg:pb-2">
+        <div className="flex flex-col gap-6 lg:gap-2">
           <figure
             className="aspect-[16/13] w-full overflow-hidden rounded-2xl lg:hidden"
           >
@@ -34,10 +34,10 @@ export function HomeHeroLightVan() {
           </figure>
 
           <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-10">
-            <div className="flex max-w-xl flex-col gap-5 lg:gap-2">
+            <div className="flex max-w-xl flex-col gap-5 lg:gap-1.5">
               <div>
                 <h1
-                  className="font-display text-[2.125rem] leading-[2.375rem] tracking-tight sm:text-[2.25rem] sm:leading-[2.5rem] lg:max-w-[22ch] lg:text-[3.5rem] lg:leading-[3.75rem]"
+                  className="font-display text-[2.125rem] leading-[2.375rem] tracking-tight sm:text-[2.25rem] sm:leading-[2.5rem] lg:max-w-[22ch] lg:text-[3.5rem] lg:leading-[3.625rem]"
                 >
                   Waste removal &amp; house clearance across{" "}
                   <span
@@ -66,7 +66,6 @@ export function HomeHeroLightVan() {
                 variant="hero"
                 compactDesktop
                 title="Get a free quote"
-                className="lg:[&>header]:hidden"
               />
             </div>
 
