@@ -1,6 +1,6 @@
 "use server";
 
-import { company, isPlaceholder } from "@/config/site";
+import { company, isPlaceholder, siteConfig } from "@/config/site";
 
 export type QuoteFormState = {
   ok: boolean;
@@ -40,12 +40,19 @@ export async function submitQuote(
   // TODO: Wire lead destination (CRM, email, webhook). Intentionally sends nowhere.
   void { name, phone, postcode, jobType, details, photo };
 
-  const phoneForMessage = isPlaceholder(company.phone)
-    ? "[number]"
-    : company.phone;
+  if (!siteConfig.quotesOpen) {
+    const phoneForMessage = isPlaceholder(company.phone)
+      ? "[number]"
+      : company.phone;
+
+    return {
+      ok: true,
+      message: `Online quotes aren't open yet. Please call us on ${phoneForMessage}.`,
+    };
+  }
 
   return {
-    ok: true,
-    message: `Online quotes aren't open yet. Please call us on ${phoneForMessage}.`,
+    ok: false,
+    message: "Quote submission is not configured yet. Please call us.",
   };
 }

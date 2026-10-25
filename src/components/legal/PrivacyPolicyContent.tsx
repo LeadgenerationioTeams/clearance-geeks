@@ -102,6 +102,10 @@ export function PrivacyPolicyContent() {
       </ul>
 
       <h2 className="font-display text-geek-lime">4. Sharing your data</h2>
+      <p>
+        Online quote requests aren&apos;t open yet, so we don&apos;t keep anything
+        you type into the form.
+      </p>
       <p>We may share personal data with:</p>
       <ul>
         <li>

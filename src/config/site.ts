@@ -585,6 +585,8 @@ export function isPlaceholder(value: string): boolean {
 }
 
 export const siteConfig = {
+  /** When false, quote forms show a call-first notice and submitQuote does not persist leads. */
+  quotesOpen: false,
   domain: {
     // TODO(Sam): Set production domain (also set NEXT_PUBLIC_SITE_URL on Vercel).
     url: "https://PLACEHOLDER_DOMAIN",

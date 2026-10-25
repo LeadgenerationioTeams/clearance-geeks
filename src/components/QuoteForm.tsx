@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { useActionState, useEffect, useRef } from "react";
 import { submitQuote, type QuoteFormState } from "@/app/actions/quote";
+import { company, isPlaceholder, siteConfig, telHref } from "@/config/site";
 import { services } from "@/lib/services";
 
 const initial: QuoteFormState = { ok: false, message: "" };
@@ -41,6 +42,29 @@ function focusQuoteNameAfterScroll(formId: string) {
       scrollFieldIntoViewNearest(field);
     });
   });
+}
+
+function QuoteClosedNotice() {
+  if (siteConfig.quotesOpen) return null;
+
+  const phone = company.phone;
+
+  return (
+    <p
+      className="quote-form-closed-notice rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm leading-snug text-amber-950"
+      role="status"
+    >
+      Online quotes aren&apos;t open yet. Please call us on{" "}
+      {isPlaceholder(phone) ? (
+        phone
+      ) : (
+        <a href={telHref(phone)} className="font-semibold underline">
+          {phone}
+        </a>
+      )}
+      .
+    </p>
+  );
 }
 
 function Field({
@@ -143,6 +167,7 @@ export function QuoteForm({
           : "gap-4 border-zinc-200/80 p-5 sm:p-6"
       } ${className}`}
     >
+      <QuoteClosedNotice />
       <header
         className={
           isHero
