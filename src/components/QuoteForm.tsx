@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { submitQuote, type QuoteFormState } from "@/app/actions/quote";
 import { services } from "@/lib/services";
 
@@ -11,6 +11,17 @@ const fieldInputClass =
   "quote-form-field mt-1.5 min-h-11 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-base text-zinc-900 shadow-sm transition placeholder:text-zinc-400";
 
 const fieldSelectClass = `${fieldInputClass} quote-form-select`;
+
+function focusQuoteFormFirstField(formId: string) {
+  const hash = `#${formId}`;
+  if (window.location.hash !== hash) return;
+  const form = document.getElementById(formId);
+  const field = form?.querySelector<HTMLElement>(
+    "input:not([type='hidden']), select, textarea",
+  );
+  if (!field) return;
+  field.focus({ preventScroll: true });
+}
 
 function Field({
   label,
@@ -48,6 +59,27 @@ export function QuoteForm({
 }) {
   const [state, action, pending] = useActionState(submitQuote, initial);
   const isHero = variant === "hero";
+
+  useEffect(() => {
+    const hash = `#${id}`;
+    const onHashChange = () => focusQuoteFormFirstField(id);
+    const onQuoteLinkClick = (event: MouseEvent) => {
+      const link = (event.target as Element | null)?.closest(
+        `a[href="${hash}"], a[href$="${hash}"]`,
+      );
+      if (!link) return;
+      window.requestAnimationFrame(() => focusQuoteFormFirstField(id));
+    };
+
+    window.addEventListener("hashchange", onHashChange);
+    document.addEventListener("click", onQuoteLinkClick, true);
+    onHashChange();
+
+    return () => {
+      window.removeEventListener("hashchange", onHashChange);
+      document.removeEventListener("click", onQuoteLinkClick, true);
+    };
+  }, [id]);
 
   const fieldsGap = isHero
     ? "quote-form-hero-fields flex flex-col gap-3.5"

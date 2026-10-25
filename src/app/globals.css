@@ -22,9 +22,21 @@ html[data-cookie-banner="open"] {
     scroll-padding-bottom: calc(88px + var(--cookie-bar-h, 0px));
   }
 
-  .quote-form-field,
+  body {
+    padding-bottom: calc(88px + var(--cookie-bar-h, 0px) + env(safe-area-inset-bottom, 0px));
+  }
+
+  :root {
+    --quote-field-scroll-margin-bottom: calc(88px + var(--cookie-bar-h, 0px) + 4px);
+  }
+
+  input.quote-form-field,
+  select.quote-form-field,
+  select.quote-form-select,
+  textarea.quote-form-field,
   .quote-form-submit {
-    scroll-margin-bottom: calc(88px + var(--cookie-bar-h, 0px) + 4px);
+    scroll-margin-bottom: var(--quote-field-scroll-margin-bottom);
+    -webkit-scroll-margin-bottom: var(--quote-field-scroll-margin-bottom);
   }
 
   #quote {

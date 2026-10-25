@@ -39,7 +39,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: cookieBannerBootstrapScript }} />
       </head>
       <body
-        className="flex min-h-full flex-col bg-zinc-50 pb-[calc(var(--mobile-call-bar-height)+env(safe-area-inset-bottom,0px))] text-zinc-900 antialiased lg:pb-0"
+        className="flex min-h-full flex-col bg-zinc-50 text-zinc-900 antialiased lg:pb-0"
       >
         <CookieConsentProvider>
           <JsonLd data={localBusinessJsonLd()} />
