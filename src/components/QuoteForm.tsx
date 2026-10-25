@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { submitQuote, type QuoteFormState } from "@/app/actions/quote";
 import { services } from "@/lib/services";
 
@@ -12,15 +12,34 @@ const fieldInputClass =
 
 const fieldSelectClass = `${fieldInputClass} quote-form-select`;
 
-function focusQuoteFormFirstField(formId: string) {
-  const hash = `#${formId}`;
-  if (window.location.hash !== hash) return;
+const QUOTE_FIELD_SELECTOR =
+  "input.quote-form-field, select.quote-form-field, select.quote-form-select, textarea.quote-form-field, .quote-form-submit";
+
+function getQuoteNameField(formId: string): HTMLInputElement | null {
   const form = document.getElementById(formId);
-  const field = form?.querySelector<HTMLElement>(
-    "input:not([type='hidden']), select, textarea",
-  );
-  if (!field) return;
-  field.focus({ preventScroll: true });
+  return form?.querySelector<HTMLInputElement>('input[name="name"]') ?? null;
+}
+
+function scrollFieldIntoViewNearest(field: HTMLElement) {
+  window.requestAnimationFrame(() => {
+    field.scrollIntoView({ block: "nearest" });
+  });
+}
+
+function focusQuoteNameAfterScroll(formId: string) {
+  const form = document.getElementById(formId);
+  const field = getQuoteNameField(formId);
+  if (!form || !field) return;
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  form.scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "instant" });
+
+  window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => {
+      field.focus({ preventScroll: true });
+      scrollFieldIntoViewNearest(field);
+    });
+  });
 }
 
 function Field({
@@ -59,23 +78,50 @@ export function QuoteForm({
 }) {
   const [state, action, pending] = useActionState(submitQuote, initial);
   const isHero = variant === "hero";
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     const hash = `#${id}`;
-    const onHashChange = () => focusQuoteFormFirstField(id);
+    const formEl = formRef.current;
+
+    const onFocusIn = (event: FocusEvent) => {
+      const target = event.target;
+      if (!(target instanceof HTMLElement)) return;
+      if (!target.matches(QUOTE_FIELD_SELECTOR)) return;
+      scrollFieldIntoViewNearest(target);
+    };
+
+    const onHashChange = () => {
+      if (window.location.hash !== hash) return;
+      focusQuoteNameAfterScroll(id);
+    };
+
     const onQuoteLinkClick = (event: MouseEvent) => {
       const link = (event.target as Element | null)?.closest(
         `a[href="${hash}"], a[href$="${hash}"]`,
       );
       if (!link) return;
-      window.requestAnimationFrame(() => focusQuoteFormFirstField(id));
+
+      if (window.location.hash === hash) {
+        event.preventDefault();
+        focusQuoteNameAfterScroll(id);
+        return;
+      }
+
+      const onNextHash = () => {
+        window.removeEventListener("hashchange", onNextHash);
+        focusQuoteNameAfterScroll(id);
+      };
+      window.addEventListener("hashchange", onNextHash);
     };
 
+    formEl?.addEventListener("focusin", onFocusIn);
     window.addEventListener("hashchange", onHashChange);
     document.addEventListener("click", onQuoteLinkClick, true);
     onHashChange();
 
     return () => {
+      formEl?.removeEventListener("focusin", onFocusIn);
       window.removeEventListener("hashchange", onHashChange);
       document.removeEventListener("click", onQuoteLinkClick, true);
     };
@@ -87,6 +133,7 @@ export function QuoteForm({
 
   return (
     <form
+      ref={formRef}
       id={id}
       action={action}
       className={`flex flex-col rounded-2xl border bg-white ${

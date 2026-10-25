@@ -6,7 +6,7 @@ const footerLinkClass =
 
 export function SiteFooter() {
   return (
-    <footer className="mt-auto border-t border-zinc-800 bg-black text-sm text-zinc-400">
+    <footer className="site-footer mt-auto border-t border-zinc-800 bg-black text-sm text-zinc-400">
       <div className="site-container section-pad grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <p className="font-display text-xl text-geek-lime">{company.legalName}</p>

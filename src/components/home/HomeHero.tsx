@@ -8,7 +8,7 @@ const vanAlt =
 export function HomeHero() {
   return (
     <section
-      className="home-hero relative isolate overflow-hidden bg-zinc-950 lg:flex lg:min-h-[min(calc(100dvh-4rem),720px)] lg:items-center"
+      className="home-hero relative isolate overflow-x-hidden overflow-y-visible bg-zinc-950 lg:flex lg:min-h-[min(calc(100dvh-4rem),720px)] lg:items-center"
     >
       <Image
         src="/brand/van-1400.webp"
@@ -35,7 +35,7 @@ export function HomeHero() {
             </p>
           </div>
 
-          <div className="hero-quote-panel lg:sticky lg:top-24">
+          <div className="hero-quote-panel overflow-visible p-[3px] lg:sticky lg:top-24">
             <QuoteForm id="quote" variant="hero" title="Get a free quote" />
           </div>
         </div>
