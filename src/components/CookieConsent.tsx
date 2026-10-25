@@ -1,16 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useSyncExternalStore } from "react";
-
-const STORAGE_KEY = "tcg_cookie_consent_v1";
+import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
+import { COOKIE_CONSENT_STORAGE_KEY } from "@/lib/cookie-consent";
 
 export type Consent = "unknown" | "granted" | "denied";
 
 function readConsent(): Consent {
   if (typeof window === "undefined") return "unknown";
   try {
-    const v = localStorage.getItem(STORAGE_KEY);
+    const v = localStorage.getItem(COOKIE_CONSENT_STORAGE_KEY);
     if (v === "granted" || v === "denied") return v;
   } catch {
     return "denied";
@@ -29,6 +28,10 @@ function notifyConsentChange() {
   listeners.forEach((l) => l());
 }
 
+function setCookieBarHeight(px: number) {
+  document.documentElement.style.setProperty("--cookie-bar-h", `${px}px`);
+}
+
 /** Optional analytics — only mount after explicit Accept. None configured yet. */
 function OptionalAnalytics() {
   return null;
@@ -40,15 +43,39 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
     readConsent,
     () => "unknown" as Consent,
   );
+  const bannerRef = useRef<HTMLDivElement>(null);
 
   const save = useCallback((value: "granted" | "denied") => {
     try {
-      localStorage.setItem(STORAGE_KEY, value);
+      localStorage.setItem(COOKIE_CONSENT_STORAGE_KEY, value);
     } catch {
       /* ignore */
     }
     notifyConsentChange();
   }, []);
+
+  useEffect(() => {
+    if (consent !== "unknown") {
+      setCookieBarHeight(0);
+      return;
+    }
+
+    const el = bannerRef.current;
+    if (!el) return;
+
+    const syncHeight = () => {
+      setCookieBarHeight(el.offsetHeight);
+    };
+
+    syncHeight();
+    const ro = new ResizeObserver(syncHeight);
+    ro.observe(el);
+
+    return () => {
+      ro.disconnect();
+      setCookieBarHeight(0);
+    };
+  }, [consent]);
 
   return (
     <>
@@ -56,6 +83,7 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
       {consent === "granted" ? <OptionalAnalytics /> : null}
       {consent === "unknown" ? (
         <div
+          ref={bannerRef}
           className="fixed bottom-[calc(var(--mobile-call-bar-height)+env(safe-area-inset-bottom,0px))] left-0 right-0 z-[100] border-t border-geek-lime/30 bg-zinc-950/95 p-4 shadow-2xl backdrop-blur sm:p-5 lg:bottom-0"
           role="dialog"
           aria-labelledby="cookie-title"

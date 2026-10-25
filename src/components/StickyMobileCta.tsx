@@ -22,7 +22,9 @@ export function StickyMobileCta() {
     >
       <div className={`grid gap-2 ${wa ? "grid-cols-2" : "grid-cols-1"}`}>
         <CallButton
-          className={cn("w-full px-3 text-sm lg:hidden")}
+          className={cn(
+            "w-full px-3 text-sm focus-visible:outline focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:hidden",
+          )}
           label="Call"
           showPhone={false}
         />

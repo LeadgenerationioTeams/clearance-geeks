@@ -5,6 +5,10 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { StickyMobileCta } from "@/components/StickyMobileCta";
 import { CookieConsentProvider } from "@/components/CookieConsent";
+import {
+  COOKIE_BAR_HEIGHT_BOOTSTRAP_PX,
+  COOKIE_CONSENT_STORAGE_KEY,
+} from "@/lib/cookie-consent";
 import { company } from "@/config/site";
 import { JsonLd, localBusinessJsonLd } from "@/lib/schema";
 
@@ -34,6 +38,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-GB" className={`${display.variable} ${body.variable} h-full`}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var k=${JSON.stringify(COOKIE_CONSENT_STORAGE_KEY)},v=localStorage.getItem(k);document.documentElement.style.setProperty("--cookie-bar-h",(v==="granted"||v==="denied")?"0px":"${COOKIE_BAR_HEIGHT_BOOTSTRAP_PX}px");}catch(e){document.documentElement.style.setProperty("--cookie-bar-h","0px");}})();`,
+          }}
+        />
+      </head>
       <body
         className="flex min-h-full flex-col bg-zinc-50 pb-[calc(var(--mobile-call-bar-height)+env(safe-area-inset-bottom,0px))] text-zinc-900 antialiased lg:pb-0"
       >

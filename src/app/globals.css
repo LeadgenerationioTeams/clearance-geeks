@@ -8,11 +8,18 @@
   --container: 75rem;
   /* Sticky mobile Call bar (p-3 + min-h-12 row); 0 on lg+ */
   --mobile-call-bar-height: 4.5rem;
+  --cookie-bar-h: 0px;
 }
 
 @media (min-width: 1024px) {
   :root {
     --mobile-call-bar-height: 0px;
+  }
+}
+
+@media (max-width: 1023px) {
+  html {
+    scroll-padding-bottom: calc(88px + var(--cookie-bar-h, 0px));
   }
 }
 

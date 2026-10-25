@@ -672,7 +672,7 @@ export function hubAreaName(index: number): string {
 }
 
 export function telHref(phone: string = siteConfig.company.phone): string {
-  if (isPlaceholder(phone)) return "tel:PLACEHOLDER_PHONE";
+  if (isPlaceholder(phone)) return "#quote";
   return `tel:${phone.replace(/\s/g, "")}`;
 }
 
