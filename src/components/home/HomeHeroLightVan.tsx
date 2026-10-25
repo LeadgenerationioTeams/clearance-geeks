@@ -18,7 +18,7 @@ export function HomeHeroLightVan() {
   return (
     <section className="bg-[#F7F8F6] text-[#111]">
       <div className="site-container w-full py-6 md:py-8 lg:py-6">
-        <div className="flex flex-col gap-6 lg:gap-6">
+        <div className="flex flex-col gap-6">
           <figure
             className="aspect-[16/13] w-full overflow-hidden rounded-2xl lg:hidden"
           >
@@ -33,41 +33,30 @@ export function HomeHeroLightVan() {
             />
           </figure>
 
-          <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-10 lg:gap-y-5">
-            <div className="max-w-xl lg:col-start-1 lg:row-start-1">
-              <h1
-                className="font-display text-[2.125rem] leading-[2.375rem] tracking-tight sm:text-[2.25rem] sm:leading-[2.5rem] lg:max-w-[22ch] lg:text-[3.5rem] lg:leading-[3.75rem]"
-              >
-                Waste removal &amp; house clearance across{" "}
-                <span
-                  className="underline decoration-geek-lime decoration-[3px] underline-offset-[6px]"
+          <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-10">
+            <div className="flex max-w-xl flex-col gap-5 lg:gap-6">
+              <div>
+                <h1
+                  className="font-display text-[2.125rem] leading-[2.375rem] tracking-tight sm:text-[2.25rem] sm:leading-[2.5rem] lg:max-w-[22ch] lg:text-[3.5rem] lg:leading-[3.75rem]"
                 >
-                  {siteConfig.serviceAreas.region}
-                </span>
-              </h1>
-              <p className="mt-3 text-base text-[#111]/80 md:mt-4 md:text-lg">
-                Fast quotes, tidy crews and responsible disposal for homes and
-                businesses.
-              </p>
-            </div>
+                  Waste removal &amp; house clearance across{" "}
+                  <span
+                    className="underline decoration-geek-lime decoration-[3px] underline-offset-[6px]"
+                  >
+                    {siteConfig.serviceAreas.region}
+                  </span>
+                </h1>
+                <p className="mt-3 text-base text-[#111]/80 md:mt-4 md:text-lg">
+                  Fast quotes, tidy crews and responsible disposal for homes and
+                  businesses.
+                </p>
+              </div>
 
-            <figure
-              className="relative hidden aspect-[819/686] w-full overflow-hidden rounded-2xl lg:col-start-2 lg:row-start-1 lg:block lg:self-start"
-            >
-              <Image
-                src="/brand/van-1400.webp"
-                alt={vanAlt}
-                width={DESKTOP_VAN_FRAME_WIDTH}
-                height={DESKTOP_VAN_FRAME_HEIGHT}
-                priority
-                sizes="(min-width: 1024px) 50vw, 0px"
-                className="h-full w-full object-cover object-[60%_50%]"
-              />
-            </figure>
-
-            <div className="flex flex-col gap-5 lg:col-start-1 lg:row-start-2">
               <p className="lg:hidden">
-                <Link href="#quote" className={`inline-flex min-h-12 w-full items-center justify-center rounded-xl px-8 py-3 text-base font-extrabold uppercase tracking-wide shadow-[0_0_24px_rgba(139,230,0,0.35)] sm:w-auto ${limeButtonOnLightClass}`}>
+                <Link
+                  href="#quote"
+                  className={`inline-flex min-h-12 w-full items-center justify-center rounded-xl px-8 py-3 text-base font-extrabold uppercase tracking-wide shadow-[0_0_24px_rgba(139,230,0,0.35)] sm:w-auto ${limeButtonOnLightClass}`}
+                >
                   Get a free quote
                 </Link>
               </p>
@@ -79,6 +68,20 @@ export function HomeHeroLightVan() {
                 title="Get a free quote"
               />
             </div>
+
+            <figure
+              className="relative hidden aspect-[819/686] w-full self-start overflow-hidden rounded-2xl lg:block"
+            >
+              <Image
+                src="/brand/van-1400.webp"
+                alt={vanAlt}
+                width={DESKTOP_VAN_FRAME_WIDTH}
+                height={DESKTOP_VAN_FRAME_HEIGHT}
+                priority
+                sizes="(min-width: 1024px) 50vw, 0px"
+                className="h-full w-full object-cover object-[60%_50%]"
+              />
+            </figure>
           </div>
         </div>
       </div>
