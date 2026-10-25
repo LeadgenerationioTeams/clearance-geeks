@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import Link from "next/link";
 import { useActionState, useEffect, useRef } from "react";
 import { submitQuote, type QuoteFormState } from "@/app/actions/quote";
 import { services } from "@/lib/services";
@@ -160,8 +161,8 @@ export function QuoteForm({
         </h2>
         <p className="text-sm leading-snug text-zinc-600">
           {isHero
-            ? "Tell us what needs clearing — photos optional but help us size the van."
-            : "Tell us what needs clearing. Optional photo helps us size the van."}
+            ? "Tell us what needs clearing — you can send photos after we reply."
+            : "Tell us what needs clearing. You can send photos after we reply."}
         </p>
       </header>
 
@@ -225,11 +226,14 @@ export function QuoteForm({
         >
           {pending ? "Sending…" : "Send quote request"}
         </button>
-        {isHero ? (
-          <p className="text-center text-xs leading-snug text-zinc-500">
-            Written quote before we load · Your details are only used to respond
-          </p>
-        ) : null}
+        <p className="text-center text-xs leading-snug text-zinc-500">
+          We&apos;ll use your details to reply to your quote request and arrange
+          the job. See our{" "}
+          <Link href="/privacy" className="font-medium text-zinc-700 underline">
+            privacy notice
+          </Link>
+          .
+        </p>
       </div>
 
       {state.message ? (

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { company, isPlaceholder } from "@/config/site";
+import { COOKIE_CONSENT_STORAGE_KEY } from "@/lib/cookie-consent-bootstrap";
 
 export function CookiePolicyContent() {
   const contact = isPlaceholder(company.email)
@@ -20,27 +21,45 @@ export function CookiePolicyContent() {
       </p>
 
       <h2 className="font-display text-geek-lime">How we use cookies</h2>
-      <ul>
-        <li>
-          <strong>Strictly necessary:</strong> required for basic site operation
-          (for example security and load balancing). These do not require
-          consent under UK rules.
-        </li>
-        <li>
-          <strong>Preference:</strong> we store your choice to accept or decline
-          optional cookies in local storage when you use the cookie banner.
-        </li>
-        <li>
-          <strong>Analytics and marketing:</strong> not enabled in this build. If
-          we add tools (for example analytics or advertising tags), we will
-          update this page and request consent where required.
-        </li>
-      </ul>
+      <p>
+        We store your choice on your device. Analytics and marketing tags load
+        only if you accept. We do not use analytics or marketing cookies at the
+        moment.
+      </p>
+      <p>
+        You can change your choice at any time using &apos;Cookie settings&apos;
+        at the bottom of every page.
+      </p>
+
+      <h2 className="font-display text-geek-lime">Cookie and storage table</h2>
+      <div className="not-prose overflow-x-auto">
+        <table className="w-full min-w-[36rem] border-collapse text-left text-sm text-zinc-300">
+          <thead>
+            <tr className="border-b border-zinc-700 text-zinc-200">
+              <th className="py-2 pr-4 font-semibold">Name</th>
+              <th className="py-2 pr-4 font-semibold">Type</th>
+              <th className="py-2 pr-4 font-semibold">Provider</th>
+              <th className="py-2 pr-4 font-semibold">Purpose</th>
+              <th className="py-2 font-semibold">Retention</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="border-b border-zinc-800">
+              <td className="py-3 pr-4 font-mono text-xs">{COOKIE_CONSENT_STORAGE_KEY}</td>
+              <td className="py-3 pr-4">local storage</td>
+              <td className="py-3 pr-4">{company.name}</td>
+              <td className="py-3 pr-4">remembers your cookie choice</td>
+              <td className="py-3">kept until you clear it</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <h2 className="font-display text-geek-lime">Managing cookies</h2>
       <p>
-        You can clear site data in your browser settings. Declining optional
-        cookies will not block quote forms or essential pages.
+        Use Cookie settings in the footer to reopen the banner and change your
+        choice. You can also clear site data in your browser settings. Declining
+        optional cookies will not block quote forms or essential pages.
       </p>
 
       <h2 className="font-display text-geek-lime">More information</h2>

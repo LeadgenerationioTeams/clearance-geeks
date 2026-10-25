@@ -23,6 +23,7 @@ export function useCookieBanner() {
 }
 
 import { COOKIE_CONSENT_STORAGE_KEY as STORAGE_KEY } from "@/lib/cookie-consent-bootstrap";
+import { registerCookieConsentReset } from "@/lib/reset-cookie-consent";
 
 export type Consent = "unknown" | "granted" | "denied";
 
@@ -65,6 +66,10 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
     open: false,
     height: 0,
   });
+
+  useLayoutEffect(() => {
+    return registerCookieConsentReset(() => notifyConsentChange());
+  }, []);
 
   useLayoutEffect(() => {
     const root = document.documentElement;
@@ -134,8 +139,8 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
                 Cookies on this site
               </p>
               <p className="mt-1">
-                We use essential cookies to remember your choice. Analytics and
-                marketing tags load only if you accept. See{" "}
+                We don&apos;t use analytics or marketing cookies at the moment. We
+                only store your cookie choice. See{" "}
                 <Link href="/cookies" className="text-geek-lime underline">
                   cookies
                 </Link>{" "}

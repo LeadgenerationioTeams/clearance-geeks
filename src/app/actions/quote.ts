@@ -1,10 +1,24 @@
 "use server";
 
+import { company, isPlaceholder } from "@/config/site";
+
 export type QuoteFormState = {
   ok: boolean;
   message: string;
 };
 
+/**
+ * Wiring checklist (before go-live) — see ICO review finding 13:
+ * - Sam: decide lead destination (`siteConfig.compliance.leadRecipient`).
+ * - If another company receives leads, name them in /privacy and on the form.
+ * - Choose processors (host, CRM, email) and document in the privacy notice.
+ * - Persist leads (database, CRM API, or email via Resend/SMTP) with access controls.
+ * - Add env vars for API keys/webhooks; never log full PII in production logs.
+ * - Send notification to operations; optional auto-reply to customer.
+ * - Retention job aligned with `quoteRetentionIfNotBooked` in site config.
+ * - Load analytics only inside CookieConsent `OptionalAnalytics` after Accept.
+ * - Update success copy to confirm submission; remove "not open yet" message.
+ */
 export async function submitQuote(
   _prev: QuoteFormState | null,
   formData: FormData,
@@ -26,9 +40,12 @@ export async function submitQuote(
   // TODO: Wire lead destination (CRM, email, webhook). Intentionally sends nowhere.
   void { name, phone, postcode, jobType, details, photo };
 
+  const phoneForMessage = isPlaceholder(company.phone)
+    ? "[number]"
+    : company.phone;
+
   return {
     ok: true,
-    message:
-      "Thanks — your request is recorded locally for now. We will confirm once contact details are live.",
+    message: `Online quotes aren't open yet. Please call us on ${phoneForMessage}.`,
   };
 }

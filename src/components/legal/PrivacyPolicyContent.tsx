@@ -40,6 +40,9 @@ export function PrivacyPolicyContent() {
         <li>
           <strong>Contact:</strong> {contactLine}
         </li>
+        <li>
+          <strong>ICO registration:</strong> {siteConfig.compliance.icoRegistrationNumber}
+        </li>
       </ul>
 
       <h2 className="font-display text-geek-lime">2. What data we collect</h2>
@@ -52,7 +55,8 @@ export function PrivacyPolicyContent() {
         </li>
         <li>
           <strong>Job information</strong> — descriptions of waste or items to
-          clear, photos you upload, preferred dates and special instructions.
+          clear, photos you send after we reply, preferred dates and special
+          instructions.
         </li>
         <li>
           <strong>Technical data</strong> — IP address, browser type, device
@@ -92,8 +96,8 @@ export function PrivacyPolicyContent() {
           records and accounting where the law requires.
         </li>
         <li>
-          <strong>Consent</strong> — where you opt in to optional cookies or
-          marketing (we do not sell your data).
+          <strong>Consent</strong> — where you opt in to optional cookies (we do
+          not sell your data).
         </li>
       </ul>
 
@@ -131,8 +135,9 @@ export function PrivacyPolicyContent() {
         We keep enquiry and job records for as long as needed to provide
         services, handle disputes and meet legal obligations (typically up to six
         years for financial and waste-related records unless a longer period is
-        required). Website logs and cookie preferences are kept for shorter
-        periods.
+        required). If you don&apos;t book, we delete your quote request after{" "}
+        {siteConfig.compliance.quoteRetentionIfNotBooked}. Website logs and
+        cookie preferences are kept for shorter periods.
       </p>
 
       <h2 className="font-display text-geek-lime">7. Security</h2>
@@ -153,6 +158,10 @@ export function PrivacyPolicyContent() {
         <li>Withdraw consent where processing is based on consent.</li>
       </ul>
       <p>
+        You can object at any time to us using your data on the basis of
+        legitimate interests.
+      </p>
+      <p>
         To exercise rights, contact us using {contactLine}. We may need to
         verify your identity. You also have the right to lodge a complaint with
         the Information Commissioner&apos;s Office (ICO) at{" "}
@@ -162,8 +171,8 @@ export function PrivacyPolicyContent() {
           rel="noopener noreferrer"
         >
           ico.org.uk
-        </a>
-        .
+        </a>{" "}
+        or by calling 0303 123 1113.
       </p>
 
       <h2 className="font-display text-geek-lime">9. Children</h2>
