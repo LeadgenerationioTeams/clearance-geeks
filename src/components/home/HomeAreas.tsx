@@ -1,9 +1,6 @@
 import Link from "next/link";
 import { areas } from "@/lib/areas";
-import {
-  focusVisibleOnDarkClass,
-  focusVisibleOnLightClass,
-} from "@/lib/focus-visible";
+import { focusVisibleOnLightClass } from "@/lib/focus-visible";
 
 export function HomeAreas() {
   return (
@@ -31,7 +28,7 @@ export function HomeAreas() {
           <li>
             <Link
               href="/areas"
-              className={`inline-flex min-h-11 items-center rounded-full bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-800 ${focusVisibleOnDarkClass}`}
+              className={`inline-flex min-h-11 items-center rounded-full bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-800 ${focusVisibleOnLightClass}`}
             >
               All areas →
             </Link>

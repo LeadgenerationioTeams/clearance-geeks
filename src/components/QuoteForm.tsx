@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useActionState, useEffect, useRef } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { submitQuote, type QuoteFormState } from "@/app/actions/quote";
 import {
@@ -10,6 +10,7 @@ import {
   siteConfig,
   telHref,
 } from "@/config/site";
+import { focusOnLightClass } from "@/lib/focus-visible";
 import { limeButtonOnLightClass } from "@/lib/lime-button";
 import { services } from "@/lib/services";
 
@@ -91,6 +92,11 @@ export function QuoteForm({
   const formRef = useRef<HTMLFormElement>(null);
   const statusRef = useRef<HTMLParagraphElement>(null);
   const savedFieldsRef = useRef<Record<string, string> | null>(null);
+  const wasPendingRef = useRef(false);
+  const hasAnnouncedInfoRef = useRef(false);
+  const [infoLiveText, setInfoLiveText] = useState<string | undefined>(
+    undefined,
+  );
   const isHero = variant === "hero";
   const tightLg = compactDesktop || isHero;
   const quotesClosed = !siteConfig.quotesOpen;
@@ -114,11 +120,29 @@ export function QuoteForm({
   }, []);
 
   useEffect(() => {
-    if (!state.message || !state.info) return;
-    requestAnimationFrame(() => {
-      statusRef.current?.focus();
-    });
-  }, [state.message, state.info]);
+    if (pending) {
+      wasPendingRef.current = true;
+      return;
+    }
+    if (!wasPendingRef.current) return;
+    wasPendingRef.current = false;
+    if (!state.info || !state.message) return;
+
+    const announce = () => {
+      setInfoLiveText(state.message);
+      requestAnimationFrame(() => {
+        statusRef.current?.focus();
+      });
+    };
+
+    if (hasAnnouncedInfoRef.current) {
+      setInfoLiveText("");
+      requestAnimationFrame(announce);
+    } else {
+      hasAnnouncedInfoRef.current = true;
+      announce();
+    }
+  }, [pending, state.info, state.message]);
 
   useEffect(() => {
     if (!state.info || !savedFieldsRef.current || !formRef.current) return;
@@ -334,7 +358,7 @@ export function QuoteForm({
           tabIndex={state.info ? -1 : undefined}
           className={`text-sm ${
             state.info
-              ? "rounded-lg border border-amber-300/80 bg-amber-50 px-3 py-2 text-amber-950"
+              ? `rounded-lg border border-amber-300/80 bg-amber-50 px-3 py-2 text-amber-950 ${focusOnLightClass}`
               : state.ok
                 ? "text-green-800"
                 : "text-red-700"
@@ -342,7 +366,11 @@ export function QuoteForm({
           role="status"
           aria-live={state.info ? "polite" : undefined}
         >
-          {state.message}
+          {state.info
+            ? infoLiveText !== undefined
+              ? infoLiveText
+              : state.message
+            : state.message}
         </p>
       ) : null}
     </form>
