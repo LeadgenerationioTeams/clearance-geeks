@@ -23,7 +23,7 @@ export function HomeServicesGrid() {
               <li key={s.slug}>
                 <Link
                   href={`/services/${s.slug}`}
-                  className="group flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-md ring-1 ring-zinc-200/80 transition duration-200 hover:-translate-y-1 hover:shadow-xl"
+                  className="group flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-md ring-1 ring-zinc-200/80 transition duration-200 hover:-translate-y-1 hover:shadow-xl lg:scroll-mb-[calc(var(--cookie-bar-h,0px)+4px)]"
                 >
                   <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-200">
                     <Image

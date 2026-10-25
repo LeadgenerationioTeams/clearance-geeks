@@ -39,7 +39,7 @@ export default function ServicesHubPage() {
           <li key={s.slug}>
             <Link
               href={`/services/${s.slug}`}
-              className="block h-full rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm hover:border-geek-lime/50"
+              className="block h-full rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm hover:border-geek-lime/50 lg:scroll-mb-[calc(var(--cookie-bar-h,0px)+4px)]"
             >
               <h2 className="font-display text-2xl text-zinc-900">{s.title}</h2>
               <p className="mt-2 text-sm text-zinc-600">{s.intro}</p>
