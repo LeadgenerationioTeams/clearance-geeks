@@ -10,6 +10,8 @@ const initial: QuoteFormState = { ok: false, message: "" };
 const fieldInputClass =
   "mt-1.5 min-h-11 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-base text-zinc-900 shadow-sm transition placeholder:text-zinc-400 focus:border-geek-lime focus:outline-none focus:ring-2 focus:ring-geek-lime/35 lg:mt-1 lg:py-2.5";
 
+const heroSelectClass = `${fieldInputClass} appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2024%2024%22%20stroke%3D%22%2371717a%22%20stroke-width%3D%222%22%3E%3Cpath%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20d%3D%22M6%209l6%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1rem_1rem] bg-[position:right_0.75rem_center] bg-no-repeat pr-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-geek-lime`;
+
 function Field({
   label,
   children,
@@ -160,7 +162,10 @@ export function QuoteForm({
         )}
 
         <Field label="Service" hero={isHero}>
-          <select name="jobType" className={fieldInputClass}>
+          <select
+            name="jobType"
+            className={isHero ? heroSelectClass : fieldInputClass}
+          >
             {services.map((s) => (
               <option key={s.slug} value={s.slug}>
                 {s.title}
