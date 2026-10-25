@@ -6,6 +6,13 @@ import {
   serviceAreaNames,
   siteConfig,
 } from "@/config/site";
+import { cn } from "@/lib/cn";
+import {
+  legalArticleClass,
+  legalHeadingClass,
+  legalLinkClass,
+  lvCn,
+} from "@/lib/light-van-page-theme";
 
 export function PrivacyPolicyContent() {
   const address = formatRegisteredAddress();
@@ -23,14 +30,14 @@ export function PrivacyPolicyContent() {
     : `We have not appointed a data protection officer; contact us at ${email}.`;
 
   return (
-    <article className="prose prose-invert prose-zinc mt-8 max-w-none break-words text-zinc-300">
-      <p className="lead text-zinc-400">
+    <article className={legalArticleClass()}>
+      <p className={cn("lead", lvCn("text-zinc-600", "text-zinc-400"))}>
         Last updated: 24 October 2026. This privacy notice explains how we
         collect and use personal data when you use our website and when you
         enquire about or book waste removal and clearance services.
       </p>
 
-      <h2 className="font-display text-geek-lime">1. Who we are</h2>
+      <h2 className={legalHeadingClass()}>1. Who we are</h2>
       <p>
         {company.legalName} (company number {company.companyNumber}, registered
         office {address}), trading as {company.name}, is the controller. ICO
@@ -44,7 +51,7 @@ export function PrivacyPolicyContent() {
         <li>{dpoLine}</li>
       </ul>
 
-      <h2 className="font-display text-geek-lime">2. What data we collect</h2>
+      <h2 className={legalHeadingClass()}>2. What data we collect</h2>
       <p>We may collect and process:</p>
       <ul>
         <li>
@@ -60,7 +67,7 @@ export function PrivacyPolicyContent() {
         <li>
           <strong>Technical data</strong> — IP address, browser type, device
           information and cookies (see our{" "}
-          <Link href="/cookies" className="text-geek-lime hover:underline">
+          <Link href="/cookies" className={legalLinkClass()}>
             cookie policy
           </Link>
           ).
@@ -76,7 +83,7 @@ export function PrivacyPolicyContent() {
         share what is necessary for the job.
       </p>
 
-      <h2 className="font-display text-geek-lime">
+      <h2 className={legalHeadingClass()}>
         3. How we use your data and lawful bases
       </h2>
       <p>Under UK GDPR we rely on the following lawful bases:</p>
@@ -99,7 +106,7 @@ export function PrivacyPolicyContent() {
         </li>
       </ul>
 
-      <h2 className="font-display text-geek-lime">4. Sharing your data</h2>
+      <h2 className={legalHeadingClass()}>4. Sharing your data</h2>
       <p>
         Online quote requests aren&apos;t open yet, so we don&apos;t keep anything
         you type into the form. When online quoting is live, recipients will be:{" "}
@@ -126,14 +133,14 @@ export function PrivacyPolicyContent() {
       </ul>
       <p>We do not sell your personal data.</p>
 
-      <h2 className="font-display text-geek-lime">5. International transfers</h2>
+      <h2 className={legalHeadingClass()}>5. International transfers</h2>
       <p>
         Our providers may process data in the UK or EEA. If data is transferred
         outside the UK, we ensure appropriate safeguards (such as UK IDTA or
         adequacy regulations) are in place.
       </p>
 
-      <h2 className="font-display text-geek-lime">6. Retention</h2>
+      <h2 className={legalHeadingClass()}>6. Retention</h2>
       <p>
         We keep enquiry and job records for as long as needed to provide
         services, handle disputes and meet legal obligations (typically up to six
@@ -146,14 +153,14 @@ export function PrivacyPolicyContent() {
         {retentionUnconverted}.
       </p>
 
-      <h2 className="font-display text-geek-lime">7. Security</h2>
+      <h2 className={legalHeadingClass()}>7. Security</h2>
       <p>
         We use appropriate technical and organisational measures to protect
         personal data. No online transmission is completely secure; please use
         reputable channels when sending photos or access details.
       </p>
 
-      <h2 className="font-display text-geek-lime">8. Your rights</h2>
+      <h2 className={legalHeadingClass()}>8. Your rights</h2>
       <p>Under UK data protection law you may have the right to:</p>
       <ul>
         <li>Access the personal data we hold about you.</li>
@@ -173,7 +180,7 @@ export function PrivacyPolicyContent() {
         the Information Commissioner&apos;s Office (ICO) at{" "}
         <a
           href="https://ico.org.uk"
-          className="text-geek-lime hover:underline"
+          className={legalLinkClass()}
           rel="noopener noreferrer"
         >
           ico.org.uk
@@ -181,20 +188,20 @@ export function PrivacyPolicyContent() {
         or by calling 0303 123 1113.
       </p>
 
-      <h2 className="font-display text-geek-lime">9. Children</h2>
+      <h2 className={legalHeadingClass()}>9. Children</h2>
       <p>
         Our services are not directed at children under 16. We do not knowingly
         collect their personal data.
       </p>
 
-      <h2 className="font-display text-geek-lime">10. Changes</h2>
+      <h2 className={legalHeadingClass()}>10. Changes</h2>
       <p>
         We may update this notice from time to time. The &quot;Last updated&quot;
         date at the top will change when we do. Material changes may also be
         highlighted on the website.
       </p>
 
-      <h2 className="font-display text-geek-lime">11. Service area</h2>
+      <h2 className={legalHeadingClass()}>11. Service area</h2>
       <p>
         We primarily operate in {siteConfig.serviceAreas.region} (
         {serviceAreaNames().slice(0, 4).join(", ")} and

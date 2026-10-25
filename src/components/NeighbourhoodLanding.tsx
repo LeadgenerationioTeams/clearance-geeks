@@ -8,6 +8,8 @@ import {
   whyChooseUsForArea,
 } from "@/lib/area-sales";
 import { areaPageImage, images } from "@/lib/media";
+import { cn } from "@/lib/cn";
+import { lvPageClasses } from "@/lib/light-van-page-theme";
 import { PageImage } from "./PageImage";
 import { QuoteForm } from "./QuoteForm";
 import { Breadcrumbs } from "./Breadcrumbs";
@@ -37,22 +39,16 @@ export function NeighbourhoodLanding({
 
       <section className="mx-auto grid max-w-6xl gap-8 px-4 py-8 lg:grid-cols-2 lg:items-center">
         <div>
-          <h1 className="font-display text-4xl text-geek-lime sm:text-5xl">
+          <h1 className={lvPageClasses.h1Flush()}>
             Waste removal — {hood.name}, {area.name}
           </h1>
-          <p className="mt-4 text-lg text-zinc-300">{hood.about}</p>
-          <p className="mt-3 text-zinc-400">{hood.accessNote}</p>
+          <p className={lvPageClasses.introLg()}>{hood.about}</p>
+          <p className={`mt-3 ${lvPageClasses.bodyMuted()}`}>{hood.accessNote}</p>
           <div className="mt-6 flex flex-wrap items-center gap-3">
-            <Link
-              href="#quote"
-              className="inline-flex min-h-11 items-center rounded-xl bg-geek-lime px-5 font-bold text-black"
-            >
+            <Link href="#quote" className={lvPageClasses.ctaLime()}>
               Get a quote
             </Link>
-            <Link
-              href={`/areas/${area.slug}`}
-              className="inline-flex min-h-11 items-center text-sm font-semibold text-zinc-400 underline"
-            >
+            <Link href={`/areas/${area.slug}`} className={lvPageClasses.linkMuted()}>
               All of {area.name}
             </Link>
           </div>
@@ -61,30 +57,27 @@ export function NeighbourhoodLanding({
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-10">
-        <h2 className="font-display text-2xl text-white">Why choose us</h2>
+        <h2 className={lvPageClasses.h2()}>Why choose us</h2>
         <ul className="mt-4 grid gap-3 sm:grid-cols-2">
           {whyChooseUsForArea(area.name).map((item) => (
-            <li
-              key={item}
-              className="rounded-lg border border-zinc-800 p-3 text-sm text-zinc-400"
-            >
+            <li key={item} className={lvPageClasses.listItem()}>
               {item}
             </li>
           ))}
         </ul>
       </section>
 
-      <section className="border-y border-zinc-800 bg-zinc-950/40 py-10">
+      <section className={lvPageClasses.sectionBand()}>
         <div className="mx-auto max-w-6xl px-4">
-          <h2 className="font-display text-2xl text-white">How it works</h2>
+          <h2 className={lvPageClasses.h2()}>How it works</h2>
           <ol className="mt-6 grid gap-4 md:grid-cols-3">
             {clearanceProcess.map((s) => (
-              <li key={s.step} className="rounded-xl border border-zinc-800 p-4">
-                <span className="text-geek-lime font-display text-2xl">
-                  {s.step}
-                </span>
-                <p className="mt-2 font-semibold text-white">{s.title}</p>
-                <p className="mt-1 text-sm text-zinc-500">{s.body}</p>
+              <li key={s.step} className={cn(lvPageClasses.listItem(), "rounded-xl")}>
+                <span className={lvPageClasses.stepNumber()}>{s.step}</span>
+                <p className={`mt-2 ${lvPageClasses.semibold()}`}>{s.title}</p>
+                <p className={`mt-1 text-sm ${lvPageClasses.bodyMuted()}`}>
+                  {s.body}
+                </p>
               </li>
             ))}
           </ol>
@@ -92,15 +85,15 @@ export function NeighbourhoodLanding({
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-10">
-        <h2 className="font-display text-2xl text-geek-lime">Local reference</h2>
+        <h2 className={lvPageClasses.h2Lime()}>Local reference</h2>
         {hood.landmarks.length ? (
-          <ul className="mt-4 space-y-2 text-sm text-zinc-400">
+          <ul className={`mt-4 space-y-2 text-sm ${lvPageClasses.bodyMuted()}`}>
             {hood.landmarks.map((l) => (
               <li key={l.name}>
                 {l.name} —{" "}
                 <a
                   href={l.source.url}
-                  className="text-geek-lime underline"
+                  className={lvPageClasses.link()}
                   rel="noopener noreferrer"
                   target="_blank"
                 >
@@ -110,7 +103,7 @@ export function NeighbourhoodLanding({
             ))}
           </ul>
         ) : (
-          <p className="mt-4 text-sm text-zinc-500">
+          <p className={`mt-4 text-sm ${lvPageClasses.bodyMuted()}`}>
             No third-party landmark citations on this page yet — use your postcode
             and access notes when you enquire.
           </p>
@@ -122,7 +115,7 @@ export function NeighbourhoodLanding({
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-10">
-        <h2 className="font-display text-2xl text-white">Services</h2>
+        <h2 className={lvPageClasses.h2()}>Services</h2>
         <ul className="mt-4 grid gap-2 sm:grid-cols-2">
           {services.map((s) => (
             <li key={s.slug}>
@@ -132,7 +125,7 @@ export function NeighbourhoodLanding({
                     ? `/areas/${area.slug}/${s.slug}`
                     : `/services/${s.slug}`
                 }
-                className="text-geek-lime underline"
+                className={lvPageClasses.link()}
               >
                 {s.title}
               </Link>
@@ -142,12 +135,12 @@ export function NeighbourhoodLanding({
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-10">
-        <h2 className="font-display text-2xl text-geek-lime">FAQs</h2>
+        <h2 className={lvPageClasses.h2Lime()}>FAQs</h2>
         <dl className="mt-4 space-y-4">
           {hood.faqs.map((f) => (
             <div key={f.question}>
-              <dt className="font-semibold text-white">{f.question}</dt>
-              <dd className="mt-1 text-zinc-400">{f.answer}</dd>
+              <dt className={lvPageClasses.semibold()}>{f.question}</dt>
+              <dd className={`mt-1 ${lvPageClasses.bodyMuted()}`}>{f.answer}</dd>
             </div>
           ))}
         </dl>

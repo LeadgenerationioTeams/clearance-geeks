@@ -18,6 +18,7 @@ import { photosForTag, photosForServiceSlug } from "@/lib/gallery";
 import type { ServiceSlug } from "@/lib/services";
 import { getArea, serviceByTownSlugs } from "@/lib/areas";
 import { company } from "@/config/site";
+import { lvPageClasses } from "@/lib/light-van-page-theme";
 
 export function generateStaticParams() {
   return serviceSlugs.map((slug) => ({ slug }));
@@ -124,7 +125,7 @@ export default async function ServicePage({
                   {index > 0 ? " · " : null}
                   <Link
                     href={`/areas/${area.slug}/${slug}`}
-                    className="inline-flex min-h-11 items-center text-geek-lime underline"
+                    className={`inline-flex min-h-11 items-center ${lvPageClasses.link()}`}
                   >
                     {area.name}
                   </Link>

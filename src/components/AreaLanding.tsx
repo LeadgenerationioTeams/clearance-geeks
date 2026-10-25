@@ -13,6 +13,7 @@ import { JobPhoto } from "./JobPhoto";
 import { VanBrandImage } from "./VanBrandImage";
 import { QuoteForm } from "./QuoteForm";
 import { RecyclingCentreBlock } from "./RecyclingCentreBlock";
+import { lvCn } from "@/lib/light-van-page-theme";
 
 export function AreaLanding({ area }: { area: AreaDefinition }) {
   const hoods = getNeighbourhoodsForArea(area.slug);
@@ -23,7 +24,12 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
       <section className="relative overflow-hidden border-b border-zinc-200 bg-white">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 lg:grid-cols-2 lg:items-start">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-widest text-geek-lime">
+            <p
+              className={`text-sm font-semibold uppercase tracking-widest ${lvCn(
+                "text-zinc-700",
+                "text-geek-lime",
+              )}`}
+            >
               {area.boroughLabel}
             </p>
             <h1 className="mt-2 font-display text-4xl leading-tight text-zinc-900 sm:text-5xl lg:text-6xl">
@@ -80,7 +86,9 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
                   sizes="(max-width: 768px) 100vw, 30vw"
                   className="mb-4"
                 />
-                <span className="font-display text-4xl text-geek-lime">
+                <span
+                  className={`font-display text-4xl ${lvCn("text-[#111]", "text-geek-lime")}`}
+                >
                   {step.step}
                 </span>
                 <h3 className="mt-2 font-display text-xl text-zinc-900">
@@ -114,7 +122,9 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
                     className="flex items-center justify-between rounded-xl border border-zinc-200 bg-white px-4 py-3 hover:border-geek-lime/50"
                   >
                     <span className="font-semibold text-zinc-900">{s.title}</span>
-                    <span className="text-geek-lime">→</span>
+                    <span className={lvCn("text-[#111]", "text-geek-lime")}>
+                      →
+                    </span>
                   </Link>
                 </li>
               ))}
@@ -153,7 +163,7 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
                 className="block rounded-xl border border-zinc-200 bg-white px-4 py-3 hover:border-geek-lime/40"
               >
                 <span className="font-semibold text-zinc-900">{h.name}</span>
-                <p className="mt-1 text-xs text-zinc-500 line-clamp-3">
+                <p className="mt-1 text-sm text-zinc-600 line-clamp-3">
                   {h.about}
                 </p>
               </Link>
@@ -166,7 +176,10 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
             <Link
               key={t.slug}
               href={`/areas/${t.slug}`}
-              className="inline-flex min-h-11 items-center rounded-full border border-zinc-700 px-3 py-2 text-sm hover:border-geek-lime"
+              className={`inline-flex min-h-11 items-center rounded-full border px-3 py-2 text-sm ${lvCn(
+                "border-zinc-300 text-zinc-800 hover:border-zinc-500",
+                "border-zinc-700 hover:border-geek-lime",
+              )}`}
             >
               Nearby: {t.label}
             </Link>

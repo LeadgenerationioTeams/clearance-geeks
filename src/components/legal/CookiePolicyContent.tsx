@@ -1,5 +1,12 @@
 import Link from "next/link";
 import { company, isPlaceholder } from "@/config/site";
+import { cn } from "@/lib/cn";
+import {
+  legalArticleClass,
+  legalHeadingClass,
+  legalLinkClass,
+  lvCn,
+} from "@/lib/light-van-page-theme";
 
 export function CookiePolicyContent() {
   const contact = isPlaceholder(company.email)
@@ -7,19 +14,19 @@ export function CookiePolicyContent() {
     : company.email;
 
   return (
-    <article className="prose prose-invert prose-zinc mt-8 max-w-none break-words text-zinc-300">
-      <p className="lead text-zinc-400">
+    <article className={legalArticleClass()}>
+      <p className={cn("lead", lvCn("text-zinc-600", "text-zinc-400"))}>
         Last updated: 24 October 2026. This policy explains how {company.legalName}{" "}
         uses cookies and similar technologies on this website.
       </p>
 
-      <h2 className="font-display text-geek-lime">What are cookies?</h2>
+      <h2 className={legalHeadingClass()}>What are cookies?</h2>
       <p>
         Cookies are small text files stored on your device. They help websites
         remember preferences and understand how visitors use pages.
       </p>
 
-      <h2 className="font-display text-geek-lime">How we use cookies</h2>
+      <h2 className={legalHeadingClass()}>How we use cookies</h2>
       <p>
         We don&apos;t use analytics or marketing cookies at the moment. We only
         store your cookie choice on your device using local storage (not a
@@ -30,11 +37,21 @@ export function CookiePolicyContent() {
         and ask for your consent before they load.
       </p>
 
-      <h2 className="font-display text-geek-lime">Storage we use</h2>
+      <h2 className={legalHeadingClass()}>Storage we use</h2>
       <div className="not-prose overflow-x-auto">
-        <table className="w-full min-w-[36rem] border-collapse text-left text-sm text-zinc-300">
+        <table
+          className={`w-full min-w-[36rem] border-collapse text-left text-sm ${lvCn(
+            "text-zinc-700",
+            "text-zinc-300",
+          )}`}
+        >
           <thead>
-            <tr className="border-b border-zinc-700 text-zinc-200">
+            <tr
+              className={`border-b ${lvCn(
+                "border-zinc-200 text-[#111]",
+                "border-zinc-700 text-zinc-200",
+              )}`}
+            >
               <th className="py-2 pr-4 font-semibold">Name</th>
               <th className="py-2 pr-4 font-semibold">Type</th>
               <th className="py-2 pr-4 font-semibold">Provider</th>
@@ -43,8 +60,10 @@ export function CookiePolicyContent() {
             </tr>
           </thead>
           <tbody>
-            <tr className="border-b border-zinc-800">
-              <td className="py-3 pr-4 font-mono text-xs">tcg_cookie_consent_v1</td>
+            <tr
+              className={`border-b ${lvCn("border-zinc-200", "border-zinc-800")}`}
+            >
+              <td className="py-3 pr-4 font-mono text-sm">tcg_cookie_consent_v1</td>
               <td className="py-3 pr-4">Local storage</td>
               <td className="py-3 pr-4">{company.name}</td>
               <td className="py-3 pr-4">Remembers your cookie choice</td>
@@ -54,7 +73,7 @@ export function CookiePolicyContent() {
         </table>
       </div>
 
-      <h2 className="font-display text-geek-lime">Managing cookies</h2>
+      <h2 className={legalHeadingClass()}>Managing cookies</h2>
       <p>
         You can change your choice at any time using &apos;Cookie settings&apos; at
         the bottom of every page.
@@ -64,10 +83,10 @@ export function CookiePolicyContent() {
         cookies will not block quote forms or essential pages.
       </p>
 
-      <h2 className="font-display text-geek-lime">More information</h2>
+      <h2 className={legalHeadingClass()}>More information</h2>
       <p>
         See our{" "}
-        <Link href="/privacy" className="text-geek-lime hover:underline">
+        <Link href="/privacy" className={legalLinkClass()}>
           privacy policy
         </Link>{" "}
         for how we handle personal data. Questions: {contact}.

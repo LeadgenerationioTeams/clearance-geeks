@@ -2,10 +2,13 @@ import Link from "next/link";
 import { CookieSettingsButton } from "@/components/CookieSettingsButton";
 import { company, hasCallablePhone, siteConfig } from "@/config/site";
 import { focusVisibleOnDarkClass } from "@/lib/focus-visible";
+import { isLightVanExperience } from "@/lib/home-hero";
 
 const footerLinkClass = `inline-flex min-h-11 items-center rounded-sm hover:text-geek-lime ${focusVisibleOnDarkClass}`;
 
 export function SiteFooter() {
+  const lightVan = isLightVanExperience();
+
   return (
     <footer
       className="mt-auto border-t border-zinc-800 bg-black pb-[calc(88px+var(--cookie-bar-h,0px))] text-sm text-zinc-400 lg:pb-[var(--cookie-bar-h,0px)]"
@@ -63,9 +66,15 @@ export function SiteFooter() {
           </ul>
         </div>
       </div>
-      <div className="site-container border-t border-zinc-800 py-6 text-sm text-zinc-600">
+      <div
+        className={`site-container border-t border-zinc-800 py-6 text-sm ${
+          lightVan ? "text-zinc-400" : "text-zinc-600"
+        }`}
+      >
         <p>© 2026 {company.name}.</p>
-        <p className="mt-2 max-w-3xl text-zinc-500">
+        <p
+          className={`mt-2 max-w-3xl ${lightVan ? "text-zinc-400" : "text-zinc-500"}`}
+        >
           {siteConfig.compliance.wasteCarrierNote}
         </p>
       </div>

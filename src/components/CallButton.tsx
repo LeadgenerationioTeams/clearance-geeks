@@ -10,11 +10,14 @@ export function CallButton({
   label = "Tap to call",
   variant = "primary",
   showPhone = true,
+  lightSurface = false,
 }: {
   className?: string;
   label?: string;
   variant?: "primary" | "outline" | "outline-dark";
   showPhone?: boolean;
+  /** White / light header — #111 focus ring on lime primary CTA */
+  lightSurface?: boolean;
 }) {
   const href = telHref(company.phone);
 
@@ -22,7 +25,7 @@ export function CallButton({
     "inline-flex min-h-12 items-center justify-center rounded-xl px-6 py-3 text-center text-base font-bold transition md:text-lg";
 
   const focusClass =
-    variant === "outline-dark"
+    variant === "outline-dark" || (variant === "primary" && lightSurface)
       ? focusVisibleOnLightClass
       : focusVisibleOnDarkClass;
 

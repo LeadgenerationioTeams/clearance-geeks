@@ -12,6 +12,7 @@ import {
   COOKIE_CONSENT_STORAGE_KEY,
 } from "@/lib/cookie-consent";
 import { company } from "@/config/site";
+import { cn } from "@/lib/cn";
 import { isLightVanExperience } from "@/lib/home-hero";
 import { JsonLd, localBusinessJsonLd } from "@/lib/schema";
 
@@ -54,7 +55,12 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="flex min-h-full flex-col bg-zinc-50 text-zinc-900 antialiased">
+      <body
+        className={cn(
+          "flex min-h-full flex-col text-zinc-900 antialiased",
+          lightVan ? "bg-[#F7F8F6]" : "bg-zinc-50",
+        )}
+      >
         <CookieConsentProvider compactMobile={lightVan}>
           <QuoteHashFocus />
           <JsonLd data={localBusinessJsonLd()} />

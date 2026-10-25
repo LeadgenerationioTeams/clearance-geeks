@@ -20,6 +20,7 @@ import {
   faqPageJsonLd,
   serviceJsonLd,
 } from "@/lib/schema";
+import { lvPageClasses } from "@/lib/light-van-page-theme";
 
 export function generateStaticParams() {
   const params: { slug: string; subslug: string }[] = [];
@@ -111,21 +112,18 @@ export default async function AreaSubPage({
         />
         <div className="mt-6 grid gap-8 lg:grid-cols-2 lg:items-start">
           <div>
-            <h1 className="font-display text-4xl text-geek-lime sm:text-5xl">
+            <h1 className={lvPageClasses.h1Flush()}>
               {service.title} in {area.name}
             </h1>
-            <p className="mt-4 text-lg text-geek-lime/90">{localBlurb}</p>
-            <p className="mt-2 text-zinc-300">{service.intro}</p>
+            <p className={lvPageClasses.introLg()}>{localBlurb}</p>
+            <p className={`mt-2 ${lvPageClasses.body()}`}>{service.intro}</p>
             <div className="mt-6 flex flex-wrap items-center gap-3">
-              <Link
-                href="#quote"
-                className="inline-flex min-h-11 items-center rounded-xl bg-geek-lime px-5 font-bold text-black"
-              >
+              <Link href="#quote" className={lvPageClasses.ctaLime()}>
                 Get a quote
               </Link>
               <Link
                 href={`/services/${subslug}`}
-                className="inline-flex min-h-11 items-center text-sm font-semibold text-zinc-400 underline"
+                className={lvPageClasses.linkMuted()}
               >
                 UK-wide service detail
               </Link>
@@ -136,19 +134,23 @@ export default async function AreaSubPage({
 
         <div id="quote" className="mt-10 grid gap-10 lg:grid-cols-2">
           <div>
-            <h2 className="font-display text-2xl text-white">
+            <h2 className={lvPageClasses.h2()}>
               On-the-ground in {area.name}
             </h2>
-            <p className="mt-2 text-zinc-400">{area.accessNotes}</p>
-            <p className="mt-4 text-sm text-zinc-500">
+            <p className={`mt-2 ${lvPageClasses.bodyMuted()}`}>
+              {area.accessNotes}
+            </p>
+            <p className={`mt-4 text-sm ${lvPageClasses.bodyMuted()}`}>
               Postcode districts: {area.postcodeDistricts.join(", ")}
             </p>
-            <h3 className="mt-8 font-display text-xl text-white">FAQs</h3>
+            <h3 className={`mt-8 ${lvPageClasses.h3()}`}>FAQs</h3>
             <dl className="mt-4 space-y-4">
               {faqs.map((f) => (
                 <div key={f.question}>
-                  <dt className="font-semibold text-geek-lime">{f.question}</dt>
-                  <dd className="mt-1 text-zinc-400">{f.answer}</dd>
+                  <dt className={lvPageClasses.semibold()}>{f.question}</dt>
+                  <dd className={`mt-1 ${lvPageClasses.bodyMuted()}`}>
+                    {f.answer}
+                  </dd>
                 </div>
               ))}
             </dl>

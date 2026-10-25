@@ -13,8 +13,8 @@ export function RecyclingCentreBlock({ areaSlug }: { areaSlug: AreaSlug }) {
         <br />
         {centre.address}
       </p>
-      <p className="mt-2 text-xs text-zinc-500">{centre.servesNotes}</p>
-      <p className="mt-2 text-xs">
+      <p className="mt-2 text-sm text-zinc-400">{centre.servesNotes}</p>
+      <p className="mt-2 text-sm">
         Source:{" "}
         <a
           href={centre.source.url}

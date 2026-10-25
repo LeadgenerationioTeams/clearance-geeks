@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { SiteImage } from "@/lib/media";
+import { lvCn, lvPageClasses } from "@/lib/light-van-page-theme";
 
 export function PageImage({
   image,
@@ -13,7 +14,12 @@ export function PageImage({
   const isLocal = image.src.startsWith("/");
 
   return (
-    <figure className={`overflow-hidden rounded-2xl border border-zinc-800 ${className}`}>
+    <figure
+      className={`overflow-hidden rounded-2xl border ${lvCn(
+        "border-zinc-200",
+        "border-zinc-800",
+      )} ${className}`}
+    >
       <div className="relative aspect-[16/10] w-full bg-zinc-900">
         <Image
           src={image.src}
@@ -26,11 +32,13 @@ export function PageImage({
         />
       </div>
       {image.credit && image.creditUrl !== "/" ? (
-        <figcaption className="px-3 py-2 text-base text-zinc-500">
+        <figcaption
+          className={`px-3 py-2 text-base ${lvCn("text-zinc-600", "text-zinc-500")}`}
+        >
           {image.illustrative ? "Illustrative — " : "Photo: "}
           <a
             href={image.creditUrl}
-            className="text-geek-lime underline"
+            className={lvPageClasses.link()}
             rel="noopener noreferrer"
             target="_blank"
           >

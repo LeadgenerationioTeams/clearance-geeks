@@ -63,6 +63,7 @@ export function SiteHeader() {
             )}
             label="Call"
             showPhone={false}
+            lightSurface={lightVan}
           />
         </div>
       </div>

@@ -5,6 +5,13 @@ import {
   isPlaceholder,
   siteConfig,
 } from "@/config/site";
+import { cn } from "@/lib/cn";
+import {
+  legalArticleClass,
+  legalHeadingClass,
+  legalLinkClass,
+  lvCn,
+} from "@/lib/light-van-page-theme";
 
 export function TermsOfUseContent() {
   const operator = company.legalName;
@@ -15,14 +22,14 @@ export function TermsOfUseContent() {
     : email;
 
   return (
-    <article className="prose prose-invert prose-zinc mt-8 max-w-none break-words text-zinc-300">
-      <p className="lead text-zinc-400">
+    <article className={legalArticleClass()}>
+      <p className={cn("lead", lvCn("text-zinc-600", "text-zinc-400"))}>
         Last updated: 24 October 2026. These terms govern your use of this
         website operated by {operator}. Separate terms apply to waste collection
         services when you accept a quote or booking confirmation.
       </p>
 
-      <h2 className="font-display text-geek-lime">1. About us</h2>
+      <h2 className={legalHeadingClass()}>1. About us</h2>
       <ul>
         <li>
           <strong>Operator:</strong> {operator}
@@ -43,7 +50,7 @@ export function TermsOfUseContent() {
         </li>
       </ul>
 
-      <h2 className="font-display text-geek-lime">2. Using this website</h2>
+      <h2 className={legalHeadingClass()}>2. Using this website</h2>
       <p>
         You may use this site to learn about our services in{" "}
         {siteConfig.serviceAreas.region}, request quotes and contact us. You
@@ -52,7 +59,7 @@ export function TermsOfUseContent() {
         submitting false or offensive material).
       </p>
 
-      <h2 className="font-display text-geek-lime">3. Quotes and bookings</h2>
+      <h2 className={legalHeadingClass()}>3. Quotes and bookings</h2>
       <p>
         Information on this website is for general guidance. A binding contract
         for waste removal is only formed when we confirm a booking in writing
@@ -67,7 +74,7 @@ export function TermsOfUseContent() {
         materially from what was agreed.
       </p>
 
-      <h2 className="font-display text-geek-lime">4. Waste and compliance</h2>
+      <h2 className={legalHeadingClass()}>4. Waste and compliance</h2>
       <p>
         We collect and transport waste in line with our carrier registration and
         applicable environmental law. Certain wastes are excluded (including
@@ -75,7 +82,7 @@ export function TermsOfUseContent() {
         not conceal prohibited items in mixed loads.
       </p>
 
-      <h2 className="font-display text-geek-lime">5. Intellectual property</h2>
+      <h2 className={legalHeadingClass()}>5. Intellectual property</h2>
       <p>
         Content on this site (text, branding, images and layout) belongs to us
         or our licensors. You may view and print pages for personal use. You may
@@ -83,13 +90,13 @@ export function TermsOfUseContent() {
         permission.
       </p>
 
-      <h2 className="font-display text-geek-lime">6. Third-party links</h2>
+      <h2 className={legalHeadingClass()}>6. Third-party links</h2>
       <p>
         Links to council recycling information or other sites are provided for
         convenience. We are not responsible for their content or policies.
       </p>
 
-      <h2 className="font-display text-geek-lime">7. Liability</h2>
+      <h2 className={legalHeadingClass()}>7. Liability</h2>
       <p>
         Nothing in these terms limits liability for death or personal injury
         caused by negligence, fraud, or any liability that cannot be limited
@@ -98,27 +105,27 @@ export function TermsOfUseContent() {
         provided &quot;as is&quot; without warranty of uninterrupted access.
       </p>
 
-      <h2 className="font-display text-geek-lime">8. Privacy and cookies</h2>
+      <h2 className={legalHeadingClass()}>8. Privacy and cookies</h2>
       <p>
         Our use of personal data is described in the{" "}
-        <Link href="/privacy" className="text-geek-lime hover:underline">
+        <Link href="/privacy" className={legalLinkClass()}>
           privacy policy
         </Link>
         . Cookie use is described in the{" "}
-        <Link href="/cookies" className="text-geek-lime hover:underline">
+        <Link href="/cookies" className={legalLinkClass()}>
           cookie policy
         </Link>
         .
       </p>
 
-      <h2 className="font-display text-geek-lime">9. Governing law</h2>
+      <h2 className={legalHeadingClass()}>9. Governing law</h2>
       <p>
         These terms are governed by the laws of England and Wales. Courts in
         England and Wales have exclusive jurisdiction, without prejudice to your
         statutory rights as a consumer.
       </p>
 
-      <h2 className="font-display text-geek-lime">10. Changes</h2>
+      <h2 className={legalHeadingClass()}>10. Changes</h2>
       <p>
         We may update these terms. Continued use of the site after changes are
         posted constitutes acceptance of the updated terms where permitted by

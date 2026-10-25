@@ -4,6 +4,10 @@ html {
   background-color: #000;
 }
 
+html[data-home-hero="light-van"] {
+  background-color: #f7f8f6;
+}
+
 :root {
   --background: #fafafa;
   --foreground: #18181b;

@@ -2,6 +2,7 @@ import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { company } from "@/config/site";
 import { PrivacyPolicyContent } from "@/components/legal/PrivacyPolicyContent";
+import { lvPageClasses } from "@/lib/light-van-page-theme";
 
 export const metadata = buildMetadata({
   title: "Privacy policy",
@@ -13,7 +14,7 @@ export default function PrivacyPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Privacy" }]} />
-      <h1 className="mt-4 font-display text-4xl text-geek-lime">Privacy policy</h1>
+      <h1 className={lvPageClasses.h1()}>Privacy policy</h1>
       <PrivacyPolicyContent />
     </div>
   );
