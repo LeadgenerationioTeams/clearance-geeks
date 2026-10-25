@@ -2,6 +2,9 @@
   "name": "cg-next",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22.6"
+  },
   "scripts": {
     "dev": "next dev",
     "prebuild": "node scripts/check-forbidden-strings.mjs && node scripts/similarity-check.mjs",

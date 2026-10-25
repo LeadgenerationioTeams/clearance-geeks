@@ -13,6 +13,9 @@ import {
   syncCookieBannerAttribute,
 } from "@/lib/cookie-consent-store";
 
+const cookieActionFocus =
+  "focus-visible:outline focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-geek-lime";
+
 /** Optional analytics — only mount after explicit Accept. None configured yet. */
 function OptionalAnalytics() {
   return null;
@@ -73,7 +76,7 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
       {consent === "unknown" ? (
         <div
           ref={bannerRef}
-          className="fixed bottom-[calc(var(--mobile-call-bar-height)+env(safe-area-inset-bottom,0px))] left-0 right-0 z-[100] border-t border-geek-lime/30 bg-zinc-950/95 p-4 shadow-2xl backdrop-blur sm:p-5 lg:bottom-0"
+          className="fixed bottom-[calc(var(--mobile-call-bar-height)+env(safe-area-inset-bottom,0px))] left-0 right-0 z-[100] border-t border-geek-lime/30 bg-zinc-950 p-4 shadow-2xl sm:p-5 lg:bottom-0"
           role="dialog"
           aria-labelledby="cookie-title"
         >
@@ -99,14 +102,14 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
               <button
                 type="button"
                 onClick={() => save("granted")}
-                className="min-h-11 rounded-xl bg-geek-lime px-5 font-bold text-black"
+                className={`min-h-11 rounded-xl bg-geek-lime px-5 font-bold text-black ${cookieActionFocus}`}
               >
                 Accept
               </button>
               <button
                 type="button"
                 onClick={() => save("denied")}
-                className="min-h-11 rounded-xl border border-zinc-600 px-5 font-semibold text-zinc-200"
+                className={`min-h-11 rounded-xl border border-zinc-600 px-5 font-semibold text-zinc-200 ${cookieActionFocus}`}
               >
                 Reject
               </button>
