@@ -61,7 +61,10 @@ export function PrivacyPolicyContent() {
         <li>
           <strong>Technical data</strong> — IP address, browser type, device
           information and cookies (see our{" "}
-          <Link href="/cookies" className="text-geek-lime hover:underline">
+          <Link
+            href="/cookies"
+            className="inline-flex min-h-[44px] items-center text-geek-lime hover:underline py-2"
+          >
             cookie policy
           </Link>
           ).
@@ -171,7 +174,7 @@ export function PrivacyPolicyContent() {
         the Information Commissioner&apos;s Office (ICO) at{" "}
         <a
           href="https://ico.org.uk"
-          className="text-geek-lime hover:underline"
+          className="inline-flex min-h-[44px] items-center text-geek-lime hover:underline py-2"
           rel="noopener noreferrer"
         >
           ico.org.uk

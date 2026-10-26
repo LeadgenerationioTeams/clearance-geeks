@@ -39,7 +39,7 @@ export function HomeServicesGrid() {
                     <h3 className="font-display text-xl text-zinc-900 group-hover:text-geek-lime">
                       {s.title}
                     </h3>
-                    <p className="mt-2 line-clamp-2 text-sm text-zinc-600">
+                    <p className="mt-2 line-clamp-2 text-base text-zinc-600">
                       {s.intro}
                     </p>
                   </div>

@@ -1,10 +1,14 @@
 "use server";
 
 import { quoteClosedPublicMessage, siteConfig } from "@/config/site";
+import { isValidUkPhone } from "@/lib/phone";
 
 export type QuoteFormState = {
   ok: boolean;
   message: string;
+  fieldErrors?: {
+    phone?: string;
+  };
 };
 
 /**
@@ -23,32 +27,49 @@ export async function submitQuote(
   _prev: QuoteFormState | null,
   formData: FormData,
 ): Promise<QuoteFormState> {
-  const name = String(formData.get("name") ?? "").trim();
-  const phone = String(formData.get("phone") ?? "").trim();
-  const postcode = String(formData.get("postcode") ?? "").trim();
-  const jobType = String(formData.get("jobType") ?? "").trim();
-  const details = String(formData.get("details") ?? "").trim();
-  const photo = formData.get("photo");
+  try {
+    const name = String(formData.get("name") ?? "").trim();
+    const phone = String(formData.get("phone") ?? "").trim();
+    const postcode = String(formData.get("postcode") ?? "").trim();
+    const jobType = String(formData.get("jobType") ?? "").trim();
+    const details = String(formData.get("details") ?? "").trim();
+    const photo = formData.get("photo");
 
-  if (!name || !phone || !postcode || !jobType) {
+    if (!name || !phone || !postcode || !jobType) {
+      return {
+        ok: false,
+        message: "Please fill in all required fields (name, phone, postcode and service).",
+      };
+    }
+
+    if (!isValidUkPhone(phone)) {
+      return {
+        ok: false,
+        message: "Please enter a valid UK phone number (e.g. 07123 456789 or +44 7123 456789).",
+        fieldErrors: {
+          phone: "Please enter a valid UK phone number (digits, spaces and +44 only).",
+        },
+      };
+    }
+
+    // Lead destination placeholder. Intentionally sends nowhere for now.
+    void { name, phone, postcode, jobType, details, photo };
+
+    if (!siteConfig.quotesOpen) {
+      return {
+        ok: true,
+        message: quoteClosedPublicMessage,
+      };
+    }
+
     return {
       ok: false,
-      message: "Please fill in name, phone, postcode and job type.",
+      message: "Online quotes aren't open yet. Please check back soon or call us.",
     };
-  }
-
-  // TODO: Wire lead destination (CRM, email, webhook). Intentionally sends nowhere.
-  void { name, phone, postcode, jobType, details, photo };
-
-  if (!siteConfig.quotesOpen) {
+  } catch {
     return {
-      ok: true,
-      message: quoteClosedPublicMessage,
+      ok: false,
+      message: "Something went wrong sending your request. Please try again or call us.",
     };
   }
-
-  return {
-    ok: false,
-    message: "Quote submission is not configured yet. Please call us.",
-  };
 }

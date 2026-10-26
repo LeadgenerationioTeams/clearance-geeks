@@ -11,12 +11,11 @@ export function HomeHero() {
       className="home-hero relative isolate overflow-x-hidden overflow-y-visible bg-zinc-950 lg:flex lg:min-h-[min(calc(100dvh-4rem),720px)] lg:items-center"
     >
       <Image
-        src="/brand/van-828.avif"
+        src="/brand/van-1920.webp"
         alt={vanAlt}
         fill
         priority
         fetchPriority="high"
-        unoptimized
         sizes="100vw"
         className="object-cover object-[72%_42%] sm:object-[68%_40%] lg:object-[58%_38%]"
       />

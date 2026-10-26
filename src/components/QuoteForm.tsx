@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { useActionState, useEffect, useRef } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { submitQuote, type QuoteFormState } from "@/app/actions/quote";
 import {
   publicPhoneNumber,
@@ -11,6 +11,7 @@ import {
   telHref,
 } from "@/config/site";
 import { services } from "@/lib/services";
+import { isValidUkPhone } from "@/lib/phone";
 
 const initial: QuoteFormState = { ok: false, message: "" };
 
@@ -61,7 +62,10 @@ function QuoteClosedNotice() {
       {phone ? (
         <>
           Online quotes aren&apos;t open yet. Please call us on{" "}
-          <a href={telHref(phone)} className="font-semibold underline">
+          <a
+            href={telHref(phone)}
+            className="inline-flex min-h-[44px] items-center font-semibold underline py-2"
+          >
             {phone}
           </a>
           .
@@ -85,7 +89,9 @@ function Field({
   return (
     <label
       className={
-        hero ? "block text-sm font-semibold text-zinc-800" : "block text-sm text-zinc-700"
+        hero
+          ? "block text-base font-semibold text-zinc-800"
+          : "block text-base font-medium text-zinc-700"
       }
     >
       <span>{label}</span>
@@ -108,8 +114,13 @@ export function QuoteForm({
   variant?: "default" | "hero";
 }) {
   const [state, action, pending] = useActionState(submitQuote, initial);
+  const [phoneValue, setPhoneValue] = useState("");
+  const [phoneError, setPhoneError] = useState<string | null>(null);
+
   const isHero = variant === "hero";
   const formRef = useRef<HTMLFormElement>(null);
+
+  const effectivePhoneError = phoneError || state.fieldErrors?.phone || null;
 
   useEffect(() => {
     const hash = `#${id}`;
@@ -166,6 +177,19 @@ export function QuoteForm({
     };
   }, [id]);
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const form = e.currentTarget;
+    const phoneInput = form.querySelector<HTMLInputElement>('input[name="phone"]');
+    const currentPhone = phoneInput?.value ?? "";
+    if (!isValidUkPhone(currentPhone)) {
+      e.preventDefault();
+      setPhoneError("Please enter a valid UK phone number (e.g. 07123 456789 or +44 7123 456789).");
+      phoneInput?.focus();
+      return;
+    }
+    setPhoneError(null);
+  };
+
   const fieldsGap = isHero
     ? "quote-form-hero-fields flex flex-col gap-3.5"
     : "flex flex-col gap-4";
@@ -179,6 +203,7 @@ export function QuoteForm({
       ref={formRef}
       id={id}
       action={action}
+      onSubmit={handleSubmit}
       className={`flex flex-col rounded-2xl border bg-white ${
         isHero
           ? "quote-form-hero gap-3.5 border-zinc-200/90 p-5 shadow-[0_20px_50px_rgba(0,0,0,0.28)] ring-1 ring-black/5 sm:p-6"
@@ -202,7 +227,7 @@ export function QuoteForm({
         >
           {title}
         </h2>
-        <p className="text-sm leading-snug text-zinc-600">
+        <p className="text-base leading-snug text-zinc-600">
           {isHero
             ? "Tell us what needs clearing — you can send photos after we reply."
             : "Tell us what needs clearing. You can send photos after we reply."}
@@ -219,8 +244,31 @@ export function QuoteForm({
             type="tel"
             required
             autoComplete="tel"
-            className={fieldInputClass}
+            value={phoneValue}
+            onChange={(e) => {
+              setPhoneValue(e.target.value);
+              if (phoneError && isValidUkPhone(e.target.value)) {
+                setPhoneError(null);
+              }
+            }}
+            onBlur={() => {
+              if (phoneValue.trim() && !isValidUkPhone(phoneValue)) {
+                setPhoneError("Please enter a valid UK phone number (e.g. 07123 456789 or +44 7123 456789).");
+              } else {
+                setPhoneError(null);
+              }
+            }}
+            aria-invalid={Boolean(effectivePhoneError)}
+            aria-describedby={effectivePhoneError ? "phone-error" : undefined}
+            className={`${fieldInputClass} ${
+              effectivePhoneError ? "border-red-500 ring-1 ring-red-500 focus:border-red-500 focus:ring-red-500" : ""
+            }`}
           />
+          {effectivePhoneError ? (
+            <p id="phone-error" className="mt-1 text-sm font-medium text-red-600" role="alert">
+              {effectivePhoneError}
+            </p>
+          ) : null}
         </Field>
         <Field label="Email" hero={isHero}>
           <input
@@ -272,22 +320,27 @@ export function QuoteForm({
         <p className="quote-form-privacy-line quote-form-meta-text text-center text-zinc-500">
           We&apos;ll use your details to reply to your quote request and arrange
           the job. See our{" "}
-          <Link href="/privacy" className="font-medium text-zinc-700 underline">
+          <Link
+            href="/privacy"
+            className="inline-flex min-h-[44px] items-center font-medium text-zinc-700 underline py-2"
+          >
             privacy notice
           </Link>
           .
         </p>
       </div>
 
-      {state.message && !hideDuplicateClosedMessage ? (
+      {!state.ok && state.message ? (
+        <div
+          className="rounded-xl border border-red-200 bg-red-50 p-4 text-base text-red-800"
+          role="alert"
+        >
+          <p className="font-semibold text-red-900">Unable to submit quote request</p>
+          <p className="mt-1">{state.message}</p>
+        </div>
+      ) : state.ok && state.message && !hideDuplicateClosedMessage ? (
         <p
-          className={
-            !siteConfig.quotesOpen
-              ? "quote-form-meta-text rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-zinc-700"
-              : state.ok
-                ? "text-sm text-green-800"
-                : "text-sm text-red-700"
-          }
+          className="quote-form-meta-text rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-zinc-700"
           role="status"
         >
           {state.message}

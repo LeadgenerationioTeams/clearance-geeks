@@ -148,18 +148,24 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
           aria-labelledby="cookie-title"
         >
           <div className="mx-auto flex max-w-6xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="text-sm text-zinc-300">
+            <div className="text-base text-zinc-300">
               <p id="cookie-title" className="font-semibold text-white">
                 Cookies on this site
               </p>
-              <p className="mt-1">
+              <p className="mt-1 leading-relaxed">
                 We don&apos;t use analytics or marketing cookies at the moment. We
                 only store your cookie choice. See{" "}
-                <Link href="/cookies" className="text-geek-lime underline">
+                <Link
+                  href="/cookies"
+                  className="inline-flex min-h-[44px] items-center text-geek-lime underline py-2"
+                >
                   cookies
                 </Link>{" "}
                 and{" "}
-                <Link href="/privacy" className="text-geek-lime underline">
+                <Link
+                  href="/privacy"
+                  className="inline-flex min-h-[44px] items-center text-geek-lime underline py-2"
+                >
                   privacy
                 </Link>
                 .
@@ -169,14 +175,14 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
               <button
                 type="button"
                 onClick={() => save("granted")}
-                className="cookie-banner-control min-h-11 rounded-xl bg-geek-lime px-5 font-bold text-black"
+                className="cookie-banner-control min-h-11 rounded-xl bg-geek-lime px-5 text-base font-bold text-black"
               >
                 Accept
               </button>
               <button
                 type="button"
                 onClick={() => save("denied")}
-                className="cookie-banner-control min-h-11 rounded-xl border border-zinc-600 px-5 font-semibold text-zinc-200"
+                className="cookie-banner-control min-h-11 rounded-xl border border-zinc-600 px-5 text-base font-semibold text-zinc-200"
               >
                 Reject
               </button>

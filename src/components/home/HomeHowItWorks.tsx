@@ -34,7 +34,7 @@ export function HomeHowItWorks() {
                 {s.step}
               </span>
               <h3 className="mt-4 font-display text-2xl text-zinc-900">{s.title}</h3>
-              <p className="mt-3 text-sm text-zinc-600 md:text-base">{s.body}</p>
+              <p className="mt-3 text-base text-zinc-600">{s.body}</p>
             </li>
           ))}
         </ol>

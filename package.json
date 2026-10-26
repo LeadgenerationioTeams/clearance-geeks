@@ -13,7 +13,7 @@
     "lint": "eslint",
     "check:forbidden": "node scripts/check-forbidden-strings.mjs",
     "check:similarity": "node scripts/similarity-check.mjs",
-    "test:unit": "node --experimental-strip-types --test scripts/cookie-consent-bootstrap.test.mjs",
+    "test:unit": "node --experimental-strip-types --test scripts/cookie-consent-bootstrap.test.mjs scripts/phone-validation.test.mjs",
     "test:e2e": "playwright test",
     "test": "npm run test:unit && playwright test"
   },

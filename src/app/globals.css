@@ -73,8 +73,8 @@ html[data-cookie-banner="open"] .quote-form-hero-header > :not([hidden]) ~ :not(
 }
 
 .quote-form-meta-text {
-  font-size: 14px;
-  line-height: 1.35;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 html[data-cookie-banner="open"] .quote-form-closed-notice {

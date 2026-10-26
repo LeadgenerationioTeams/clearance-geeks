@@ -71,7 +71,7 @@ export function HomeTrustBar() {
             <Icon>{item.icon}</Icon>
             <div>
               <p className="font-semibold text-zinc-900">{item.title}</p>
-              <p className="mt-1 text-sm text-zinc-600">{item.body}</p>
+              <p className="mt-1 text-base text-zinc-600">{item.body}</p>
             </div>
           </li>
         ))}
