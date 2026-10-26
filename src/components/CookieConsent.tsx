@@ -97,11 +97,14 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
     }
 
     const syncBannerHeight = () => {
-      const height = el.getBoundingClientRect().height;
-      const heightPx = `${height}px`;
-      root.style.setProperty("--cookie-consent-bar-height", heightPx);
-      root.style.setProperty("--cookie-bar-h", heightPx);
-      setBannerState({ open: true, height });
+      window.requestAnimationFrame(() => {
+        if (!el) return;
+        const height = el.getBoundingClientRect().height;
+        const heightPx = `${height}px`;
+        root.style.setProperty("--cookie-consent-bar-height", heightPx);
+        root.style.setProperty("--cookie-bar-h", heightPx);
+        setBannerState({ open: true, height });
+      });
     };
 
     syncBannerHeight();
