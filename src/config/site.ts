@@ -603,9 +603,9 @@ export const siteConfig = {
   company: {
     tradingName: "Clearance Geeks",
     // TODO(Sam): Full legal entity name for contracts, metadata and policies.
-    legalName: "PLACEHOLDER_LEGAL_NAME",
+    legalName: "[COMPANY NAME]",
     // TODO(Sam): Companies House number.
-    companyNumber: "PLACEHOLDER_COMPANY_NUMBER",
+    companyNumber: "[COMPANY NO]",
     registeredAddress: {
       line1: "PLACEHOLDER_REGISTERED_ADDRESS_LINE_1",
       line2: "PLACEHOLDER_REGISTERED_ADDRESS_LINE_2",
@@ -614,11 +614,11 @@ export const siteConfig = {
       country: "United Kingdom",
     },
     // TODO(Sam): Environment Agency waste carrier registration (upper tier if applicable).
-    wasteCarrierLicence: "PLACEHOLDER_WASTE_CARRIER_LICENCE",
+    wasteCarrierLicence: "[CARRIER NO]",
     // TODO(Sam): Customer-facing phone (display format).
-    phone: "PLACEHOLDER_PHONE",
+    phone: "[PHONE]",
     // TODO(Sam): Customer-facing email.
-    email: "PLACEHOLDER_EMAIL",
+    email: "[EMAIL]",
   },
   compliance: {
     wasteCarrierNote:
