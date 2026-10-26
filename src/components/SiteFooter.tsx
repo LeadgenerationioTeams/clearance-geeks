@@ -9,22 +9,22 @@ export function SiteFooter() {
   return (
     <footer className="site-footer mt-auto border-t border-zinc-800 bg-black text-base text-zinc-400 sm:text-sm">
       <div className="site-container section-pad grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-        <div>
-          <p className="font-display text-xl text-geek-lime">{company.legalName}</p>
-          <p className="mt-3 break-words text-zinc-400">{company.address}</p>
+        <div className="min-w-0">
+          <p className="font-display text-xl text-geek-lime break-words [overflow-wrap:anywhere]">{company.legalName}</p>
+          <p className="mt-3 break-words [overflow-wrap:anywhere] text-zinc-400">{company.address}</p>
           {!isPlaceholder(company.phone) ? (
-            <p className="mt-2">{company.phone}</p>
+            <p className="mt-2 break-words [overflow-wrap:anywhere]">{company.phone}</p>
           ) : null}
-          <p className="break-all">{company.email}</p>
+          <p className="break-all [overflow-wrap:anywhere]">{company.email}</p>
         </div>
-        <div>
+        <div className="min-w-0">
           <p className="font-semibold text-white">Company</p>
           <ul className="mt-3 space-y-2">
-            <li>Reg: {company.companyNumber}</li>
-            <li>Waste carrier: {company.wasteCarrierLicence}</li>
+            <li className="break-words [overflow-wrap:anywhere]">Reg: {company.companyNumber}</li>
+            <li className="break-words [overflow-wrap:anywhere]">Waste carrier: {company.wasteCarrierLicence}</li>
           </ul>
         </div>
-        <div>
+        <div className="min-w-0">
           <p className="font-semibold text-white">Explore</p>
           <ul className="mt-1 space-y-0">
             <li>
@@ -39,7 +39,7 @@ export function SiteFooter() {
             </li>
           </ul>
         </div>
-        <div>
+        <div className="min-w-0">
           <p className="font-semibold text-white">Legal</p>
           <ul className="mt-1 space-y-0">
             <li>
@@ -63,9 +63,9 @@ export function SiteFooter() {
           </ul>
         </div>
       </div>
-      <div className="site-container border-t border-zinc-800 py-6 text-xs text-zinc-400">
-        <p>© 2026 {company.name}.</p>
-        <p className="mt-2 max-w-3xl text-zinc-400">
+      <div className="site-container border-t border-zinc-800 py-6 text-sm text-zinc-400">
+        <p className="break-words [overflow-wrap:anywhere]">© 2026 {company.name}.</p>
+        <p className="mt-2 max-w-3xl text-zinc-400 break-words [overflow-wrap:anywhere]">
           {siteConfig.compliance.wasteCarrierNote}
         </p>
       </div>

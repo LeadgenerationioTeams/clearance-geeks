@@ -86,7 +86,7 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
                 <h3 className="mt-2 font-display text-xl text-zinc-900">
                   {step.title}
                 </h3>
-                <p className="mt-2 text-sm text-zinc-600">{step.body}</p>
+                <p className="mt-2 text-base text-zinc-600">{step.body}</p>
               </li>
             ))}
           </ol>
@@ -129,7 +129,7 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
           Access, postcodes & local reference
         </h2>
         <p className="mt-4 max-w-3xl text-zinc-700">{area.accessNotes}</p>
-        <p className="mt-4 text-sm text-zinc-500">
+        <p className="mt-4 text-base text-zinc-500">
           Outward postcode districts for this page:{" "}
           {area.postcodeDistricts.join(", ")} — confirm your full postcode when
           booking.
@@ -141,7 +141,7 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
         <h3 className="mt-10 font-display text-2xl text-zinc-900">
           Neighbourhood pages in {area.name}
         </h3>
-        <p className="mt-2 text-sm text-zinc-500">
+        <p className="mt-2 text-base text-zinc-500">
           Each link opens a focused page with access notes and cited landmarks
           where available.
         </p>
@@ -153,7 +153,7 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
                 className="block rounded-xl border border-zinc-200 bg-white px-4 py-3 hover:border-geek-lime/40"
               >
                 <span className="font-semibold text-zinc-900">{h.name}</span>
-                <p className="mt-1 text-xs text-zinc-500 line-clamp-3">
+                <p className="mt-1 text-sm text-zinc-500 line-clamp-3">
                   {h.about}
                 </p>
               </Link>
@@ -166,7 +166,7 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
             <Link
               key={t.slug}
               href={`/areas/${t.slug}`}
-              className="inline-flex min-h-11 items-center rounded-full border border-zinc-700 px-3 py-2 text-sm hover:border-geek-lime"
+              className="inline-flex min-h-11 items-center rounded-full border border-zinc-700 px-3 py-2 text-base hover:border-geek-lime"
             >
               Nearby: {t.label}
             </Link>

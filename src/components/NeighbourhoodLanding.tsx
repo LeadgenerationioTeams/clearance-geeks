@@ -51,7 +51,7 @@ export function NeighbourhoodLanding({
             </Link>
             <Link
               href={`/areas/${area.slug}`}
-              className="inline-flex min-h-11 items-center text-sm font-semibold text-zinc-400 underline"
+              className="inline-flex min-h-11 items-center text-base font-semibold text-zinc-400 underline"
             >
               All of {area.name}
             </Link>
@@ -66,7 +66,7 @@ export function NeighbourhoodLanding({
           {whyChooseUsForArea(area.name).map((item) => (
             <li
               key={item}
-              className="rounded-lg border border-zinc-800 p-3 text-sm text-zinc-400"
+              className="rounded-lg border border-zinc-800 p-3 text-base text-zinc-400"
             >
               {item}
             </li>
@@ -84,7 +84,7 @@ export function NeighbourhoodLanding({
                   {s.step}
                 </span>
                 <p className="mt-2 font-semibold text-white">{s.title}</p>
-                <p className="mt-1 text-sm text-zinc-500">{s.body}</p>
+                <p className="mt-1 text-base text-zinc-500">{s.body}</p>
               </li>
             ))}
           </ol>
@@ -94,13 +94,13 @@ export function NeighbourhoodLanding({
       <section className="mx-auto max-w-6xl px-4 py-10">
         <h2 className="font-display text-2xl text-geek-lime">Local reference</h2>
         {hood.landmarks.length ? (
-          <ul className="mt-4 space-y-2 text-sm text-zinc-400">
+          <ul className="mt-4 space-y-2 text-base text-zinc-400">
             {hood.landmarks.map((l) => (
               <li key={l.name}>
                 {l.name} —{" "}
                 <a
                   href={l.source.url}
-                  className="text-geek-lime underline"
+                  className="inline-flex min-h-[44px] items-center text-geek-lime underline py-2"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
@@ -110,7 +110,7 @@ export function NeighbourhoodLanding({
             ))}
           </ul>
         ) : (
-          <p className="mt-4 text-sm text-zinc-500">
+          <p className="mt-4 text-base text-zinc-500">
             No third-party landmark citations on this page yet — use your postcode
             and access notes when you enquire.
           </p>

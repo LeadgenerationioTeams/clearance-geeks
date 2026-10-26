@@ -652,6 +652,9 @@ export const todoMarketing = {
 
 export function formatRegisteredAddress(): string {
   const a = siteConfig.company.registeredAddress;
+  if (isPlaceholder(a.line1)) {
+    return "[REGISTERED ADDRESS]";
+  }
   return [a.line1, a.line2, a.city, a.postcode, a.country]
     .filter(Boolean)
     .join(", ");

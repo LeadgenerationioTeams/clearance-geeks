@@ -35,7 +35,7 @@ export function HowItWorks() {
                 <JobPhoto photo={photo} sizes="(max-width: 1024px) 100vw, 30vw" />
                 <span className="mt-4 font-display text-4xl text-geek-lime">{step.step}</span>
                 <h3 className="mt-1 font-display text-xl text-zinc-900">{step.title}</h3>
-                <p className="mt-2 text-sm text-zinc-600">{step.body}</p>
+                <p className="mt-2 text-base text-zinc-600">{step.body}</p>
               </li>
             );
           })}

@@ -42,7 +42,7 @@ export default function ServicesHubPage() {
               className="block h-full rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm hover:border-geek-lime/50"
             >
               <h2 className="font-display text-2xl text-zinc-900">{s.title}</h2>
-              <p className="mt-2 text-sm text-zinc-600">{s.intro}</p>
+              <p className="mt-2 text-base text-zinc-600">{s.intro}</p>
             </Link>
           </li>
         ))}

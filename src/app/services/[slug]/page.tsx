@@ -116,14 +116,14 @@ export default async function ServicePage({
             ))}
           </dl>
           {hubAreas.length > 0 ? (
-            <p className="mt-8 text-sm text-zinc-500">
+            <p className="mt-8 text-base text-zinc-500">
               Local pages:{" "}
               {hubAreas.map((area, index) => (
                 <span key={area.slug}>
                   {index > 0 ? " · " : null}
                   <Link
                     href={`/areas/${area.slug}/${slug}`}
-                    className="inline-flex min-h-11 items-center text-geek-lime underline"
+                    className="inline-flex min-h-11 items-center text-geek-lime underline py-1"
                   >
                     {area.name}
                   </Link>

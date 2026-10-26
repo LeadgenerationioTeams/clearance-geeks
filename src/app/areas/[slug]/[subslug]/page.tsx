@@ -125,7 +125,7 @@ export default async function AreaSubPage({
               </Link>
               <Link
                 href={`/services/${subslug}`}
-                className="inline-flex min-h-11 items-center text-sm font-semibold text-zinc-400 underline"
+                className="inline-flex min-h-11 items-center text-base font-semibold text-zinc-400 underline"
               >
                 UK-wide service detail
               </Link>
@@ -140,7 +140,7 @@ export default async function AreaSubPage({
               On-the-ground in {area.name}
             </h2>
             <p className="mt-2 text-zinc-400">{area.accessNotes}</p>
-            <p className="mt-4 text-sm text-zinc-500">
+            <p className="mt-4 text-base text-zinc-500">
               Postcode districts: {area.postcodeDistricts.join(", ")}
             </p>
             <h3 className="mt-8 font-display text-xl text-white">FAQs</h3>

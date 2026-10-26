@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { useActionState, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { submitQuote, type QuoteFormState } from "@/app/actions/quote";
 import {
   publicPhoneNumber,
@@ -113,8 +113,16 @@ export function QuoteForm({
   compactDesktop?: boolean;
   variant?: "default" | "hero";
 }) {
-  const [state, action, pending] = useActionState(submitQuote, initial);
-  const [phoneValue, setPhoneValue] = useState("");
+  const [state, setState] = useState<QuoteFormState>(initial);
+  const [pending, setPending] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    postcode: "",
+    jobType: services[0]?.slug ?? "house-clearance",
+    details: "",
+  });
   const [phoneError, setPhoneError] = useState<string | null>(null);
 
   const isHero = variant === "hero";
@@ -177,32 +185,59 @@ export function QuoteForm({
     };
   }, [id]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    const form = e.currentTarget;
-    const phoneInput = form.querySelector<HTMLInputElement>('input[name="phone"]');
-    const currentPhone = phoneInput?.value ?? "";
-    if (!isValidUkPhone(currentPhone)) {
-      e.preventDefault();
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (name === "phone") {
+      if (phoneError && isValidUkPhone(value)) {
+        setPhoneError(null);
+      }
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!isValidUkPhone(formData.phone)) {
       setPhoneError("Please enter a valid UK phone number (e.g. 07123 456789 or +44 7123 456789).");
-      phoneInput?.focus();
+      formRef.current?.querySelector<HTMLInputElement>('input[name="phone"]')?.focus();
       return;
     }
+
     setPhoneError(null);
+    setPending(true);
+
+    try {
+      const data = new FormData();
+      data.set("name", formData.name);
+      data.set("phone", formData.phone);
+      data.set("email", formData.email);
+      data.set("postcode", formData.postcode);
+      data.set("jobType", formData.jobType);
+      data.set("details", formData.details);
+
+      const res = await submitQuote(state, data);
+      setState(res);
+    } catch {
+      setState({
+        ok: false,
+        message: "Something went wrong sending your request. Please try again or call us.",
+      });
+    } finally {
+      setPending(false);
+    }
   };
 
   const fieldsGap = isHero
     ? "quote-form-hero-fields flex flex-col gap-3.5"
     : "flex flex-col gap-4";
 
-  const closedNoticeVisible = !siteConfig.quotesOpen;
-  const hideDuplicateClosedMessage =
-    closedNoticeVisible && state.message === quoteClosedPublicMessage;
-
   return (
     <form
       ref={formRef}
       id={id}
-      action={action}
       onSubmit={handleSubmit}
       className={`flex flex-col rounded-2xl border bg-white ${
         isHero
@@ -236,7 +271,14 @@ export function QuoteForm({
 
       <div className={fieldsGap}>
         <Field label="Name" hero={isHero}>
-          <input name="name" required autoComplete="name" className={fieldInputClass} />
+          <input
+            name="name"
+            required
+            autoComplete="name"
+            value={formData.name}
+            onChange={handleChange}
+            className={fieldInputClass}
+          />
         </Field>
         <Field label="Phone" hero={isHero}>
           <input
@@ -244,15 +286,10 @@ export function QuoteForm({
             type="tel"
             required
             autoComplete="tel"
-            value={phoneValue}
-            onChange={(e) => {
-              setPhoneValue(e.target.value);
-              if (phoneError && isValidUkPhone(e.target.value)) {
-                setPhoneError(null);
-              }
-            }}
+            value={formData.phone}
+            onChange={handleChange}
             onBlur={() => {
-              if (phoneValue.trim() && !isValidUkPhone(phoneValue)) {
+              if (formData.phone.trim() && !isValidUkPhone(formData.phone)) {
                 setPhoneError("Please enter a valid UK phone number (e.g. 07123 456789 or +44 7123 456789).");
               } else {
                 setPhoneError(null);
@@ -265,7 +302,7 @@ export function QuoteForm({
             }`}
           />
           {effectivePhoneError ? (
-            <p id="phone-error" className="mt-1 text-sm font-medium text-red-600" role="alert">
+            <p id="phone-error" className="mt-1 text-base font-medium text-red-600" role="alert">
               {effectivePhoneError}
             </p>
           ) : null}
@@ -275,6 +312,8 @@ export function QuoteForm({
             name="email"
             type="email"
             autoComplete="email"
+            value={formData.email}
+            onChange={handleChange}
             className={fieldInputClass}
           />
         </Field>
@@ -283,11 +322,18 @@ export function QuoteForm({
             name="postcode"
             required
             autoComplete="postal-code"
+            value={formData.postcode}
+            onChange={handleChange}
             className={fieldInputClass}
           />
         </Field>
         <Field label="Service" hero={isHero}>
-          <select name="jobType" className={fieldSelectClass}>
+          <select
+            name="jobType"
+            value={formData.jobType}
+            onChange={handleChange}
+            className={fieldSelectClass}
+          >
             {services.map((s) => (
               <option key={s.slug} value={s.slug}>
                 {s.title}
@@ -300,6 +346,8 @@ export function QuoteForm({
             name="details"
             rows={isHero ? 3 : 4}
             required
+            value={formData.details}
+            onChange={handleChange}
             className={`${fieldInputClass} resize-y${isHero ? " quote-form-hero-details" : ""}`}
           />
         </Field>
@@ -330,7 +378,15 @@ export function QuoteForm({
         </p>
       </div>
 
-      {!state.ok && state.message ? (
+      {state.ok && state.message ? (
+        <div
+          className="rounded-xl border border-green-200 bg-green-50 p-4 text-base text-green-800"
+          role="status"
+        >
+          <p className="font-semibold text-green-900">Thank you — quote request received</p>
+          <p className="mt-1">{state.message}</p>
+        </div>
+      ) : !state.ok && state.message ? (
         <div
           className="rounded-xl border border-red-200 bg-red-50 p-4 text-base text-red-800"
           role="alert"
@@ -338,13 +394,6 @@ export function QuoteForm({
           <p className="font-semibold text-red-900">Unable to submit quote request</p>
           <p className="mt-1">{state.message}</p>
         </div>
-      ) : state.ok && state.message && !hideDuplicateClosedMessage ? (
-        <p
-          className="quote-form-meta-text rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-zinc-700"
-          role="status"
-        >
-          {state.message}
-        </p>
       ) : null}
     </form>
   );

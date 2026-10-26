@@ -31,7 +31,7 @@ export function HomeJobGallery() {
                     loading="lazy"
                   />
                 </div>
-                <figcaption className="px-4 py-3 text-sm text-zinc-700">
+                <figcaption className="px-4 py-3 text-base text-zinc-700">
                   {photo.caption}
                 </figcaption>
               </figure>
