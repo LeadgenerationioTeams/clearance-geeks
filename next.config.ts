@@ -30,11 +30,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   cacheComponents: false,
   images: {
-    remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com", pathname: "/**" },
-      { protocol: "https", hostname: "upload.wikimedia.org", pathname: "/**" },
-      { protocol: "https", hostname: "images.pexels.com", pathname: "/**" },
-    ],
+    formats: ["image/avif", "image/webp"],
   },
   turbopack: {
     rules: {

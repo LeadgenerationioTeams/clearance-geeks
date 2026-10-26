@@ -12,25 +12,25 @@ export interface SiteImage {
  */
 export const images = {
   heroClearance: {
-    src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80",
+    src: "/images/hero-clearance.webp",
     alt: "Living room interior with sofa and side table (stock photo)",
     credit: "Unsplash — Spacejoy",
     creditUrl: "https://unsplash.com/photos/MP0IUfwrn0A",
   },
   gardenWaste: {
-    src: "https://images.unsplash.com/photo-1598902108854-10e335adac99?auto=format&fit=crop&w=1600&q=80",
+    src: "/images/garden-waste.webp",
     alt: "Green leaves on a wooden surface (stock photo)",
     credit: "Unsplash — Gary Barnes",
     creditUrl: "https://unsplash.com/photos/green-leaves-on-brown-wooden-table-6231",
   },
   officeClearance: {
-    src: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=80",
+    src: "/images/office-clearance.webp",
     alt: "Open-plan office interior with desks (stock photo)",
     credit: "Unsplash",
     creditUrl: "https://unsplash.com/photos/photo-1497366216548-37526070297c",
   },
   buildersRubble: {
-    src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=80",
+    src: "/images/builders-rubble.webp",
     alt: "Construction site with crane (stock photo)",
     credit: "Unsplash — Ricardo Gomez Angel",
     creditUrl: "https://unsplash.com/photos/yellow-crane-under-blue-sky-1504307651254",
@@ -44,7 +44,7 @@ export const images = {
     illustrative: false,
   },
   recycling: {
-    src: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1600&q=80",
+    src: "/images/recycling.webp",
     alt: "Abstract texture of crumpled light material (stock photo)",
     credit: "Unsplash — Pawel Czerwinski",
     creditUrl: "https://unsplash.com/photos/white-and-brown-cardboard-box-1581578731548",

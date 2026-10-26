@@ -18,7 +18,7 @@ export function HomeJobGallery() {
           </p>
         </div>
         <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((photo, i) => (
+          {featured.map((photo) => (
             <li key={photo.id}>
               <figure className="overflow-hidden rounded-xl bg-zinc-100 shadow-md ring-1 ring-zinc-200/80">
                 <div className="relative aspect-[4/3] w-full min-h-[12rem]">
@@ -28,8 +28,7 @@ export function HomeJobGallery() {
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    loading="eager"
-                    priority={i < 6}
+                    loading="lazy"
                   />
                 </div>
                 <figcaption className="px-4 py-3 text-sm text-zinc-700">

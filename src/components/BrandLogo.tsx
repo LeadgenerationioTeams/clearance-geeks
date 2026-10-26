@@ -49,7 +49,6 @@ export function BrandLogo({
       width={LOGO_WIDTH}
       height={LOGO_HEIGHT}
       className={`h-14 w-auto max-w-[min(100%,360px)] object-contain object-left ${className}`}
-      priority
       unoptimized
     />
   );

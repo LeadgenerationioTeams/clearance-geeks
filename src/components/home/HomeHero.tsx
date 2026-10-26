@@ -15,6 +15,8 @@ export function HomeHero() {
         alt={vanAlt}
         fill
         priority
+        fetchPriority="high"
+        decoding="sync"
         sizes="100vw"
         className="object-cover object-[72%_42%] sm:object-[68%_40%] lg:object-[58%_38%]"
       />

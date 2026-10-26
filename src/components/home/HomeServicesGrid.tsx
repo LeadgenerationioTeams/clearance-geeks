@@ -31,7 +31,8 @@ export function HomeServicesGrid() {
                       alt={photo.alt}
                       fill
                       className="object-cover transition duration-300 group-hover:scale-[1.03]"
-                      sizes="(max-width: 768px) 100vw, 33vw"
+                      sizes="(max-width: 640px) 384px, (max-width: 1024px) 50vw, 33vw"
+                      loading="lazy"
                     />
                   </div>
                   <div className="flex flex-1 flex-col p-5">

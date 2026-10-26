@@ -57,7 +57,7 @@ export function NeighbourhoodLanding({
             </Link>
           </div>
         </div>
-        <PageImage image={areaPageImage()} priority />
+        <PageImage image={areaPageImage()} />
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-10">

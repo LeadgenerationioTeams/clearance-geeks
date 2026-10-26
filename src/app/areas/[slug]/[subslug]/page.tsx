@@ -131,7 +131,7 @@ export default async function AreaSubPage({
               </Link>
             </div>
           </div>
-          <PageImage image={images.heroClearance} priority />
+          <PageImage image={images.heroClearance} />
         </div>
 
         <div id="quote" className="mt-10 grid gap-10 lg:grid-cols-2">

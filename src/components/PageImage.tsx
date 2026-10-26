@@ -10,8 +10,6 @@ export function PageImage({
   priority?: boolean;
   className?: string;
 }) {
-  const isLocal = image.src.startsWith("/");
-
   return (
     <figure className={`overflow-hidden rounded-2xl border border-zinc-800 ${className}`}>
       <div className="relative aspect-[16/10] w-full bg-zinc-900">
@@ -22,7 +20,7 @@ export function PageImage({
           className="object-cover"
           sizes="(max-width: 768px) 100vw, 50vw"
           priority={priority}
-          unoptimized={isLocal}
+          loading={priority ? "eager" : "lazy"}
         />
       </div>
       {image.credit && image.creditUrl !== "/" ? (

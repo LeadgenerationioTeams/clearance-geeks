@@ -20,11 +20,10 @@ export function PhotoGallery({
           collections across {siteConfig.serviceAreas.region}.
         </p>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {photos.map((photo, i) => (
+          {photos.map((photo) => (
             <JobPhoto
               key={photo.id}
               photo={photo}
-              priority={i < 2}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             />
           ))}
