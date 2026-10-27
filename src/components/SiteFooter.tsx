@@ -28,6 +28,11 @@ export function SiteFooter() {
           <p className="font-semibold text-white">Explore</p>
           <ul className="mt-1 space-y-0">
             <li>
+              <Link href="#quote" className={footerLinkClass}>
+                Get a quote
+              </Link>
+            </li>
+            <li>
               <Link href="/services" className={footerLinkClass}>
                 Services
               </Link>
@@ -63,7 +68,7 @@ export function SiteFooter() {
           </ul>
         </div>
       </div>
-      <div className="site-container border-t border-zinc-800 py-6 text-sm text-zinc-400">
+      <div className="site-container border-t border-zinc-800 py-6 text-base sm:text-sm text-zinc-400">
         <p className="break-words [overflow-wrap:anywhere]">© 2026 {company.name}.</p>
         <p className="mt-2 max-w-3xl text-zinc-400 break-words [overflow-wrap:anywhere]">
           {siteConfig.compliance.wasteCarrierNote}

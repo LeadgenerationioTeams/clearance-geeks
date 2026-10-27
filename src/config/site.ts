@@ -624,9 +624,9 @@ export const siteConfig = {
     wasteCarrierNote:
       "Waste is collected under an Environment Agency waste carrier registration. Registration number shown in the footer when confirmed.",
     // TODO(Sam): ICO data protection fee registration number (format Z…).
-    icoRegistrationNumber: "PLACEHOLDER_ICO_REGISTRATION_NUMBER",
+    icoRegistrationNumber: "[ICO NUMBER]",
     // TODO(Sam): Retention for quote requests that do not become jobs (e.g. "12 months").
-    quoteRetentionIfNotBooked: "PLACEHOLDER_QUOTE_RETENTION_IF_NOT_BOOKED",
+    quoteRetentionIfNotBooked: "[RETENTION PERIOD]",
     // TODO(Sam): Where quote leads are sent (own CRM/email or named partner company).
     leadRecipient: "PLACEHOLDER_LEAD_RECIPIENT",
   },

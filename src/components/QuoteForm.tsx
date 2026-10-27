@@ -380,10 +380,22 @@ export function QuoteForm({
 
       {state.ok && state.message ? (
         <div
-          className="rounded-xl border border-green-200 bg-green-50 p-4 text-base text-green-800"
+          className={`rounded-xl border p-4 text-base ${
+            siteConfig.quotesOpen
+              ? "border-green-200 bg-green-50 text-green-800"
+              : "border-zinc-200 bg-zinc-50 text-zinc-800"
+          }`}
           role="status"
         >
-          <p className="font-semibold text-green-900">Thank you — quote request received</p>
+          <p
+            className={`font-semibold ${
+              siteConfig.quotesOpen ? "text-green-900" : "text-zinc-900"
+            }`}
+          >
+            {siteConfig.quotesOpen
+              ? "Thank you — quote request received"
+              : "We're not taking quotes just yet"}
+          </p>
           <p className="mt-1">{state.message}</p>
         </div>
       ) : !state.ok && state.message ? (

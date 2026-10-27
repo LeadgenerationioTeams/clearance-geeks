@@ -132,7 +132,7 @@ export function NeighbourhoodLanding({
                     ? `/areas/${area.slug}/${s.slug}`
                     : `/services/${s.slug}`
                 }
-                className="text-geek-lime underline"
+                className="inline-flex min-h-[44px] items-center text-geek-lime underline py-2.5"
               >
                 {s.title}
               </Link>

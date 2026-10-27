@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/check-forbidden-strings.mjs && node scripts/similarity-check.mjs",
+    "prebuild": "node scripts/check-forbidden-strings.mjs && node scripts/similarity-check.mjs && node scripts/patch-next-error-button.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",

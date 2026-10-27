@@ -15,7 +15,7 @@ const stickyBarClass =
   "fixed bottom-0 left-0 right-0 z-40 border-t border-geek-lime/40 bg-black/95 p-3 backdrop-blur lg:hidden";
 
 const quoteLinkClass =
-  "sticky-call-link inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-geek-lime px-3 text-center text-sm font-extrabold uppercase tracking-wide text-black shadow-[0_0_24px_rgba(139,230,0,0.35)] hover:bg-geek-lime-bright";
+  "sticky-call-link inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-geek-lime px-3 text-center text-base font-extrabold uppercase tracking-wide text-black shadow-[0_0_24px_rgba(139,230,0,0.35)] hover:bg-geek-lime-bright";
 
 export function StickyMobileCta() {
   const wa = whatsAppHref();
@@ -41,14 +41,14 @@ export function StickyMobileCta() {
     >
       <div className={`grid gap-2 ${wa ? "grid-cols-2" : "grid-cols-1"}`}>
         <CallButton
-          className={cn("sticky-call-link w-full px-3 text-sm lg:hidden")}
+          className={cn("sticky-call-link w-full px-3 text-base lg:hidden")}
           label="Call"
           showPhone={false}
         />
         {wa ? (
           <a
             href={wa}
-            className="inline-flex min-h-12 items-center justify-center rounded-xl border-2 border-geek-lime bg-transparent px-3 text-center text-sm font-extrabold uppercase tracking-wide text-geek-lime"
+            className="inline-flex min-h-12 items-center justify-center rounded-xl border-2 border-geek-lime bg-transparent px-3 text-center text-base font-extrabold uppercase tracking-wide text-geek-lime"
             rel="noopener noreferrer"
             target="_blank"
           >

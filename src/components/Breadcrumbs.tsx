@@ -14,12 +14,14 @@ export function Breadcrumbs({
             {item.href ? (
               <Link
                 href={item.href}
-                className="inline-flex min-h-11 items-center py-1 hover:text-geek-lime"
+                className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center px-2 py-1 hover:text-geek-lime"
               >
                 {item.label}
               </Link>
             ) : (
-              <span className="text-zinc-300">{item.label}</span>
+              <span className="inline-flex min-h-[44px] items-center py-1 text-zinc-300">
+                {item.label}
+              </span>
             )}
           </li>
         ))}

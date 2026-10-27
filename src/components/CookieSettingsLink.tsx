@@ -9,7 +9,7 @@ export function CookieSettingsLink() {
   return (
     <button
       type="button"
-      className={`${linkClass} cursor-pointer border-0 bg-transparent p-0 text-left text-sm text-zinc-400`}
+      className={`${linkClass} cursor-pointer border-0 bg-transparent p-0 text-left text-base sm:text-sm text-zinc-400`}
       onClick={() => resetCookieConsentChoice()}
     >
       Cookie settings
