@@ -1,0 +1,38 @@
+{
+  "name": "cg-next",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.6"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "prebuild": "node scripts/check-forbidden-strings.mjs && node scripts/similarity-check.mjs",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "check:forbidden": "node scripts/check-forbidden-strings.mjs",
+    "check:similarity": "node scripts/similarity-check.mjs",
+    "verify:neighbourhood-images": "node scripts/verify-neighbourhood-images.mjs",
+    "test:unit": "node --test scripts/phone-validation.test.mjs",
+    "test:e2e": "playwright test",
+    "test": "node --test scripts/phone-validation.test.mjs && playwright test"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.64.1",
+    "next": "16.4.3",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "tailwind-merge": "^3.7.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.3",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
