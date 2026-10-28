@@ -1,25 +1,34 @@
-import { company, hasCallablePhone, siteConfig } from "@/config/site";
+import { company, isPlaceholder, siteConfig } from "@/config/site";
 import { resolveSiteUrl } from "@/lib/env.server";
 
 export function localBusinessJsonLd() {
   const siteUrl = resolveSiteUrl();
   const addr = siteConfig.company.registeredAddress;
+  const isAddressPlaceholder =
+    isPlaceholder(addr.line1) ||
+    isPlaceholder(addr.city) ||
+    isPlaceholder(addr.postcode);
+  const isUrlPlaceholder = isPlaceholder(siteUrl);
 
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     name: company.legalName,
     description: company.defaultDescription,
-    url: siteUrl,
-    ...(hasCallablePhone() ? { telephone: company.phone } : {}),
-    email: company.email,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: [addr.line1, addr.line2].filter(Boolean).join(", "),
-      addressLocality: addr.city,
-      postalCode: addr.postcode,
-      addressCountry: "GB",
-    },
+    ...(isUrlPlaceholder ? {} : { url: siteUrl }),
+    ...(isPlaceholder(company.phone) ? {} : { telephone: company.phone }),
+    ...(isPlaceholder(company.email) ? {} : { email: company.email }),
+    ...(isAddressPlaceholder
+      ? {}
+      : {
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: [addr.line1, addr.line2].filter(Boolean).join(", "),
+            addressLocality: addr.city,
+            postalCode: addr.postcode,
+            addressCountry: "GB",
+          },
+        }),
     areaServed: {
       "@type": "AdministrativeArea",
       name: siteConfig.serviceAreas.region,
@@ -67,6 +76,8 @@ export function breadcrumbJsonLd(
   items: { name: string; path: string }[],
 ) {
   const siteUrl = resolveSiteUrl();
+  const isUrlPlaceholder = isPlaceholder(siteUrl);
+
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -74,7 +85,7 @@ export function breadcrumbJsonLd(
       "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: `${siteUrl}${item.path}`,
+      ...(isUrlPlaceholder ? {} : { item: `${siteUrl}${item.path}` }),
     })),
   };
 }

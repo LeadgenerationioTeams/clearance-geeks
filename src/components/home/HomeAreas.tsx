@@ -19,7 +19,7 @@ export function HomeAreas() {
             <li key={a.slug}>
               <Link
                 href={`/areas/${a.slug}`}
-                className={`inline-flex min-h-11 items-center rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-semibold text-zinc-800 shadow-sm transition hover:border-geek-lime hover:text-zinc-900 ${focusVisibleOnLightClass}`}
+                className={`inline-flex min-h-11 min-w-[44px] items-center justify-center rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-semibold text-zinc-800 shadow-sm transition hover:border-geek-lime hover:text-zinc-900 ${focusVisibleOnLightClass}`}
               >
                 {a.name}
               </Link>
@@ -28,7 +28,7 @@ export function HomeAreas() {
           <li>
             <Link
               href="/areas"
-              className={`inline-flex min-h-11 items-center rounded-full bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-800 ${focusVisibleOnLightClass}`}
+              className={`inline-flex min-h-11 min-w-[44px] items-center justify-center rounded-full bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-800 ${focusVisibleOnLightClass}`}
             >
               All areas →
             </Link>

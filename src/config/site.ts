@@ -603,37 +603,37 @@ export const siteConfig = {
   quotesOpen: false,
   domain: {
     // TODO(Sam): Set production domain (also set NEXT_PUBLIC_SITE_URL on Vercel).
-    url: "https://PLACEHOLDER_DOMAIN",
+    url: "https://[DOMAIN]",
   },
   company: {
     tradingName: "Clearance Geeks",
     // TODO(Sam): Full legal entity name for contracts, metadata and policies.
-    legalName: "PLACEHOLDER_LEGAL_NAME",
+    legalName: "[COMPANY NAME]",
     // TODO(Sam): Companies House number.
-    companyNumber: "PLACEHOLDER_COMPANY_NUMBER",
+    companyNumber: "[COMPANY NO]",
     registeredAddress: {
-      line1: "PLACEHOLDER_REGISTERED_ADDRESS_LINE_1",
-      line2: "PLACEHOLDER_REGISTERED_ADDRESS_LINE_2",
-      city: "PLACEHOLDER_REGISTERED_ADDRESS_CITY",
-      postcode: "PLACEHOLDER_REGISTERED_ADDRESS_POSTCODE",
+      line1: "[REGISTERED ADDRESS LINE 1]",
+      line2: "[REGISTERED ADDRESS LINE 2]",
+      city: "[CITY]",
+      postcode: "[POSTCODE]",
       country: "United Kingdom",
     },
     // TODO(Sam): Environment Agency waste carrier registration (upper tier if applicable).
-    wasteCarrierLicence: "PLACEHOLDER_WASTE_CARRIER_LICENCE",
+    wasteCarrierLicence: "[CARRIER NO]",
     // TODO(Sam): Customer-facing phone (display format).
-    phone: "PLACEHOLDER_PHONE",
+    phone: "[PHONE]",
     // TODO(Sam): Customer-facing email.
-    email: "PLACEHOLDER_EMAIL",
+    email: "[EMAIL]",
   },
   compliance: {
     wasteCarrierNote:
       "Waste is collected under an Environment Agency waste carrier registration. Registration number shown in the footer when confirmed.",
-    // TODO(Sam): ICO data protection fee registration number (format Z……).
-    icoRegistrationNumber: "PLACEHOLDER_ICO_REGISTRATION",
+    // TODO(Sam): ICO data protection fee registration number (format Z…).
+    icoRegistrationNumber: "[ICO NUMBER]",
     // TODO(Sam): How long to keep quote requests that do not become bookings (e.g. "12 months").
-    quoteRetentionIfNotBooked: "PLACEHOLDER_QUOTE_RETENTION_IF_NOT_BOOKED",
-    // TODO(Sam): Where quote leads are sent (e.g. "our CRM at PLACEHOLDER_EMAIL" or partner company name).
-    leadRecipient: "PLACEHOLDER_LEAD_RECIPIENT",
+    quoteRetentionIfNotBooked: "[RETENTION PERIOD]",
+    // TODO(Sam): Where quote leads are sent (own CRM/email or named partner company).
+    leadRecipient: "[LEAD RECIPIENT]",
   },
   serviceAreas: {
     region: "Greater Manchester",

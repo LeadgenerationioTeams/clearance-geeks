@@ -1,6 +1,7 @@
 "use server";
 
 import { quotesClosedNoticeMessage, siteConfig } from "@/config/site";
+import { isValidUkPhone } from "@/lib/phone";
 
 export type QuoteFormState = {
   ok: boolean;
@@ -26,7 +27,15 @@ export async function submitQuote(
     };
   }
 
-  // TODO: Wire lead destination (CRM, email, webhook). Intentionally sends nowhere.
+  if (!isValidUkPhone(phone)) {
+    return {
+      ok: false,
+      message:
+        "Please enter a valid UK phone number (e.g. 07123 456789 or +44 7123 456789).",
+    };
+  }
+
+  // Lead destination placeholder. Intentionally sends nowhere for now.
   void { name, phone, postcode, jobType, details, photo };
 
   if (!siteConfig.quotesOpen) {

@@ -11,37 +11,39 @@ export function PrivacyPolicyContent() {
   const address = formatRegisteredAddress();
   const email = company.email;
   const phone = company.phone;
-  const ico = siteConfig.compliance.icoRegistrationNumber;
-  const retentionUnconverted = siteConfig.compliance.quoteRetentionIfNotBooked;
 
   const contactLine = isPlaceholder(email)
     ? "the contact details published on this website once live"
-    : email;
-
-  const dpoLine = isPlaceholder(email)
-    ? "We have not appointed a data protection officer; contact us using the contact details published on this website once live."
-    : `We have not appointed a data protection officer; contact us at ${email}.`;
+    : `${email}${isPlaceholder(phone) ? "" : ` or ${phone}`}`;
 
   return (
     <article className="prose prose-invert prose-zinc mt-8 max-w-none break-words text-zinc-300">
       <p className="lead text-zinc-400">
-        Last updated: 24 October 2026. This privacy notice explains how we
-        collect and use personal data when you use our website and when you
-        enquire about or book waste removal and clearance services.
+        Last updated: 24 October 2026. This privacy notice explains how{" "}
+        {company.legalName} (&quot;we&quot;, &quot;us&quot;) collects and uses
+        personal data when you use our website and when you enquire about or book
+        waste removal and clearance services.
       </p>
 
       <h2 className="font-display text-geek-lime">1. Who we are</h2>
       <p>
-        {company.legalName} (company number {company.companyNumber}, registered
-        office {address}), trading as {company.name}, is the controller. ICO
-        registration: {ico}.
+        {company.legalName} is the data controller for personal data described in
+        this notice.
       </p>
       <ul>
         <li>
-          <strong>Contact:</strong> {contactLine}
-          {isPlaceholder(phone) ? null : ` · ${phone}`}
+          <strong>Company number:</strong> {company.companyNumber}
         </li>
-        <li>{dpoLine}</li>
+        <li>
+          <strong>Registered address:</strong> {address}
+        </li>
+        <li>
+          <strong>Contact:</strong> {contactLine}
+        </li>
+        <li>
+          <strong>ICO registration:</strong>{" "}
+          {siteConfig.compliance.icoRegistrationNumber}
+        </li>
       </ul>
 
       <h2 className="font-display text-geek-lime">2. What data we collect</h2>
@@ -54,13 +56,16 @@ export function PrivacyPolicyContent() {
         </li>
         <li>
           <strong>Job information</strong> — descriptions of waste or items to
-          clear, photos you send us after we reply, preferred dates and special
+          clear, photos you send after we reply, preferred dates and special
           instructions.
         </li>
         <li>
           <strong>Technical data</strong> — IP address, browser type, device
           information and cookies (see our{" "}
-          <Link href="/cookies" className="text-geek-lime hover:underline">
+          <Link
+            href="/cookies"
+            className="inline-flex min-h-[44px] items-center text-geek-lime hover:underline py-2"
+          >
             cookie policy
           </Link>
           ).
@@ -86,8 +91,9 @@ export function PrivacyPolicyContent() {
           perform waste removal services you request.
         </li>
         <li>
-          <strong>Legitimate interests</strong> — our interest in responding to
-          enquiries and running our business, balanced against your rights.
+          <strong>Legitimate interests</strong> — to respond to enquiries, improve
+          our services, prevent fraud, manage complaints and keep business
+          records, balanced against your rights.
         </li>
         <li>
           <strong>Legal obligation</strong> — waste transfer notes, carrier
@@ -102,8 +108,7 @@ export function PrivacyPolicyContent() {
       <h2 className="font-display text-geek-lime">4. Sharing your data</h2>
       <p>
         Online quote requests aren&apos;t open yet, so we don&apos;t keep anything
-        you type into the form. When online quoting is live, recipients will be:{" "}
-        {siteConfig.compliance.leadRecipient}.
+        you type into the form.
       </p>
       <p>We may share personal data with:</p>
       <ul>
@@ -138,12 +143,9 @@ export function PrivacyPolicyContent() {
         We keep enquiry and job records for as long as needed to provide
         services, handle disputes and meet legal obligations (typically up to six
         years for financial and waste-related records unless a longer period is
-        required). Website logs and cookie preferences are kept for shorter
-        periods.
-      </p>
-      <p>
-        If you don&apos;t book, we delete your quote request after{" "}
-        {retentionUnconverted}.
+        required). If you don&apos;t book, we delete your quote request after{" "}
+        {siteConfig.compliance.quoteRetentionIfNotBooked}. Website logs and
+        cookie preferences are kept for shorter periods.
       </p>
 
       <h2 className="font-display text-geek-lime">7. Security</h2>
@@ -160,7 +162,10 @@ export function PrivacyPolicyContent() {
         <li>Request correction of inaccurate data.</li>
         <li>Request erasure in certain circumstances.</li>
         <li>Restrict or object to processing in certain circumstances.</li>
-        <li>Data portability where processing is automated and based on contract or consent.</li>
+        <li>
+          Data portability where processing is automated and based on contract or
+          consent.
+        </li>
         <li>Withdraw consent where processing is based on consent.</li>
       </ul>
       <p>
@@ -173,8 +178,9 @@ export function PrivacyPolicyContent() {
         the Information Commissioner&apos;s Office (ICO) at{" "}
         <a
           href="https://ico.org.uk"
-          className="text-geek-lime hover:underline"
+          className="inline-flex min-h-[44px] items-center text-geek-lime hover:underline py-2"
           rel="noopener noreferrer"
+          target="_blank"
         >
           ico.org.uk
         </a>{" "}

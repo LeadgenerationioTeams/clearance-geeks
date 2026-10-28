@@ -14,8 +14,9 @@
     "check:forbidden": "node scripts/check-forbidden-strings.mjs",
     "check:similarity": "node scripts/similarity-check.mjs",
     "verify:neighbourhood-images": "node scripts/verify-neighbourhood-images.mjs",
+    "test:unit": "node --test scripts/phone-validation.test.mjs",
     "test:e2e": "playwright test",
-    "test": "playwright test"
+    "test": "node --test scripts/phone-validation.test.mjs && playwright test"
   },
   "dependencies": {
     "@playwright/test": "^1.64.1",

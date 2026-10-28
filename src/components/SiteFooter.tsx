@@ -28,6 +28,11 @@ export function SiteFooter() {
           <p className="font-semibold text-white">Explore</p>
           <ul className="mt-1 space-y-0">
             <li>
+              <Link href="#quote" className={footerLinkClass}>
+                Get a quote
+              </Link>
+            </li>
+            <li>
               <Link href="/services" className={footerLinkClass}>
                 Services
               </Link>

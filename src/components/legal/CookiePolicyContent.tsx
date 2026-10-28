@@ -67,7 +67,10 @@ export function CookiePolicyContent() {
       <h2 className="font-display text-geek-lime">More information</h2>
       <p>
         See our{" "}
-        <Link href="/privacy" className="text-geek-lime hover:underline">
+        <Link
+          href="/privacy"
+          className="inline-flex min-h-[44px] items-center text-geek-lime hover:underline py-2"
+        >
           privacy policy
         </Link>{" "}
         for how we handle personal data. Questions: {contact}.

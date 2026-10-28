@@ -95,11 +95,17 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
               <p className="mt-1">
                 We don&apos;t use analytics or marketing cookies at the moment. We
                 only store your cookie choice. See{" "}
-                <Link href="/cookies" className="text-geek-lime underline">
+                <Link
+                  href="/cookies"
+                  className="inline-flex min-h-[44px] items-center text-geek-lime underline py-2"
+                >
                   cookies
                 </Link>{" "}
                 and{" "}
-                <Link href="/privacy" className="text-geek-lime underline">
+                <Link
+                  href="/privacy"
+                  className="inline-flex min-h-[44px] items-center text-geek-lime underline py-2"
+                >
                   privacy
                 </Link>
                 .

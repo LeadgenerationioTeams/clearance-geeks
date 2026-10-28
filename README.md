@@ -22,7 +22,7 @@ npm run test:e2e
 
 ## Configuration
 
-- Company placeholders: `src/lib/company.ts`
+- Company placeholders: `src/config/site.ts`
 - Production indexing: `VERCEL_ENV=production` (see `src/app/robots.ts` and `src/app/sitemap.ts`)
 - Logo slot: replace `public/logo-clearance-geeks.svg` with final artwork
 

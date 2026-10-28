@@ -4,7 +4,7 @@ const contentSecurityPolicy = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline'",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://images.unsplash.com https://upload.wikimedia.org https://images.pexels.com",
+  "img-src 'self' data: blob:",
   "font-src 'self'",
   "connect-src 'self'",
   "frame-ancestors 'none'",
@@ -31,11 +31,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   cacheComponents: false,
   images: {
-    remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com", pathname: "/**" },
-      { protocol: "https", hostname: "upload.wikimedia.org", pathname: "/**" },
-      { protocol: "https", hostname: "images.pexels.com", pathname: "/**" },
-    ],
+    formats: ["image/avif", "image/webp"],
   },
   turbopack: {
     rules: {

@@ -166,7 +166,7 @@ export function AreaLanding({ area }: { area: AreaDefinition }) {
             <Link
               key={t.slug}
               href={`/areas/${t.slug}`}
-              className="inline-flex min-h-11 items-center rounded-full border border-zinc-700 px-3 py-2 text-sm hover:border-geek-lime"
+              className="inline-flex min-h-11 min-w-[44px] items-center justify-center rounded-full border border-zinc-700 px-3 py-2 text-sm hover:border-geek-lime"
             >
               Nearby: {t.label}
             </Link>

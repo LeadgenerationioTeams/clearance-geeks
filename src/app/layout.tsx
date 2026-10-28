@@ -17,11 +17,13 @@ const display = Bangers({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-display",
+  display: "swap",
 });
 
 const body = Inter({
   subsets: ["latin"],
   variable: "--font-body",
+  display: "swap",
 });
 
 export const metadata: Metadata = {

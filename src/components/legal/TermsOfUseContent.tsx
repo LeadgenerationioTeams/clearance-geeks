@@ -101,11 +101,17 @@ export function TermsOfUseContent() {
       <h2 className="font-display text-geek-lime">8. Privacy and cookies</h2>
       <p>
         Our use of personal data is described in the{" "}
-        <Link href="/privacy" className="text-geek-lime hover:underline">
+        <Link
+          href="/privacy"
+          className="inline-flex min-h-[44px] items-center text-geek-lime hover:underline py-2"
+        >
           privacy policy
         </Link>
         . Cookie use is described in the{" "}
-        <Link href="/cookies" className="text-geek-lime hover:underline">
+        <Link
+          href="/cookies"
+          className="inline-flex min-h-[44px] items-center text-geek-lime hover:underline py-2"
+        >
           cookie policy
         </Link>
         .

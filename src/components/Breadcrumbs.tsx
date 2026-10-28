@@ -19,7 +19,9 @@ export function Breadcrumbs({
                 {item.label}
               </Link>
             ) : (
-              <span className="text-zinc-300">{item.label}</span>
+              <span className="inline-flex min-h-11 items-center py-1 text-zinc-300">
+                {item.label}
+              </span>
             )}
           </li>
         ))}
