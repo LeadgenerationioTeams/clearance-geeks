@@ -1,11 +1,17 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { CookieSettingsButton } from "@/components/CookieSettingsButton";
-import { company, hasCallablePhone, siteConfig } from "@/config/site";
+import { company, hasCallablePhone, quoteHrefForPath, siteConfig } from "@/config/site";
 import { focusVisibleOnDarkClass } from "@/lib/focus-visible";
 
 const footerLinkClass = `inline-flex min-h-11 min-w-11 items-center justify-center rounded-sm px-2 hover:text-geek-lime ${focusVisibleOnDarkClass}`;
 
 export function SiteFooter() {
+  const pathname = usePathname();
+  const quoteHref = quoteHrefForPath(pathname);
+
   return (
     <footer
       className="mt-auto border-t border-zinc-800 bg-black pb-[calc(88px+var(--cookie-bar-h,0px))] text-sm text-zinc-400 lg:pb-[var(--cookie-bar-h,0px)]"
@@ -28,7 +34,7 @@ export function SiteFooter() {
           <p className="font-semibold text-white">Explore</p>
           <ul className="mt-1 space-y-0">
             <li>
-              <Link href="#quote" className={footerLinkClass}>
+              <Link href={quoteHref} className={footerLinkClass}>
                 Get a quote
               </Link>
             </li>

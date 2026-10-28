@@ -12,6 +12,7 @@ import {
 } from "@/config/site";
 import { focusOnLightClass } from "@/lib/focus-visible";
 import { limeButtonOnLightClass } from "@/lib/lime-button";
+import { isValidUkPhone } from "@/lib/phone";
 import { services } from "@/lib/services";
 
 const initial: QuoteFormState = { ok: false, message: "" };
@@ -81,14 +82,15 @@ export function QuoteForm({
   title = "Get a quote",
   compactDesktop = false,
   variant = "default",
+  defaultService,
 }: {
   id?: string;
   className?: string;
   title?: string;
   compactDesktop?: boolean;
   variant?: "default" | "hero";
+  defaultService?: string;
 }) {
-  const [state, action, pending] = useActionState(submitQuote, initial);
   const formRef = useRef<HTMLFormElement>(null);
   const statusRef = useRef<HTMLParagraphElement>(null);
   const savedFieldsRef = useRef<Record<string, string> | null>(null);
@@ -97,9 +99,36 @@ export function QuoteForm({
   const [infoLiveText, setInfoLiveText] = useState<string | undefined>(
     undefined,
   );
+
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [postcode, setPostcode] = useState("");
+  const [jobType, setJobType] = useState(defaultService || services[0]?.slug || "house-clearance");
+  const [details, setDetails] = useState("");
+  const [phoneError, setPhoneError] = useState<string | null>(null);
+
+  const [state, action, pending] = useActionState(
+    async (prev: QuoteFormState | null, formData: FormData) => {
+      const res = await submitQuote(prev, formData);
+      if (res.ok && !res.info) {
+        setName("");
+        setPhone("");
+        setEmail("");
+        setPostcode("");
+        setDetails("");
+        setPhoneError(null);
+      }
+      return res;
+    },
+    initial,
+  );
+
   const isHero = variant === "hero";
   const tightLg = compactDesktop || isHero;
   const quotesClosed = !siteConfig.quotesOpen;
+
+  const effectivePhoneError = phoneError || (!state.ok ? state.fieldErrors?.phone : null);
 
   useEffect(() => {
     const form = formRef.current;
@@ -126,7 +155,7 @@ export function QuoteForm({
     }
     if (!wasPendingRef.current) return;
     wasPendingRef.current = false;
-    if (!state.info || !state.message) return;
+    if (!state.message) return;
 
     const announce = () => {
       setInfoLiveText(state.message);
@@ -144,38 +173,60 @@ export function QuoteForm({
     }
   }, [pending, state.info, state.message]);
 
+  function captureFormFields() {
+    const form = formRef.current;
+    if (!form) return;
+    savedFieldsRef.current = {
+      name: String(new FormData(form).get("name") ?? name),
+      phone: String(new FormData(form).get("phone") ?? phone),
+      email: String(new FormData(form).get("email") ?? email),
+      postcode: String(new FormData(form).get("postcode") ?? postcode),
+      jobType: String(new FormData(form).get("jobType") ?? jobType),
+      details: String(new FormData(form).get("details") ?? details),
+    };
+  }
+
   useEffect(() => {
-    if (!state.info || !savedFieldsRef.current || !formRef.current) return;
+    if (state.ok && !state.info) return;
+    if (!savedFieldsRef.current || !formRef.current) return;
     const form = formRef.current;
     const saved = savedFieldsRef.current;
-    for (const [name, value] of Object.entries(saved)) {
-      const el = form.elements.namedItem(name);
+    for (const [fieldName, value] of Object.entries(saved)) {
+      const el = form.elements.namedItem(fieldName);
       if (
         el instanceof HTMLInputElement ||
         el instanceof HTMLTextAreaElement ||
         el instanceof HTMLSelectElement
       ) {
-        el.value = value;
+        if (!el.value) {
+          el.value = value;
+        }
       }
     }
   }, [state]);
 
-  function captureFormFields() {
-    const form = formRef.current;
-    if (!form) return;
-    savedFieldsRef.current = {
-      name: String(new FormData(form).get("name") ?? ""),
-      phone: String(new FormData(form).get("phone") ?? ""),
-      email: String(new FormData(form).get("email") ?? ""),
-      postcode: String(new FormData(form).get("postcode") ?? ""),
-      jobType: String(new FormData(form).get("jobType") ?? ""),
-      details: String(new FormData(form).get("details") ?? ""),
-    };
-  }
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    captureFormFields();
+    if (!isValidUkPhone(phone)) {
+      e.preventDefault();
+      setPhoneError("Please enter a valid UK phone number (e.g. 07123 456789 or +44 7123 456789).");
+      const phoneInput = formRef.current?.querySelector<HTMLInputElement>('input[name="phone"]');
+      phoneInput?.focus();
+      return;
+    }
+    setPhoneError(null);
+  };
 
   const nameField = (
     <Field label="Name" hero={isHero}>
-      <input name="name" required autoComplete="name" className={fieldInputClass} />
+      <input
+        name="name"
+        required
+        autoComplete="name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        className={fieldInputClass}
+      />
     </Field>
   );
   const phoneField = (
@@ -185,8 +236,37 @@ export function QuoteForm({
         type="tel"
         required
         autoComplete="tel"
-        className={fieldInputClass}
+        placeholder="e.g. 07123 456789"
+        pattern="^\+?[0-9\s]{10,17}$"
+        title="UK phone number, e.g. 07123 456789 or +44 7123 456789"
+        value={phone}
+        onChange={(e) => {
+          const val = e.target.value;
+          setPhone(val);
+          if (phoneError && isValidUkPhone(val)) {
+            setPhoneError(null);
+          }
+        }}
+        onBlur={() => {
+          if (phone.trim() && !isValidUkPhone(phone)) {
+            setPhoneError("Please enter a valid UK phone number (e.g. 07123 456789 or +44 7123 456789).");
+          } else {
+            setPhoneError(null);
+          }
+        }}
+        aria-invalid={Boolean(effectivePhoneError)}
+        aria-describedby={effectivePhoneError ? "phone-error" : undefined}
+        className={`${fieldInputClass} ${
+          effectivePhoneError
+            ? "border-red-500 ring-1 ring-red-500 focus:border-red-500"
+            : ""
+        }`}
       />
+      {effectivePhoneError ? (
+        <p id="phone-error" className="mt-1 text-sm font-medium text-red-600" role="alert">
+          {effectivePhoneError}
+        </p>
+      ) : null}
     </Field>
   );
 
@@ -199,7 +279,7 @@ export function QuoteForm({
       id={id}
       tabIndex={-1}
       action={action}
-      onSubmit={quotesClosed ? captureFormFields : undefined}
+      onSubmit={handleSubmit}
       className={`flex flex-col rounded-2xl border bg-white ${
         isHero
           ? `border-zinc-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.28)] ring-1 ring-black/5 sm:p-6 lg:gap-2 lg:p-3.5 ${
@@ -259,6 +339,8 @@ export function QuoteForm({
                   name="email"
                   type="email"
                   autoComplete="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className={fieldInputClass}
                 />
               </Field>
@@ -267,6 +349,8 @@ export function QuoteForm({
                   name="postcode"
                   required
                   autoComplete="postal-code"
+                  value={postcode}
+                  onChange={(e) => setPostcode(e.target.value)}
                   className={fieldInputClass}
                 />
               </Field>
@@ -283,6 +367,8 @@ export function QuoteForm({
                 name="email"
                 type="email"
                 autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className={fieldInputClass}
               />
             </Field>
@@ -291,6 +377,8 @@ export function QuoteForm({
                 name="postcode"
                 required
                 autoComplete="postal-code"
+                value={postcode}
+                onChange={(e) => setPostcode(e.target.value)}
                 className={fieldInputClass}
               />
             </Field>
@@ -300,6 +388,9 @@ export function QuoteForm({
         <Field label="Service" hero={isHero}>
           <select
             name="jobType"
+            required
+            value={jobType}
+            onChange={(e) => setJobType(e.target.value)}
             className={isHero ? heroSelectClass : fieldInputClass}
           >
             {services.map((s) => (
@@ -314,6 +405,8 @@ export function QuoteForm({
             name="details"
             rows={isHero ? 2 : tightLg ? 2 : 4}
             required
+            value={details}
+            onChange={(e) => setDetails(e.target.value)}
             className={`${fieldInputClass} resize-y ${isHero || tightLg ? "lg:min-h-0 lg:py-2" : ""}`}
           />
         </Field>
@@ -357,8 +450,8 @@ export function QuoteForm({
 
       {state.message ? (
         <p
-          ref={state.info ? statusRef : undefined}
-          tabIndex={state.info ? -1 : undefined}
+          ref={statusRef}
+          tabIndex={-1}
           className={`text-sm ${
             state.info
               ? `rounded-lg border border-amber-300/80 bg-amber-50 px-3 py-2 text-amber-950 ${focusOnLightClass}`
@@ -366,8 +459,8 @@ export function QuoteForm({
                 ? "text-green-800"
                 : "text-red-700"
           }`}
-          role="status"
-          aria-live={state.info ? "polite" : undefined}
+          role={state.ok ? "status" : "alert"}
+          aria-live="polite"
         >
           {state.info
             ? infoLiveText !== undefined

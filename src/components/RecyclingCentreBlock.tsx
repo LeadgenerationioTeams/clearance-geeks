@@ -18,7 +18,7 @@ export function RecyclingCentreBlock({ areaSlug }: { areaSlug: AreaSlug }) {
         Source:{" "}
         <a
           href={centre.source.url}
-          className="text-geek-lime underline"
+          className="inline-flex min-h-[44px] items-center text-geek-lime underline py-2"
           rel="noopener noreferrer"
           target="_blank"
         >

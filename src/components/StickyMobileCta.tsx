@@ -1,5 +1,8 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import { CallButton } from "./CallButton";
-import { company, hasCallablePhone } from "@/config/site";
+import { company, hasCallablePhone, quoteHrefForPath } from "@/config/site";
 import { cn } from "@/lib/cn";
 import { focusVisibleOnDarkClass } from "@/lib/focus-visible";
 import { limeButtonOnDarkClass } from "@/lib/lime-button";
@@ -13,7 +16,9 @@ function whatsAppHref(): string | null {
 }
 
 export function StickyMobileCta() {
+  const pathname = usePathname();
   const wa = whatsAppHref();
+  const quoteHref = quoteHrefForPath(pathname);
 
   return (
     <div
@@ -31,7 +36,7 @@ export function StickyMobileCta() {
           />
         ) : (
           <a
-            href="#quote"
+            href={quoteHref}
             className={cn(
               "inline-flex min-h-12 w-full items-center justify-center rounded-xl px-3 text-center text-sm font-extrabold uppercase tracking-wide lg:hidden",
               limeButtonOnDarkClass,

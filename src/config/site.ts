@@ -670,7 +670,7 @@ export const company = {
   phone: siteConfig.company.phone,
   phoneTel: hasCallablePhone()
     ? `tel:${siteConfig.company.phone.replace(/\s/g, "")}`
-    : "#quote",
+    : "/#quote",
   email: siteConfig.company.email,
   wasteCarrierLicence: siteConfig.company.wasteCarrierLicence,
   region: siteConfig.serviceAreas.region,
@@ -693,8 +693,27 @@ export function hubAreaName(index: number): string {
   return serviceAreaEntries.find((entry) => entry.slug === slug)?.name ?? "";
 }
 
-export function telHref(phone: string = siteConfig.company.phone): string {
-  if (isPlaceholder(phone)) return "#quote";
+export function hasPageQuoteForm(pathname?: string | null): boolean {
+  if (!pathname) return false;
+  const clean = pathname.replace(/\/+$/, "");
+  if (clean === "") return true;
+  if (clean.startsWith("/services/") && clean !== "/services") return true;
+  if (clean.startsWith("/areas/") && clean !== "/areas") return true;
+  return false;
+}
+
+export function quoteHrefForPath(pathname?: string | null): string {
+  if (!pathname || !hasPageQuoteForm(pathname)) {
+    return "/#quote";
+  }
+  return "#quote";
+}
+
+export function telHref(
+  phone: string = siteConfig.company.phone,
+  pathname?: string | null,
+): string {
+  if (isPlaceholder(phone)) return quoteHrefForPath(pathname);
   return `tel:${phone.replace(/\s/g, "")}`;
 }
 

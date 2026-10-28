@@ -12,4 +12,6 @@ export {
   formatRegisteredAddress,
   serviceAreasListText,
   telHref,
+  quoteHrefForPath,
+  hasPageQuoteForm,
 } from "@/config/site";

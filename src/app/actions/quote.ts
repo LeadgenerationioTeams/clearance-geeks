@@ -7,6 +7,9 @@ export type QuoteFormState = {
   ok: boolean;
   message: string;
   info?: boolean;
+  fieldErrors?: {
+    phone?: string;
+  };
 };
 
 export async function submitQuote(
@@ -32,6 +35,10 @@ export async function submitQuote(
       ok: false,
       message:
         "Please enter a valid UK phone number (e.g. 07123 456789 or +44 7123 456789).",
+      fieldErrors: {
+        phone:
+          "Please enter a valid UK phone number (e.g. 07123 456789 or +44 7123 456789).",
+      },
     };
   }
 

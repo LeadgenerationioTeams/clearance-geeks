@@ -1,3 +1,6 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import { company, isPlaceholder, telHref } from "@/config/site";
 import { cn } from "@/lib/cn";
 import {
@@ -16,7 +19,8 @@ export function CallButton({
   variant?: "primary" | "outline" | "outline-dark";
   showPhone?: boolean;
 }) {
-  const href = telHref(company.phone);
+  const pathname = usePathname();
+  const href = telHref(company.phone, pathname);
 
   const base =
     "inline-flex min-h-12 items-center justify-center rounded-xl px-6 py-3 text-center text-base font-bold transition md:text-lg";
