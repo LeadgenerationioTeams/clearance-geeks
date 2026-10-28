@@ -340,7 +340,10 @@ export function QuoteForm({
         >
           We&apos;ll use your details to reply to your quote request and arrange
           the job. See our{" "}
-          <Link href="/privacy" className="font-semibold text-zinc-900 underline">
+          <Link
+            href="/privacy"
+            className="inline-flex min-h-[44px] items-center font-semibold text-zinc-900 underline"
+          >
             privacy notice
           </Link>
           .
