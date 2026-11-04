@@ -6,7 +6,10 @@ import { CookieSettingsButton } from "@/components/CookieSettingsButton";
 import {
   company,
   hasCallablePhone,
+  hasCompanyEmail,
   hasCompanyNumber,
+  hasRegisteredAddress,
+  hasWasteCarrierLicence,
   quoteHrefForPath,
   siteConfig,
 } from "@/config/site";
@@ -17,6 +20,8 @@ const footerLinkClass = `inline-flex min-h-11 min-w-11 items-center justify-cent
 export function SiteFooter() {
   const pathname = usePathname();
   const quoteHref = quoteHrefForPath(pathname);
+  const showCompanyDetails =
+    hasCompanyNumber() || hasWasteCarrierLicence();
 
   return (
     <footer
@@ -25,19 +30,27 @@ export function SiteFooter() {
       <div className="site-container section-pad grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <p className="font-display text-xl text-geek-lime">{company.legalName}</p>
-          <p className="mt-3 break-words text-zinc-400">{company.address}</p>
+          {company.address ? (
+            <p className="mt-3 break-words text-zinc-400">{company.address}</p>
+          ) : null}
           {hasCallablePhone() ? <p className="mt-2">{company.phone}</p> : null}
-          <p className="break-all">{company.email}</p>
+          {hasCompanyEmail() ? (
+            <p className="break-all">{company.email}</p>
+          ) : null}
         </div>
+        {showCompanyDetails ? (
         <div>
           <p className="font-semibold text-white">Company</p>
           <ul className="mt-3 space-y-2">
             {hasCompanyNumber() ? (
               <li>Reg: {company.companyNumber}</li>
             ) : null}
-            <li>Waste carrier: {company.wasteCarrierLicence}</li>
+            {hasWasteCarrierLicence() ? (
+              <li>Waste carrier: {company.wasteCarrierLicence}</li>
+            ) : null}
           </ul>
         </div>
+        ) : null}
         <div>
           <p className="font-semibold text-white">Explore</p>
           <ul className="mt-1 space-y-0">
@@ -84,9 +97,11 @@ export function SiteFooter() {
       </div>
       <div className="site-container border-t border-zinc-800 py-6 text-sm text-zinc-400">
         <p>© 2026 {company.name}.</p>
-        <p className="mt-2 max-w-3xl text-zinc-400">
-          {siteConfig.compliance.wasteCarrierNote}
-        </p>
+        {hasWasteCarrierLicence() ? (
+          <p className="mt-2 max-w-3xl text-zinc-400">
+            {siteConfig.compliance.wasteCarrierNote}
+          </p>
+        ) : null}
       </div>
     </footer>
   );
