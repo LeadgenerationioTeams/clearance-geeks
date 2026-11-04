@@ -60,7 +60,7 @@ async function pathsFromSitemap() {
     paths.push(pathname === "" ? "/" : pathname);
   }
   if (paths.length === 0) {
-    throw new Error("sitemap.xml returned no URLs (is VERCEL_ENV=production set?)");
+    throw new Error("sitemap.xml returned no URLs");
   }
   return paths;
 }
@@ -79,25 +79,22 @@ function freePort(port) {
 }
 
 function stopServer(child) {
-  if (!child?.pid) return;
-  try {
-    process.kill(-child.pid, "SIGTERM");
-  } catch {
+  if (child?.pid) {
     try {
-      process.kill(child.pid, "SIGTERM");
+      process.kill(-child.pid, "SIGTERM");
     } catch {
-      // already exited
+      try {
+        process.kill(child.pid, "SIGTERM");
+      } catch {
+        // already exited
+      }
     }
   }
-  try {
-    process.kill(-child.pid, "SIGKILL");
-  } catch {
-    try {
-      process.kill(child.pid, "SIGKILL");
-    } catch {
-      // already exited
-    }
-  }
+}
+
+async function stopServerAndFreePort(child) {
+  stopServer(child);
+  await new Promise((resolve) => setTimeout(resolve, 300));
   freePort(PORT);
 }
 
@@ -110,20 +107,13 @@ async function main() {
     VERCEL_ENV: "production",
   };
 
-  let logs = "";
   const child = spawn(NEXT_BIN, ["start", "-p", PORT], {
     cwd: ROOT,
     env: serverEnv,
     detached: true,
-    stdio: ["ignore", "pipe", "pipe"],
+    stdio: "ignore",
   });
-
-  child.stdout?.on("data", (chunk) => {
-    logs += chunk.toString();
-  });
-  child.stderr?.on("data", (chunk) => {
-    logs += chunk.toString();
-  });
+  child.unref();
 
   try {
     await waitForServer(child);
@@ -149,15 +139,11 @@ async function main() {
     console.log(
       `Rendered placeholder check passed (${routes.length} sitemap routes + llms.txt).`,
     );
-    stopServer(child);
+    await stopServerAndFreePort(child);
     process.exit(0);
   } catch (err) {
     console.error(err instanceof Error ? err.message : err);
-    if (logs) {
-      console.error("--- next start log (tail) ---");
-      console.error(logs.slice(-4000));
-    }
-    stopServer(child);
+    await stopServerAndFreePort(child);
     process.exit(1);
   }
 }
