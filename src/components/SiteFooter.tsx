@@ -3,7 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CookieSettingsButton } from "@/components/CookieSettingsButton";
-import { company, hasCallablePhone, quoteHrefForPath, siteConfig } from "@/config/site";
+import {
+  company,
+  hasCallablePhone,
+  hasCompanyNumber,
+  quoteHrefForPath,
+  siteConfig,
+} from "@/config/site";
 import { focusVisibleOnDarkClass } from "@/lib/focus-visible";
 
 const footerLinkClass = `inline-flex min-h-11 min-w-11 items-center justify-center rounded-sm px-2 hover:text-geek-lime ${focusVisibleOnDarkClass}`;
@@ -26,7 +32,9 @@ export function SiteFooter() {
         <div>
           <p className="font-semibold text-white">Company</p>
           <ul className="mt-3 space-y-2">
-            <li>Reg: {company.companyNumber}</li>
+            {hasCompanyNumber() ? (
+              <li>Reg: {company.companyNumber}</li>
+            ) : null}
             <li>Waste carrier: {company.wasteCarrierLicence}</li>
           </ul>
         </div>
