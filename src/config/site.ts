@@ -598,19 +598,30 @@ export function quotesClosedNoticeMessage(): string {
   return "Online quotes aren't open yet. Please check back soon.";
 }
 
+/** Canonical production origin (no trailing slash). Override with NEXT_PUBLIC_SITE_URL on Vercel if needed. */
+export const SITE_URL = "https://theclearancegeeks.co.uk";
+
+/** TODO: company number pending */
+export const COMPANY_NUMBER = "";
+
+export function hasCompanyNumber(
+  companyNumber: string = siteConfig.company.companyNumber,
+): boolean {
+  const trimmed = companyNumber.trim();
+  return trimmed.length > 0 && !isPlaceholder(trimmed);
+}
+
 export const siteConfig = {
   /** Set true when submitQuote is wired to a live lead destination. */
   quotesOpen: false,
   domain: {
-    // TODO(Sam): Set production domain (also set NEXT_PUBLIC_SITE_URL on Vercel).
-    url: "https://[DOMAIN]",
+    url: SITE_URL,
   },
   company: {
     tradingName: "Clearance Geeks",
     // TODO(Sam): Full legal entity name for contracts, metadata and policies.
     legalName: "[COMPANY NAME]",
-    // TODO(Sam): Companies House number.
-    companyNumber: "[COMPANY NO]",
+    companyNumber: COMPANY_NUMBER,
     registeredAddress: {
       line1: "[REGISTERED ADDRESS LINE 1]",
       line2: "[REGISTERED ADDRESS LINE 2]",

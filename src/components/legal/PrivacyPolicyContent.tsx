@@ -2,6 +2,7 @@ import Link from "next/link";
 import {
   company,
   formatRegisteredAddress,
+  hasCompanyNumber,
   isPlaceholder,
   serviceAreaNames,
   siteConfig,
@@ -31,9 +32,11 @@ export function PrivacyPolicyContent() {
         this notice.
       </p>
       <ul>
-        <li>
-          <strong>Company number:</strong> {company.companyNumber}
-        </li>
+        {hasCompanyNumber() ? (
+          <li>
+            <strong>Company number:</strong> {company.companyNumber}
+          </li>
+        ) : null}
         <li>
           <strong>Registered address:</strong> {address}
         </li>
