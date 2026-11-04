@@ -10,10 +10,12 @@ test("quote links point to /#quote on pages without form and #quote on pages wit
     const footerQuote = page.locator("footer").getByRole("link", { name: "Get a quote" });
     await expect(footerQuote).toHaveAttribute("href", "/#quote");
 
-    // Header "Call" button
-    const headerCall = page.locator("header").getByRole("link", { name: /call/i });
-    if (await headerCall.count()) {
-      await expect(headerCall).toHaveAttribute("href", "/#quote");
+    // Header call / quote button (desktop)
+    const headerCta = page.locator("header").getByRole("link", {
+      name: /^(call|get a quote)$/i,
+    });
+    if (await headerCta.count()) {
+      await expect(headerCta).toHaveAttribute("href", "/#quote");
     }
 
     // Mobile "Get a quote" sticky bar (if present)
@@ -29,9 +31,11 @@ test("quote links point to /#quote on pages without form and #quote on pages wit
     const footerQuote = page.locator("footer").getByRole("link", { name: "Get a quote" });
     await expect(footerQuote).toHaveAttribute("href", "#quote");
 
-    const headerCall = page.locator("header").getByRole("link", { name: /call/i });
-    if (await headerCall.count()) {
-      await expect(headerCall).toHaveAttribute("href", "#quote");
+    const headerCta = page.locator("header").getByRole("link", {
+      name: /^(call|get a quote)$/i,
+    });
+    if (await headerCta.count()) {
+      await expect(headerCta).toHaveAttribute("href", "#quote");
     }
 
     const mobileQuote = page.locator(".fixed.bottom-0 a", { hasText: /get a quote/i });
@@ -54,7 +58,7 @@ test("client-side phone validation shows inline error and preserves entered valu
   const quote = page.locator("#quote");
   await quote.locator('input[name="name"]').fill("Jane Doe");
   await quote.locator('input[name="phone"]').fill("invalid-phone");
-  await quote.locator('input[name="email"]').fill("jane@example.com");
+  await quote.locator('input[name="email"]').fill("jane@clearance-geeks.test");
   await quote.locator('input[name="postcode"]').fill("SK1 1AA");
   await quote.locator('select[name="jobType"]').selectOption("garden-waste");
   await quote.locator('textarea[name="details"]').fill("Tree branches and grass cuttings");
@@ -70,7 +74,7 @@ test("client-side phone validation shows inline error and preserves entered valu
   // Expect all entered values to be preserved!
   await expect(quote.locator('input[name="name"]')).toHaveValue("Jane Doe");
   await expect(quote.locator('input[name="phone"]')).toHaveValue("invalid-phone");
-  await expect(quote.locator('input[name="email"]')).toHaveValue("jane@example.com");
+  await expect(quote.locator('input[name="email"]')).toHaveValue("jane@clearance-geeks.test");
   await expect(quote.locator('input[name="postcode"]')).toHaveValue("SK1 1AA");
   await expect(quote.locator('select[name="jobType"]')).toHaveValue("garden-waste");
   await expect(quote.locator('textarea[name="details"]')).toHaveValue(
@@ -111,7 +115,7 @@ test("server-side rejection preserves entered values and shows inline phone erro
   const quote = page.locator("#quote");
   await quote.locator('input[name="name"]').fill("Bob Builder");
   await quote.locator('input[name="phone"]').fill("12345");
-  await quote.locator('input[name="email"]').fill("bob@example.com");
+  await quote.locator('input[name="email"]').fill("bob@clearance-geeks.test");
   await quote.locator('input[name="postcode"]').fill("M1 1AA");
   await quote.locator('select[name="jobType"]').selectOption("builders-waste");
   await quote.locator('textarea[name="details"]').fill("Bricks and plasterboard");
@@ -133,7 +137,7 @@ test("server-side rejection preserves entered values and shows inline phone erro
   // Verify all entered values are still retained!
   await expect(quote.locator('input[name="name"]')).toHaveValue("Bob Builder");
   await expect(quote.locator('input[name="phone"]')).toHaveValue("12345");
-  await expect(quote.locator('input[name="email"]')).toHaveValue("bob@example.com");
+  await expect(quote.locator('input[name="email"]')).toHaveValue("bob@clearance-geeks.test");
   await expect(quote.locator('input[name="postcode"]')).toHaveValue("M1 1AA");
   await expect(quote.locator('select[name="jobType"]')).toHaveValue("builders-waste");
   await expect(quote.locator('textarea[name="details"]')).toHaveValue("Bricks and plasterboard");

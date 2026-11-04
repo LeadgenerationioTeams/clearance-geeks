@@ -1,6 +1,8 @@
 import {
   company,
+  displayLegalName,
   hasCallablePhone,
+  hasCompanyEmail,
   serviceAreasListText,
   siteConfig,
 } from "@/config/site";
@@ -8,7 +10,15 @@ import { resolveSiteUrl } from "@/lib/env.server";
 
 export function GET() {
   const origin = resolveSiteUrl();
-  const body = `# ${company.legalName}
+  const contactLines = [
+    `Quote form: ${origin}/#quote`,
+    ...(hasCompanyEmail() ? [`Email: ${siteConfig.company.email}`] : []),
+    hasCallablePhone()
+      ? `Phone: ${siteConfig.company.phone}`
+      : "Phone: not published yet",
+  ].join("\n");
+
+  const body = `# ${displayLegalName()}
 
 > ${company.defaultDescription}
 
@@ -24,9 +34,7 @@ export function GET() {
 ${serviceAreasListText()}.
 
 ## Contact
-Quote form: ${origin}/#quote
-Email: ${company.email}
-${hasCallablePhone() ? `Phone: ${company.phone}` : "Phone: not published yet"}
+${contactLines}
 
 ## Policies
 - Privacy: ${origin}/privacy

@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { company, isPlaceholder, telHref } from "@/config/site";
+import { company, hasCallablePhone, telHref } from "@/config/site";
 import { cn } from "@/lib/cn";
 import {
   focusVisibleOnDarkClass,
@@ -38,7 +38,7 @@ export function CallButton({
         : `${base} border-2 border-zinc-900 bg-geek-lime font-extrabold uppercase tracking-wide text-black shadow-[0_0_24px_rgba(139,230,0,0.35)] hover:bg-geek-lime-bright ${focusClass}`;
 
   const phoneSuffix =
-    showPhone && !isPlaceholder(company.phone) ? ` ${company.phone}` : "";
+    showPhone && hasCallablePhone() ? ` ${company.phone}` : "";
 
   return (
     <a href={href} className={cn(styles, className)}>

@@ -9,6 +9,7 @@
     "dev": "next dev",
     "prebuild": "node scripts/check-forbidden-strings.mjs && node scripts/similarity-check.mjs",
     "build": "next build",
+    "postbuild": "node scripts/check-rendered-placeholders.mjs",
     "start": "next start",
     "lint": "eslint",
     "check:forbidden": "node scripts/check-forbidden-strings.mjs",
