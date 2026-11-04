@@ -1,11 +1,10 @@
-import { execSync, spawn } from "node:child_process";
+import { execFileSync, spawn } from "node:child_process";
+import { createServer } from "node:net";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const NEXT_BIN = join(ROOT, "node_modules", ".bin", "next");
-const PORT = process.env.PLACEHOLDER_CHECK_PORT ?? "3999";
-const BASE = `http://127.0.0.1:${PORT}`;
 
 /** Uppercase bracket placeholders such as [COMPANY NAME] — not markdown links. */
 const BRACKET_PLACEHOLDER = /\[[A-Z][A-Z0-9 ]*\]/;
@@ -31,14 +30,40 @@ function extractJsonLd(html) {
   return out;
 }
 
-async function waitForServer(child, timeoutMs = 60_000) {
+function pickFreePort() {
+  return new Promise((resolve, reject) => {
+    const probe = createServer();
+    probe.once("error", reject);
+    probe.listen(0, "127.0.0.1", () => {
+      const address = probe.address();
+      const port =
+        address && typeof address === "object" ? address.port : undefined;
+      probe.close((err) => {
+        if (err) reject(err);
+        else if (port) resolve(port);
+        else reject(new Error("Could not allocate a free TCP port"));
+      });
+    });
+  });
+}
+
+function processAlive(pid) {
+  try {
+    process.kill(pid, 0);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function waitForServer(base, child, timeoutMs = 60_000) {
   const start = Date.now();
   while (Date.now() - start < timeoutMs) {
     if (child.exitCode !== null) {
       throw new Error(`next start exited with code ${child.exitCode}`);
     }
     try {
-      const res = await fetch(`${BASE}/`);
+      const res = await fetch(`${base}/`);
       if (res.ok) return;
     } catch {
       // not ready yet
@@ -48,66 +73,58 @@ async function waitForServer(child, timeoutMs = 60_000) {
   throw new Error("Timed out waiting for next start");
 }
 
-async function pathsFromSitemap() {
-  const res = await fetch(`${BASE}/sitemap.xml`);
-  if (!res.ok) {
-    throw new Error(`GET /sitemap.xml → ${res.status}`);
-  }
-  const xml = await res.text();
-  const paths = [];
-  for (const match of xml.matchAll(/<loc>([^<]+)<\/loc>/gi)) {
-    const pathname = new URL(match[1]).pathname;
-    paths.push(pathname === "" ? "/" : pathname);
-  }
-  if (paths.length === 0) {
-    throw new Error("sitemap.xml returned no URLs");
-  }
-  return paths;
-}
+async function stopServer(child) {
+  if (!child?.pid) return;
 
-function freePort(port) {
-  for (const cmd of [
-    `fuser -k ${port}/tcp 2>/dev/null`,
-    `lsof -ti :${port} 2>/dev/null | xargs -r kill -9 2>/dev/null`,
-  ]) {
+  try {
+    process.kill(-child.pid, "SIGTERM");
+  } catch {
     try {
-      execSync(cmd, { shell: true, stdio: "ignore" });
+      process.kill(child.pid, "SIGTERM");
     } catch {
-      // no listener or tool unavailable
+      return;
+    }
+  }
+
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  if (!processAlive(child.pid)) return;
+
+  try {
+    process.kill(-child.pid, "SIGKILL");
+  } catch {
+    try {
+      process.kill(child.pid, "SIGKILL");
+    } catch {
+      // already exited
     }
   }
 }
 
-function stopServer(child) {
-  if (child?.pid) {
-    try {
-      process.kill(-child.pid, "SIGTERM");
-    } catch {
-      try {
-        process.kill(child.pid, "SIGTERM");
-      } catch {
-        // already exited
-      }
-    }
-  }
-}
-
-async function stopServerAndFreePort(child) {
-  stopServer(child);
-  await new Promise((resolve) => setTimeout(resolve, 300));
-  freePort(PORT);
+async function loadStaticRoutePaths() {
+  const json = execFileSync(
+    "npx",
+    ["--yes", "tsx", join(ROOT, "scripts/print-static-route-paths.ts")],
+    { cwd: ROOT, encoding: "utf8", env: process.env },
+  ).trim();
+  return JSON.parse(json);
 }
 
 async function main() {
-  freePort(PORT);
+  const port =
+    process.env.PLACEHOLDER_CHECK_PORT != null
+      ? Number(process.env.PLACEHOLDER_CHECK_PORT)
+      : await pickFreePort();
+  const base = `http://127.0.0.1:${port}`;
+
+  const routes = await loadStaticRoutePaths();
 
   const serverEnv = {
     ...process.env,
     NODE_ENV: "production",
-    VERCEL_ENV: "production",
   };
 
-  const child = spawn(NEXT_BIN, ["start", "-p", PORT], {
+  const child = spawn(NEXT_BIN, ["start", "-p", String(port)], {
     cwd: ROOT,
     env: serverEnv,
     detached: true,
@@ -116,11 +133,10 @@ async function main() {
   child.unref();
 
   try {
-    await waitForServer(child);
+    await waitForServer(base, child);
 
-    const routes = await pathsFromSitemap();
     for (const route of routes) {
-      const html = await fetch(`${BASE}${route}`).then((res) => {
+      const html = await fetch(`${base}${route}`).then((res) => {
         if (!res.ok) throw new Error(`GET ${route} → ${res.status}`);
         return res.text();
       });
@@ -130,20 +146,20 @@ async function main() {
       }
     }
 
-    const llms = await fetch(`${BASE}/llms.txt`).then((res) => {
+    const llms = await fetch(`${base}/llms.txt`).then((res) => {
       if (!res.ok) throw new Error(`GET /llms.txt → ${res.status}`);
       return res.text();
     });
     assertClean("llms.txt", llms);
 
     console.log(
-      `Rendered placeholder check passed (${routes.length} sitemap routes + llms.txt).`,
+      `Rendered placeholder check passed (${routes.length} routes + llms.txt on port ${port}).`,
     );
-    await stopServerAndFreePort(child);
+    await stopServer(child);
     process.exit(0);
   } catch (err) {
     console.error(err instanceof Error ? err.message : err);
-    await stopServerAndFreePort(child);
+    await stopServer(child);
     process.exit(1);
   }
 }
