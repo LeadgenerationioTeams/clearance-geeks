@@ -10,10 +10,12 @@ test("quote links point to /#quote on pages without form and #quote on pages wit
     const footerQuote = page.locator("footer").getByRole("link", { name: "Get a quote" });
     await expect(footerQuote).toHaveAttribute("href", "/#quote");
 
-    // Header "Call" button
-    const headerCall = page.locator("header").getByRole("link", { name: /call/i });
-    if (await headerCall.count()) {
-      await expect(headerCall).toHaveAttribute("href", "/#quote");
+    // Header call / quote button (desktop)
+    const headerCta = page.locator("header").getByRole("link", {
+      name: /^(call|get a quote)$/i,
+    });
+    if (await headerCta.count()) {
+      await expect(headerCta).toHaveAttribute("href", "/#quote");
     }
 
     // Mobile "Get a quote" sticky bar (if present)
@@ -29,9 +31,11 @@ test("quote links point to /#quote on pages without form and #quote on pages wit
     const footerQuote = page.locator("footer").getByRole("link", { name: "Get a quote" });
     await expect(footerQuote).toHaveAttribute("href", "#quote");
 
-    const headerCall = page.locator("header").getByRole("link", { name: /call/i });
-    if (await headerCall.count()) {
-      await expect(headerCall).toHaveAttribute("href", "#quote");
+    const headerCta = page.locator("header").getByRole("link", {
+      name: /^(call|get a quote)$/i,
+    });
+    if (await headerCta.count()) {
+      await expect(headerCta).toHaveAttribute("href", "#quote");
     }
 
     const mobileQuote = page.locator(".fixed.bottom-0 a", { hasText: /get a quote/i });

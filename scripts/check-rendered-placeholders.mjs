@@ -1,8 +1,9 @@
-import { spawn } from "node:child_process";
+import { execSync, spawn } from "node:child_process";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+const NEXT_BIN = join(ROOT, "node_modules", ".bin", "next");
 const PORT = process.env.PLACEHOLDER_CHECK_PORT ?? "3999";
 const BASE = `http://127.0.0.1:${PORT}`;
 
@@ -30,7 +31,7 @@ function extractJsonLd(html) {
   return out;
 }
 
-async function waitForServer(child, timeoutMs = 120_000) {
+async function waitForServer(child, timeoutMs = 60_000) {
   const start = Date.now();
   while (Date.now() - start < timeoutMs) {
     if (child.exitCode !== null) {
@@ -42,19 +43,81 @@ async function waitForServer(child, timeoutMs = 120_000) {
     } catch {
       // not ready yet
     }
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 200));
   }
   throw new Error("Timed out waiting for next start");
 }
 
+async function pathsFromSitemap() {
+  const res = await fetch(`${BASE}/sitemap.xml`);
+  if (!res.ok) {
+    throw new Error(`GET /sitemap.xml → ${res.status}`);
+  }
+  const xml = await res.text();
+  const paths = [];
+  for (const match of xml.matchAll(/<loc>([^<]+)<\/loc>/gi)) {
+    const pathname = new URL(match[1]).pathname;
+    paths.push(pathname === "" ? "/" : pathname);
+  }
+  if (paths.length === 0) {
+    throw new Error("sitemap.xml returned no URLs (is VERCEL_ENV=production set?)");
+  }
+  return paths;
+}
+
+function freePort(port) {
+  for (const cmd of [
+    `fuser -k ${port}/tcp 2>/dev/null`,
+    `lsof -ti :${port} 2>/dev/null | xargs -r kill -9 2>/dev/null`,
+  ]) {
+    try {
+      execSync(cmd, { shell: true, stdio: "ignore" });
+    } catch {
+      // no listener or tool unavailable
+    }
+  }
+}
+
+function stopServer(child) {
+  if (!child?.pid) return;
+  try {
+    process.kill(-child.pid, "SIGTERM");
+  } catch {
+    try {
+      process.kill(child.pid, "SIGTERM");
+    } catch {
+      // already exited
+    }
+  }
+  try {
+    process.kill(-child.pid, "SIGKILL");
+  } catch {
+    try {
+      process.kill(child.pid, "SIGKILL");
+    } catch {
+      // already exited
+    }
+  }
+  freePort(PORT);
+}
+
 async function main() {
-  const child = spawn("npx", ["next", "start", "-p", PORT], {
+  freePort(PORT);
+
+  const serverEnv = {
+    ...process.env,
+    NODE_ENV: "production",
+    VERCEL_ENV: "production",
+  };
+
+  let logs = "";
+  const child = spawn(NEXT_BIN, ["start", "-p", PORT], {
     cwd: ROOT,
-    env: { ...process.env, NODE_ENV: "production" },
+    env: serverEnv,
+    detached: true,
     stdio: ["ignore", "pipe", "pipe"],
   });
 
-  let logs = "";
   child.stdout?.on("data", (chunk) => {
     logs += chunk.toString();
   });
@@ -62,23 +125,10 @@ async function main() {
     logs += chunk.toString();
   });
 
-  const stop = () => {
-    if (!child.killed) child.kill("SIGTERM");
-  };
-  process.on("exit", stop);
-
   try {
     await waitForServer(child);
 
-    const routes = [
-      "/",
-      "/privacy",
-      "/terms",
-      "/cookies",
-      "/services",
-      "/areas/stockport",
-    ];
-
+    const routes = await pathsFromSitemap();
     for (const route of routes) {
       const html = await fetch(`${BASE}${route}`).then((res) => {
         if (!res.ok) throw new Error(`GET ${route} → ${res.status}`);
@@ -96,16 +146,19 @@ async function main() {
     });
     assertClean("llms.txt", llms);
 
-    console.log("Rendered placeholder check passed.");
+    console.log(
+      `Rendered placeholder check passed (${routes.length} sitemap routes + llms.txt).`,
+    );
+    stopServer(child);
+    process.exit(0);
   } catch (err) {
     console.error(err instanceof Error ? err.message : err);
     if (logs) {
       console.error("--- next start log (tail) ---");
       console.error(logs.slice(-4000));
     }
-    process.exitCode = 1;
-  } finally {
-    stop();
+    stopServer(child);
+    process.exit(1);
   }
 }
 

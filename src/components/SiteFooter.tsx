@@ -96,7 +96,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="site-container border-t border-zinc-800 py-6 text-sm text-zinc-400">
-        <p>© 2026 {company.name}.</p>
+        <p>© 2026 {company.legalName}.</p>
         {hasWasteCarrierLicence() ? (
           <p className="mt-2 max-w-3xl text-zinc-400">
             {siteConfig.compliance.wasteCarrierNote}

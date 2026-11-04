@@ -3,7 +3,8 @@ import { getAllStaticRoutes } from "@/lib/routes";
 import { isProduction, resolveSiteUrl } from "@/lib/env.server";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  if (!isProduction) {
+  // Empty in dev; full route list when built or run with NODE_ENV=production.
+  if (!isProduction && process.env.NODE_ENV !== "production") {
     return [];
   }
 
