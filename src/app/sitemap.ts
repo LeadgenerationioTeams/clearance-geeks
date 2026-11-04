@@ -1,10 +1,9 @@
 import type { MetadataRoute } from "next";
 import { getAllStaticRoutes } from "@/lib/routes";
-import { isProduction, resolveSiteUrl } from "@/lib/env.server";
+import { resolveSiteUrl, shouldPublishSitemapRoutes } from "@/lib/env.server";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // Empty in dev; full route list when built or run with NODE_ENV=production.
-  if (!isProduction && process.env.NODE_ENV !== "production") {
+  if (!shouldPublishSitemapRoutes()) {
     return [];
   }
 
