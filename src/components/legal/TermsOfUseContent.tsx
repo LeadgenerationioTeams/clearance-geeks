@@ -2,18 +2,20 @@ import Link from "next/link";
 import {
   company,
   formatRegisteredAddress,
+  hasCompanyEmail,
   hasCompanyNumber,
-  isPlaceholder,
+  hasRegisteredAddress,
+  hasWasteCarrierLicence,
   siteConfig,
 } from "@/config/site";
 
 export function TermsOfUseContent() {
   const operator = company.legalName;
   const address = formatRegisteredAddress();
-  const email = company.email;
-  const contactLine = isPlaceholder(email)
-    ? "the contact details published on this website once live"
-    : email;
+  const email = siteConfig.company.email;
+  const contactLine = hasCompanyEmail()
+    ? email
+    : "the contact details published on this website once live";
 
   return (
     <article className="prose prose-invert prose-zinc mt-8 max-w-none break-words text-zinc-300">
@@ -30,17 +32,21 @@ export function TermsOfUseContent() {
         </li>
         {hasCompanyNumber() ? (
           <li>
-            <strong>Company number:</strong> {company.companyNumber}
+            <strong>Company number:</strong> {siteConfig.company.companyNumber}
           </li>
         ) : null}
-        <li>
-          <strong>Registered address:</strong> {address}
-        </li>
-        <li>
-          <strong>Waste carrier registration:</strong>{" "}
-          {company.wasteCarrierLicence} (shown for transparency; confirm active
-          registration before booking).
-        </li>
+        {hasRegisteredAddress() ? (
+          <li>
+            <strong>Registered address:</strong> {address}
+          </li>
+        ) : null}
+        {hasWasteCarrierLicence() ? (
+          <li>
+            <strong>Waste carrier registration:</strong>{" "}
+            {siteConfig.company.wasteCarrierLicence} (shown for transparency;
+            confirm active registration before booking).
+          </li>
+        ) : null}
         <li>
           <strong>Contact:</strong> {contactLine}
         </li>

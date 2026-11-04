@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { company, isPlaceholder } from "@/config/site";
+import { company, hasCompanyEmail } from "@/config/site";
 
 export function CookiePolicyContent() {
-  const contact = isPlaceholder(company.email)
-    ? "the contact details on this website"
-    : company.email;
+  const contact = hasCompanyEmail()
+    ? company.email
+    : "the contact details on this website";
 
   return (
     <article className="prose prose-invert prose-zinc mt-8 max-w-none break-words text-zinc-300">

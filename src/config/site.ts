@@ -584,10 +584,15 @@ export function isPlaceholder(value: string): boolean {
   return value.includes("PLACEHOLDER_") || value.startsWith("[");
 }
 
+export function hasConfiguredValue(value: string): boolean {
+  const trimmed = value.trim();
+  return trimmed.length > 0 && !isPlaceholder(trimmed);
+}
+
 export function hasCallablePhone(
   phone: string = siteConfig.company.phone,
 ): boolean {
-  return !isPlaceholder(phone);
+  return hasConfiguredValue(phone);
 }
 
 /** Shown when quotesOpen is false — never includes a placeholder phone string. */
@@ -601,14 +606,86 @@ export function quotesClosedNoticeMessage(): string {
 /** Canonical production origin (no trailing slash). Override with NEXT_PUBLIC_SITE_URL on Vercel if needed. */
 export const SITE_URL = "https://theclearancegeeks.co.uk";
 
+/** Public brand name when legal entity name is not yet configured. */
+export const BRAND_DISPLAY_NAME = "The Clearance Geeks";
+
 /** TODO: company number pending */
 export const COMPANY_NUMBER = "";
+
+/** TODO: legal entity name pending */
+export const COMPANY_LEGAL_NAME = "";
+
+/** TODO: registered address line 1 pending */
+export const REGISTERED_ADDRESS_LINE_1 = "";
+
+/** TODO: registered address line 2 pending */
+export const REGISTERED_ADDRESS_LINE_2 = "";
+
+/** TODO: registered address city pending */
+export const REGISTERED_ADDRESS_CITY = "";
+
+/** TODO: registered address postcode pending */
+export const REGISTERED_ADDRESS_POSTCODE = "";
+
+/** TODO: waste carrier licence pending */
+export const WASTE_CARRIER_LICENCE = "";
+
+/** TODO: customer phone pending */
+export const COMPANY_PHONE = "";
+
+/** TODO: customer email pending */
+export const COMPANY_EMAIL = "";
+
+/** TODO: ICO registration pending */
+export const ICO_REGISTRATION_NUMBER = "";
+
+/** TODO: quote retention period pending */
+export const QUOTE_RETENTION_IF_NOT_BOOKED = "";
+
+/** TODO: lead recipient pending */
+export const LEAD_RECIPIENT = "";
+
+export type RegisteredAddress = {
+  line1: string;
+  line2: string;
+  city: string;
+  postcode: string;
+  country: string;
+};
 
 export function hasCompanyNumber(
   companyNumber: string = siteConfig.company.companyNumber,
 ): boolean {
-  const trimmed = companyNumber.trim();
-  return trimmed.length > 0 && !isPlaceholder(trimmed);
+  return hasConfiguredValue(companyNumber);
+}
+
+export function hasCompanyEmail(
+  email: string = siteConfig.company.email,
+): boolean {
+  return hasConfiguredValue(email);
+}
+
+export function hasWasteCarrierLicence(
+  licence: string = siteConfig.company.wasteCarrierLicence,
+): boolean {
+  return hasConfiguredValue(licence);
+}
+
+export function hasRegisteredAddress(
+  address: RegisteredAddress = siteConfig.company.registeredAddress,
+): boolean {
+  return (
+    hasConfiguredValue(address.line1) ||
+    hasConfiguredValue(address.line2) ||
+    hasConfiguredValue(address.city) ||
+    hasConfiguredValue(address.postcode)
+  );
+}
+
+export function displayLegalName(
+  legalName: string = siteConfig.company.legalName,
+): string {
+  return hasConfiguredValue(legalName) ? legalName : BRAND_DISPLAY_NAME;
 }
 
 export const siteConfig = {
@@ -619,32 +696,25 @@ export const siteConfig = {
   },
   company: {
     tradingName: "Clearance Geeks",
-    // TODO(Sam): Full legal entity name for contracts, metadata and policies.
-    legalName: "[COMPANY NAME]",
+    legalName: COMPANY_LEGAL_NAME,
     companyNumber: COMPANY_NUMBER,
     registeredAddress: {
-      line1: "[REGISTERED ADDRESS LINE 1]",
-      line2: "[REGISTERED ADDRESS LINE 2]",
-      city: "[CITY]",
-      postcode: "[POSTCODE]",
+      line1: REGISTERED_ADDRESS_LINE_1,
+      line2: REGISTERED_ADDRESS_LINE_2,
+      city: REGISTERED_ADDRESS_CITY,
+      postcode: REGISTERED_ADDRESS_POSTCODE,
       country: "United Kingdom",
     },
-    // TODO(Sam): Environment Agency waste carrier registration (upper tier if applicable).
-    wasteCarrierLicence: "[CARRIER NO]",
-    // TODO(Sam): Customer-facing phone (display format).
-    phone: "[PHONE]",
-    // TODO(Sam): Customer-facing email.
-    email: "[EMAIL]",
+    wasteCarrierLicence: WASTE_CARRIER_LICENCE,
+    phone: COMPANY_PHONE,
+    email: COMPANY_EMAIL,
   },
   compliance: {
     wasteCarrierNote:
-      "Waste is collected under an Environment Agency waste carrier registration. Registration number shown in the footer when confirmed.",
-    // TODO(Sam): ICO data protection fee registration number (format Z…).
-    icoRegistrationNumber: "[ICO NUMBER]",
-    // TODO(Sam): How long to keep quote requests that do not become bookings (e.g. "12 months").
-    quoteRetentionIfNotBooked: "[RETENTION PERIOD]",
-    // TODO(Sam): Where quote leads are sent (own CRM/email or named partner company).
-    leadRecipient: "[LEAD RECIPIENT]",
+      "Waste is collected under an Environment Agency waste carrier registration.",
+    icoRegistrationNumber: ICO_REGISTRATION_NUMBER,
+    quoteRetentionIfNotBooked: QUOTE_RETENTION_IF_NOT_BOOKED,
+    leadRecipient: LEAD_RECIPIENT,
   },
   serviceAreas: {
     region: "Greater Manchester",
@@ -667,15 +737,18 @@ export const todoMarketing = {
 } as const;
 
 export function formatRegisteredAddress(): string {
+  if (!hasRegisteredAddress()) {
+    return "";
+  }
   const a = siteConfig.company.registeredAddress;
   return [a.line1, a.line2, a.city, a.postcode, a.country]
-    .filter(Boolean)
+    .filter((part) => hasConfiguredValue(part) || part === "United Kingdom")
     .join(", ");
 }
 
 export const company = {
   name: siteConfig.company.tradingName,
-  legalName: siteConfig.company.legalName,
+  legalName: displayLegalName(),
   companyNumber: siteConfig.company.companyNumber,
   address: formatRegisteredAddress(),
   phone: siteConfig.company.phone,
@@ -724,7 +797,7 @@ export function telHref(
   phone: string = siteConfig.company.phone,
   pathname?: string | null,
 ): string {
-  if (isPlaceholder(phone)) return quoteHrefForPath(pathname);
+  if (!hasConfiguredValue(phone)) return quoteHrefForPath(pathname);
   return `tel:${phone.replace(/\s/g, "")}`;
 }
 
