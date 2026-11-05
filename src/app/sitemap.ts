@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
 import { getAllStaticRoutes } from "@/lib/routes";
-import { isProduction, resolveSiteUrl } from "@/lib/env.server";
+import { resolveSiteUrl, shouldPublishSitemapRoutes } from "@/lib/env.server";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  if (!isProduction) {
+  if (!shouldPublishSitemapRoutes()) {
     return [];
   }
 
