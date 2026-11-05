@@ -695,7 +695,7 @@ export const siteConfig = {
     url: SITE_URL,
   },
   company: {
-    tradingName: "Clearance Geeks",
+    tradingName: BRAND_DISPLAY_NAME,
     legalName: COMPANY_LEGAL_NAME,
     companyNumber: COMPANY_NUMBER,
     registeredAddress: {

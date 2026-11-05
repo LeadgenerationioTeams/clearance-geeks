@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const NEXT_BIN = join(ROOT, "node_modules", ".bin", "next");
+const EXPECTED_SITE_ORIGIN = "https://theclearancegeeks.co.uk";
 
 /** Uppercase bracket placeholders such as [COMPANY NAME] — not markdown links. */
 const BRACKET_PLACEHOLDER = /\[[A-Z][A-Z0-9 ]*\]/;
@@ -152,8 +153,37 @@ async function main() {
     });
     assertClean("llms.txt", llms);
 
+    const robots = await fetch(`${base}/robots.txt`).then((res) => {
+      if (!res.ok) throw new Error(`GET /robots.txt → ${res.status}`);
+      return res.text();
+    });
+    assertClean("robots.txt", robots);
+    if (!robots.includes(`Sitemap: ${EXPECTED_SITE_ORIGIN}/sitemap.xml`)) {
+      throw new Error(
+        `robots.txt missing Sitemap: ${EXPECTED_SITE_ORIGIN}/sitemap.xml`,
+      );
+    }
+
+    const sitemapXml = await fetch(`${base}/sitemap.xml`).then((res) => {
+      if (!res.ok) throw new Error(`GET /sitemap.xml → ${res.status}`);
+      return res.text();
+    });
+    assertClean("sitemap.xml", sitemapXml);
+    const sitemapLocs = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/gi)].map(
+      (match) => match[1],
+    );
+    if (sitemapLocs.length === 0) {
+      throw new Error("sitemap.xml returned no <loc> entries");
+    }
+    for (const loc of sitemapLocs) {
+      if (!loc.startsWith(`${EXPECTED_SITE_ORIGIN}/`) && loc !== EXPECTED_SITE_ORIGIN) {
+        throw new Error(`sitemap.xml loc is not on ${EXPECTED_SITE_ORIGIN}: ${loc}`);
+      }
+      assertClean(`sitemap loc ${loc}`, loc);
+    }
+
     console.log(
-      `Rendered placeholder check passed (${routes.length} routes + llms.txt on port ${port}).`,
+      `Rendered placeholder check passed (${routes.length} routes + llms.txt + robots + sitemap on port ${port}).`,
     );
     await stopServer(child);
     process.exit(0);

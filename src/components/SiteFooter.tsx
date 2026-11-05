@@ -8,7 +8,6 @@ import {
   hasCallablePhone,
   hasCompanyEmail,
   hasCompanyNumber,
-  hasRegisteredAddress,
   hasWasteCarrierLicence,
   quoteHrefForPath,
   siteConfig,
