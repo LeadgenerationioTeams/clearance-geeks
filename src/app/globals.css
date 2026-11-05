@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+html {
+  background-color: #000;
+}
+
+:root {
+  --background: #fafafa;
+  --foreground: #18181b;
+  --geek-lime: #7cfc00;
+  --geek-lime-bright: #8be600;
+  --container: 75rem;
+  /* Sticky mobile Call bar (p-3 + min-h-12 row); 0 on lg+ */
+  --mobile-call-bar-height: 4.5rem;
+  --cookie-bar-h: 0px;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --mobile-call-bar-height: 0px;
+  }
+}
+
+@media (max-width: 1023px) {
+  html {
+    scroll-padding-bottom: calc(88px + var(--cookie-bar-h, 0px));
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    scroll-padding-bottom: calc(var(--cookie-bar-h, 0px) + 8px);
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-geek-lime: var(--geek-lime);
+  --color-geek-lime-bright: var(--geek-lime-bright);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+  body {
+    font-size: 1.125rem;
+  }
+}
+
+.font-display {
+  font-family: var(--font-display), Impact, Haettenschweiler, sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.site-container {
+  width: 100%;
+  max-width: var(--container);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.section-pad {
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+
+@media (min-width: 768px) {
+  .section-pad {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-pad {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
