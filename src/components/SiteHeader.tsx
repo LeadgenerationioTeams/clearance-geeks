@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { hasCallablePhone } from "@/config/site";
 import { LogoLockup } from "./LogoLockup";
 import { CallButton } from "./CallButton";
 import { cn } from "@/lib/cn";
@@ -33,7 +34,7 @@ export function SiteHeader() {
             className={cn(
               "hidden min-h-11 px-4 py-2 text-sm lg:inline-flex",
             )}
-            label="Call"
+            label={hasCallablePhone() ? "Call" : "Get a quote"}
             showPhone={false}
           />
         </div>

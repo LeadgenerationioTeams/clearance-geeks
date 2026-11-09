@@ -1,13 +1,16 @@
-import { company, isPlaceholder, siteConfig } from "@/config/site";
+import {
+  company,
+  hasCompanyEmail,
+  hasConfiguredValue,
+  hasRegisteredAddress,
+  isPlaceholder,
+  siteConfig,
+} from "@/config/site";
 import { resolveSiteUrl } from "@/lib/env.server";
 
 export function localBusinessJsonLd() {
   const siteUrl = resolveSiteUrl();
   const addr = siteConfig.company.registeredAddress;
-  const isAddressPlaceholder =
-    isPlaceholder(addr.line1) ||
-    isPlaceholder(addr.city) ||
-    isPlaceholder(addr.postcode);
   const isUrlPlaceholder = isPlaceholder(siteUrl);
 
   return {
@@ -16,19 +19,27 @@ export function localBusinessJsonLd() {
     name: company.legalName,
     description: company.defaultDescription,
     ...(isUrlPlaceholder ? {} : { url: siteUrl }),
-    ...(isPlaceholder(company.phone) ? {} : { telephone: company.phone }),
-    ...(isPlaceholder(company.email) ? {} : { email: company.email }),
-    ...(isAddressPlaceholder
-      ? {}
-      : {
+    ...(hasConfiguredValue(siteConfig.company.phone)
+      ? { telephone: siteConfig.company.phone }
+      : {}),
+    ...(hasCompanyEmail() ? { email: siteConfig.company.email } : {}),
+    ...(hasRegisteredAddress()
+      ? {
           address: {
             "@type": "PostalAddress",
-            streetAddress: [addr.line1, addr.line2].filter(Boolean).join(", "),
-            addressLocality: addr.city,
-            postalCode: addr.postcode,
+            streetAddress: [addr.line1, addr.line2]
+              .filter((line) => hasConfiguredValue(line))
+              .join(", "),
+            ...(hasConfiguredValue(addr.city)
+              ? { addressLocality: addr.city }
+              : {}),
+            ...(hasConfiguredValue(addr.postcode)
+              ? { postalCode: addr.postcode }
+              : {}),
             addressCountry: "GB",
           },
-        }),
+        }
+      : {}),
     areaServed: {
       "@type": "AdministrativeArea",
       name: siteConfig.serviceAreas.region,

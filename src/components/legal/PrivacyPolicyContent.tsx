@@ -2,7 +2,11 @@ import Link from "next/link";
 import {
   company,
   formatRegisteredAddress,
-  isPlaceholder,
+  hasCallablePhone,
+  hasCompanyEmail,
+  hasCompanyNumber,
+  hasConfiguredValue,
+  hasRegisteredAddress,
   serviceAreaNames,
   siteConfig,
 } from "@/config/site";
@@ -10,11 +14,11 @@ import {
 export function PrivacyPolicyContent() {
   const address = formatRegisteredAddress();
   const email = company.email;
-  const phone = company.phone;
+  const phone = siteConfig.company.phone;
 
-  const contactLine = isPlaceholder(email)
-    ? "the contact details published on this website once live"
-    : `${email}${isPlaceholder(phone) ? "" : ` or ${phone}`}`;
+  const contactLine = hasCompanyEmail()
+    ? `${email}${hasCallablePhone() ? ` or ${phone}` : ""}`
+    : "the contact details published on this website once live";
 
   return (
     <article className="prose prose-invert prose-zinc mt-8 max-w-none break-words text-zinc-300">
@@ -31,19 +35,25 @@ export function PrivacyPolicyContent() {
         this notice.
       </p>
       <ul>
-        <li>
-          <strong>Company number:</strong> {company.companyNumber}
-        </li>
-        <li>
-          <strong>Registered address:</strong> {address}
-        </li>
+        {hasCompanyNumber() ? (
+          <li>
+            <strong>Company number:</strong> {siteConfig.company.companyNumber}
+          </li>
+        ) : null}
+        {hasRegisteredAddress() ? (
+          <li>
+            <strong>Registered address:</strong> {address}
+          </li>
+        ) : null}
         <li>
           <strong>Contact:</strong> {contactLine}
         </li>
-        <li>
-          <strong>ICO registration:</strong>{" "}
-          {siteConfig.compliance.icoRegistrationNumber}
-        </li>
+        {hasConfiguredValue(siteConfig.compliance.icoRegistrationNumber) ? (
+          <li>
+            <strong>ICO registration:</strong>{" "}
+            {siteConfig.compliance.icoRegistrationNumber}
+          </li>
+        ) : null}
       </ul>
 
       <h2 className="font-display text-geek-lime">2. What data we collect</h2>
@@ -143,9 +153,11 @@ export function PrivacyPolicyContent() {
         We keep enquiry and job records for as long as needed to provide
         services, handle disputes and meet legal obligations (typically up to six
         years for financial and waste-related records unless a longer period is
-        required). If you don&apos;t book, we delete your quote request after{" "}
-        {siteConfig.compliance.quoteRetentionIfNotBooked}. Website logs and
-        cookie preferences are kept for shorter periods.
+        required). If you don&apos;t book, we delete your quote request{" "}
+        {hasConfiguredValue(siteConfig.compliance.quoteRetentionIfNotBooked)
+          ? `after ${siteConfig.compliance.quoteRetentionIfNotBooked}`
+          : "within a reasonable period"}
+        . Website logs and cookie preferences are kept for shorter periods.
       </p>
 
       <h2 className="font-display text-geek-lime">7. Security</h2>
