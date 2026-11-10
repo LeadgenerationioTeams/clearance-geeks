@@ -11,6 +11,7 @@ import {
   COOKIE_CONSENT_STORAGE_KEY,
 } from "@/lib/cookie-consent";
 import { company } from "@/config/site";
+import { previewNoIndexRobots } from "@/lib/env.server";
 import { JsonLd, localBusinessJsonLd } from "@/lib/schema";
 
 const display = Bangers({
@@ -26,12 +27,15 @@ const body = Inter({
   display: "swap",
 });
 
+const previewRobots = previewNoIndexRobots();
+
 export const metadata: Metadata = {
   title: {
     default: company.name,
     template: `%s | ${company.name}`,
   },
   description: company.defaultDescription,
+  ...(previewRobots ? { robots: previewRobots } : {}),
 };
 
 export default function RootLayout({
