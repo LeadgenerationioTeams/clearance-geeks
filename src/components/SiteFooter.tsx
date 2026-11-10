@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { CookieSettingsButton } from "@/components/CookieSettingsButton";
 import {
@@ -101,7 +102,15 @@ export function SiteFooter() {
             {siteConfig.compliance.wasteCarrierNote}
           </p>
         ) : null}
+        <div
+          {...{ "google-add-preferred-source-btn": "" }}
+          className="min-h-0 empty:m-0 empty:h-0 empty:overflow-hidden [&:not(:empty)]:mt-2"
+        />
       </div>
+      <Script
+        src="https://news.google.com/swg/js/v1/publisher.js"
+        strategy="lazyOnload"
+      />
     </footer>
   );
 }
