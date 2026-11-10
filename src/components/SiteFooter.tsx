@@ -104,7 +104,7 @@ export function SiteFooter() {
         ) : null}
         <div
           {...{ "google-add-preferred-source-btn": "" }}
-          className="min-h-0 empty:m-0 empty:h-0 empty:overflow-hidden [&:not(:empty)]:mt-2"
+          className="mt-2 block"
         />
       </div>
       <Script

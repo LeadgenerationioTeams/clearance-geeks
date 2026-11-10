@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { company } from "@/config/site";
-import { resolveSiteUrl } from "@/lib/env.server";
+import { previewNoIndexRobots, resolveSiteUrl } from "@/lib/env.server";
 
 /** Crawl/index rules live in `app/robots.ts` (VERCEL_ENV-aware). */
 export function buildMetadata({
@@ -15,9 +15,12 @@ export function buildMetadata({
   const fullTitle = `${title} | ${company.name}`;
   const url = `${resolveSiteUrl()}${path}`;
 
+  const robots = previewNoIndexRobots();
+
   return {
     title: fullTitle,
     description,
+    ...(robots ? { robots } : {}),
     alternates: { canonical: url },
     openGraph: {
       title: fullTitle,

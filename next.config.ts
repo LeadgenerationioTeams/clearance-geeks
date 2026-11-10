@@ -4,7 +4,7 @@ const contentSecurityPolicy = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' https://news.google.com",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob:",
+  "img-src 'self' data: blob: https://www.gstatic.com",
   "font-src 'self'",
   "connect-src 'self' https://news.google.com",
   "frame-src https://news.google.com https://accounts.google.com",
