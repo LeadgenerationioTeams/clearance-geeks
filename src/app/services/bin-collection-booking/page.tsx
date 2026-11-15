@@ -36,7 +36,7 @@ const faqs = [
   },
   {
     q: "Are the prices final?",
-    a: "PLACEHOLDER_FOR_SAM — headline prices are placeholders until Sam confirms rates. You will see the full total before paying.",
+    a: "Yes. The prices on each service card are what you pay. You will see the full total before paying.",
   },
 ];
 
@@ -75,9 +75,6 @@ export default function BinCollectionBookingPage() {
           <h2 id="booking-services" className="font-display text-3xl text-zinc-900">
             Services & prices
           </h2>
-          <p className="mt-2 text-sm text-amber-800">
-            PLACEHOLDER_FOR_SAM — unit prices below are placeholders for Sam to confirm before go-live.
-          </p>
           <ul className="mt-8 grid gap-4 sm:grid-cols-2">
             {BIN_BOOKING_SERVICES.map((svc) => (
               <li
@@ -113,7 +110,6 @@ export default function BinCollectionBookingPage() {
               </div>
             ))}
           </dl>
-          <p className="mt-8 text-xs text-zinc-500">{binBookingConfig.licenceNotePlaceholder}</p>
         </section>
       </div>
     </div>
