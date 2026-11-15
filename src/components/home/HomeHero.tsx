@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { QuoteForm } from "@/components/QuoteForm";
 import { siteConfig } from "@/config/site";
 
@@ -34,6 +35,12 @@ export function HomeHero() {
               Fast quotes, tidy crews and responsible disposal for homes and
               businesses.
             </p>
+            <Link
+              href="/services/bin-collection-booking"
+              className="mt-4 inline-flex min-h-11 items-center justify-center rounded-xl border-2 border-geek-lime px-4 text-sm font-extrabold uppercase tracking-wide text-geek-lime hover:bg-geek-lime/10"
+            >
+              Book bin &amp; bag collections
+            </Link>
           </div>
 
           <div className="lg:sticky lg:top-24">
