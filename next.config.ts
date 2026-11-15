@@ -10,7 +10,7 @@ const contentSecurityPolicy = [
   "frame-src https://news.google.com https://accounts.google.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
-  "form-action 'self'",
+  "form-action 'self' https://checkout.stripe.com",
 ].join("; ");
 
 const securityHeaders = [

@@ -15,7 +15,7 @@
     "check:forbidden": "node scripts/check-forbidden-strings.mjs",
     "check:similarity": "node scripts/similarity-check.mjs",
     "verify:neighbourhood-images": "node scripts/verify-neighbourhood-images.mjs",
-    "test:unit": "node --test scripts/phone-validation.test.mjs",
+    "test:unit": "node --test scripts/phone-validation.test.mjs scripts/bin-booking-pricing.test.mjs scripts/bin-booking-postcode.test.mjs",
     "test:e2e": "playwright test",
     "test": "node --test scripts/phone-validation.test.mjs && playwright test"
   },
@@ -24,6 +24,7 @@
     "next": "16.4.3",
     "react": "19.3.0",
     "react-dom": "19.3.0",
+    "stripe": "^17.7.0",
     "tailwind-merge": "^3.7.0"
   },
   "devDependencies": {

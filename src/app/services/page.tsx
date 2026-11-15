@@ -34,6 +34,19 @@ export default function ServicesHubPage() {
         across {siteConfig.serviceAreas.region} with local routing from{" "}
         {hubAreaName(0)} and {hubAreaName(1)} hubs.
       </p>
+      <div className="mt-10 rounded-2xl border-2 border-geek-lime/40 bg-zinc-900 p-6 text-white">
+        <h2 className="font-display text-2xl text-geek-lime">Bin & bag booking</h2>
+        <p className="mt-2 max-w-xl text-sm text-zinc-200">
+          Councils missed your bin or won&apos;t take extra bags? Book online with one-off, multi-date or
+          subscription collections — subscribe and save 15% on bags and bin empties.
+        </p>
+        <Link
+          href="/services/bin-collection-booking"
+          className="mt-4 inline-flex min-h-11 items-center justify-center rounded-xl border-2 border-geek-lime bg-geek-lime px-5 text-sm font-extrabold uppercase tracking-wide text-black"
+        >
+          Book collections
+        </Link>
+      </div>
       <ul className="relative z-10 mt-10 grid gap-5 sm:grid-cols-2">
         {services.map((s) => (
           <li key={s.slug}>

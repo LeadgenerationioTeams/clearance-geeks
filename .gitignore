@@ -38,6 +38,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# bin booking file store (swap for DB in production)
+.data/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

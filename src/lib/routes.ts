@@ -11,6 +11,8 @@ export function getAllStaticRoutes(): RouteEntry[] {
   const routes: RouteEntry[] = [
     { path: "/", label: "Home" },
     { path: "/services", label: "Services" },
+    { path: "/services/bin-collection-booking", label: "Bin collection booking" },
+    { path: "/services/bin-collection-booking/book", label: "Book bin collection" },
     { path: "/areas", label: "Areas" },
     { path: "/privacy", label: "Privacy" },
     { path: "/cookies", label: "Cookies" },
